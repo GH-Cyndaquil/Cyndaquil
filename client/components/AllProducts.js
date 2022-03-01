@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect } from "react";
 
 function AllProducts(props) {
   let [products, setProducts] = useState([]);
@@ -7,6 +7,8 @@ function AllProducts(props) {
     //grab all products from DB
   });
 
+  //define addToCart function here
+
   return (
     <main>
       {products.map((product) => {
@@ -14,7 +16,10 @@ function AllProducts(props) {
           <img src={product.imageUrl} />
           <h2>{product.name}</h2>
           <h3>{product.price}</h3>
-          <button>Add to Cart</button>
+          <input type="number" value="1"></input>
+          <button className="addToCart" onClick={(evt) => addToCart(evt)}>
+            Add to Cart
+          </button>
         </div>;
       })}
     </main>
