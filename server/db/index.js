@@ -4,13 +4,22 @@ const db = require("./db");
 
 const User = require("./models/User");
 const Product = require("./models/Product");
+const Ingredient = require("./models/Ingredient");
+const Region = require("./models/Region");
 
 //associations could go here!
+Ingredient.hasMany(Product);
+Product.belongsTo(Ingredient);
+
+Region.hasMany(Product);
+Product.belongsTo(Region);
 
 module.exports = {
   db,
   models: {
     User,
     Product,
+    Ingredient,
+    Region,
   },
 };
