@@ -1,16 +1,22 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { logout } from '../store';
+import React from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router-dom";
+import { logout } from "../store";
 
 const Navbar = ({ handleClick, isLoggedIn }) => (
   <div>
-    <h1>Liquor Shop</h1>
+    <h1>NYET</h1>
     <nav>
+      <div>
+        {/* The navbar will show these links after you log in */}
+        <Link to="/home">Home</Link>
+        <Link to="/AllProducts">Products</Link>
+      </div>
+
       {isLoggedIn ? (
         <div>
           {/* The navbar will show these links after you log in */}
-          <Link to="/home">Home</Link>
+          <Link to="/AccountInfo">Account</Link>
           <a href="#" onClick={handleClick}>
             Logout
           </a>
@@ -22,6 +28,7 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
           <Link to="/signup">Sign Up</Link>
         </div>
       )}
+      <img id="cartIcon" src="images/carticon.png" />
     </nav>
     <hr />
   </div>

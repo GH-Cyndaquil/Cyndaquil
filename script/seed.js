@@ -82,7 +82,7 @@ async function seed() {
       price: 18.99,
       quantity: 100,
       description: "Absolut Perfection",
-      imageUrl: "images/absolute.jpeg",
+      imageUrl: "images/absolut.jpeg",
     }),
     Product.create({
       name: "Belvedere",
@@ -96,7 +96,7 @@ async function seed() {
       price: 17.99,
       quantity: 85,
       description: "hand crafted American potato vodka",
-      imageUrl: "images/blue ice.jpeg",
+      imageUrl: "images/blue ice vodka.jpeg",
     }),
     Product.create({
       name: "Chopin",
@@ -173,7 +173,7 @@ async function seed() {
       price: 34.99,
       quantity: 130,
       description: "Go beyond the bottle",
-      imageUrl: "images/ocean.jpeg",
+      imageUrl: "images/ocean vodka.jpeg",
     }),
     Product.create({
       name: "Reyka",
@@ -215,7 +215,7 @@ async function seed() {
       price: 19.99,
       quantity: 63,
       description: "the spirit of adventure",
-      imageUrl: "images/crater lake.jpg",
+      imageUrl: "images/crater lake.jpeg",
     }),
   ]);
   console.log(`seeded ${products.length} products`);
