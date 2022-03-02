@@ -7,10 +7,15 @@ function AllProducts(props) {
   const products = useSelector((state) => {
     return state.products;
   });
+  let [filters, setFilters] = useState([]);
 
   useEffect(() => {
     dispatch(fetchProducts());
   }, []);
+
+  function onFilter(evt) {
+    evt.preventDefault();
+  }
 
   //define addToCart function here
 
@@ -19,13 +24,22 @@ function AllProducts(props) {
       <div id="filtering">
         <h2>Filter</h2>
         <h3>Region:</h3>
-        <div>Region 1</div>
-        <div>Region 2</div>
-        <div>Region 3</div>
+        <div>United States</div>
+        <div>France</div>
+        <div>Sweden</div>
+        <div>Poland</div>
+        <div>Ukrain</div>
+        <div>Iceland</div>
+        <div>Netherlands</div>
         <h3>Main Ingredient</h3>
-        <div>Ingredient 1</div>
-        <div>Ingredient 2</div>
-        <div>Ingredient 3</div>
+        <div>Wheat</div>
+        <div>Potato</div>
+        <div>Grape</div>
+        <div>Sugar Cane</div>
+        <div>Wheat and Barley</div>
+        <div>Corn</div>
+        <div>Rye</div>
+        <div>Spelt Grain</div>
       </div>
       <div id="products">
         {products.map((product) => {
