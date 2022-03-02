@@ -18,24 +18,24 @@ import axios from "axios";
 //   fetchProduct();
 // }, []);
 
-  return (
-    <main id="cart">
-      <table>
-        
-        </table>  
-  
-      {cart.map((item) => {
-        return (
-          <div key={produc.id}>
-            <img src={product.imageUrl} />
-            <h2>{product.name}</h2>
-            <h3>{product.price}</h3>
-            <button>Add to Cart</button>
-          </div>
-        );
-      })}
-    </main>
-  );
-}
+//   return (
+//     <main id="cart">
+//       <table>
 
-export default ViewCart;
+//         </table>
+
+//       {cart.map((item) => {
+//         return (
+//           <div key={produc.id}>
+//             <img src={product.imageUrl} />
+//             <h2>{product.name}</h2>
+//             <h3>{product.price}</h3>
+//             <button>Add to Cart</button>
+//           </div>
+//         );
+//       })}
+//     </main>
+//   );
+// }
+
+// export default ViewCart;
