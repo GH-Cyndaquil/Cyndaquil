@@ -3,7 +3,7 @@ const db = require("../db");
 
 const OrderDetails = db.define("order-details", {
   quantityOrdered: {
-    type: Sequelize.NUMBER,
+    type: Sequelize.INTEGER,
     allowNull: false,
     validate: {
       min: 1,
