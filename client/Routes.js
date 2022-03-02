@@ -6,7 +6,6 @@ import Home from './components/Home';
 import { me } from './store';
 import AllProducts from './components/AllProducts';
 import SingleProduct from './components/SingleProduct';
-import Login from './components/Login';
 import ViewCart from './components/ViewCart';
 
 /**
