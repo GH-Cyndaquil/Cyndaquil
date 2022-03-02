@@ -4,7 +4,6 @@ import {
   fetchSelectedProduct,
   setSelectedProduct,
 } from '../store/selectedProduct';
-import axios from 'axios';
 
 function SingleProduct(props) {
   let dispatch = useDispatch();
@@ -12,10 +11,10 @@ function SingleProduct(props) {
     return state.selectedProduct;
   });
 
-  console.log(currentProduct);
   useEffect(() => {
     dispatch(fetchSelectedProduct(props.match.params.id));
   }, []);
+
   return (
     <main id="single-product">
       <div>
@@ -25,7 +24,7 @@ function SingleProduct(props) {
         <h1>{currentProduct.name}</h1>
         <h2>{currentProduct.price}</h2>
         <p>{currentProduct.description}</p>
-        <div>{currentProduct.quantity}</div>
+        <div>In stock: {currentProduct.quantity}</div>
       </div>
     </main>
   );
