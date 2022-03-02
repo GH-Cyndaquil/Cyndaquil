@@ -2,7 +2,7 @@
 
 const { db } = require("../server/db");
 const {
-  models: { User, Product, Ingredient, Region },
+  models: { User, Product, Ingredient, Region, Order },
 } = require("../server/db");
 
 async function seed() {
@@ -18,7 +18,7 @@ async function seed() {
       firstName: "Peter",
       lastName: "Cummings",
       address: "19596 141st pl se",
-      state: "Wa",
+      state: "WA",
       city: "Monroe",
       postalCode: "98272",
       isAdmin: true,
@@ -30,7 +30,7 @@ async function seed() {
       firstName: "Dale",
       lastName: "Luce",
       address: "1234 121st pl se",
-      state: "In",
+      state: "IN",
       city: "Indianapolis",
       postalCode: "98765",
       isAdmin: true,
@@ -42,7 +42,7 @@ async function seed() {
       firstName: "Matt",
       lastName: "Yard",
       address: "1234 121st st ne",
-      state: "Ma",
+      state: "MA",
       city: "Boston",
       postalCode: "98765",
       isAdmin: true,
@@ -54,7 +54,7 @@ async function seed() {
       firstName: "Austin",
       lastName: "Gautney",
       address: "1234 121st pl se",
-      state: "Wa",
+      state: "WA",
       city: "Puyallup",
       postalCode: "98765",
       isAdmin: true,
@@ -66,7 +66,7 @@ async function seed() {
       firstName: "Sean",
       lastName: "Doe",
       address: "1234 121st st se",
-      state: "Wa",
+      state: "WA",
       city: "Monroe",
       postalCode: "98765",
       isAdmin: false,
@@ -274,14 +274,95 @@ async function seed() {
     }),
   ]);
   console.log(`seeded ${ingredients.length} ingredients`);
-  /*
+
+  //Creating Orders
   const orders = await Promise.all([
     Order.create({
-
-    })
-  ])
+      orderDate: new Date(),
+      shipAddress: "1234 21st pl se",
+      shipState: "WA",
+      shipCity: "Bellevue",
+      shipPostalCode: "98004",
+    }),
+    Order.create({
+      orderDate: new Date(),
+      shipAddress: "1235 21st pl se",
+      shipState: "WA",
+      shipCity: "Seattle",
+      shipPostalCode: "98002",
+    }),
+    Order.create({
+      orderDate: new Date(),
+      shipAddress: "1236 21st pl se",
+      shipState: "CA",
+      shipCity: "Los Angles",
+      shipPostalCode: "90210",
+    }),
+    Order.create({
+      orderDate: new Date(),
+      shipAddress: "1223 22nd st ne",
+      shipState: "CA",
+      shipCity: "Los Angeles",
+      shipPostalCode: "90210",
+    }),
+    Order.create({
+      orderDate: new Date(),
+      shipAddress: "1236 25th pl se",
+      shipState: "WA",
+      shipCity: "Redmond",
+      shipPostalCode: "98052",
+    }),
+  ]);
   console.log(`seeded ${orders.length} orders`);
-  */
+
+  //add region and ingredients to product
+  await products[0].setRegion(5);
+  await products[0].setIngredient(1);
+  await products[1].setRegion(3);
+  await products[1].setIngredient(7);
+  await products[2].setRegion(1);
+  await products[2].setIngredient(2);
+  await products[3].setRegion(3);
+  await products[3].setIngredient(2);
+  await products[4].setRegion(2);
+  await products[4].setIngredient(3);
+  await products[5].setRegion(1);
+  await products[5].setIngredient(6);
+  await products[6].setRegion(2);
+  await products[6].setIngredient(1);
+  await products[7].setRegion(1);
+  await products[7].setIngredient(3);
+  await products[8].setRegion(2);
+  await products[8].setIngredient(1);
+  await products[9].setRegion(7);
+  await products[9].setIngredient(1);
+  await products[10].setRegion(4);
+  await products[10].setIngredient(6);
+  await products[11].setRegion(3);
+  await products[11].setIngredient(7);
+  await products[12].setRegion(2);
+  await products[12].setIngredient(1);
+  await products[13].setRegion(1);
+  await products[13].setIngredient(4);
+  await products[14].setRegion(3);
+  await products[14].setIngredient(5);
+  await products[15].setRegion(1);
+  await products[15].setIngredient(1);
+  await products[16].setRegion(5);
+  await products[16].setIngredient(1);
+  await products[17].setRegion(1);
+  await products[17].setIngredient(6);
+  await products[18].setRegion(3);
+  await products[18].setIngredient(8);
+  await products[19].setRegion(1);
+  await products[19].setIngredient(6);
+
+  //add userId, productId, quantityOrdered, price, fullfiled
+  await orders[0].setUser(1);
+  await orders[1].setUser(2);
+  await orders[2].setUser(3);
+  await orders[3].setUser(4);
+  await orders[4].setUser(5);
 }
 
 /*
