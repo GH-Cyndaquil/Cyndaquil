@@ -4,7 +4,7 @@ import axios from "axios";
 // function AllProducts(props) {
 //   let [products, setProducts] = useState([]);
 
-//need axios call to get products from cart--------------
+// need axios call to get products from cart--------------
 
 // useEffect(() => {
 //   const fetchProduct = async () => {
@@ -18,20 +18,24 @@ import axios from "axios";
 //   fetchProduct();
 // }, []);
 
-//   return (
-//     <main id="cart">
-//       {cart.map((item) => {
-//         return (
-//           <div key={produc.id}>
-//             <img src={product.imageUrl} />
-//             <h2>{product.name}</h2>
-//             <h3>{product.price}</h3>
-//             <button>Add to Cart</button>
-//           </div>
-//         );
-//       })}
-//     </main>
-//   );
-// }
+  return (
+    <main id="cart">
+      <table>
+        
+        </table>  
+  
+      {cart.map((item) => {
+        return (
+          <div key={produc.id}>
+            <img src={product.imageUrl} />
+            <h2>{product.name}</h2>
+            <h3>{product.price}</h3>
+            <button>Add to Cart</button>
+          </div>
+        );
+      })}
+    </main>
+  );
+}
 
-// export default ViewCart;
+export default ViewCart;
