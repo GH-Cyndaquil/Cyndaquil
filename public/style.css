@@ -26,3 +26,16 @@ form div {
   flex-wrap: wrap;
   justify-content: space-evenly;
 }
+
+#filtering {
+  flex-grow: 1;
+}
+
+#products {
+  flex-direction: row;
+  flex-grow: 2;
+}
+
+#products > div {
+  padding: 0px;
+}
