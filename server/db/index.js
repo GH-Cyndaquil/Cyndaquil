@@ -29,5 +29,6 @@ module.exports = {
     Product,
     Ingredient,
     Region,
+    Order,
   },
 };
