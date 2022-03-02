@@ -7,6 +7,8 @@ function AllProducts(props) {
   const products = useSelector((state) => {
     return state.products;
   });
+  let [regionFilter, setRegionFilter] = useState('');
+  let [ingredientFilter, setIngredientFilter] = useState('');
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -19,13 +21,38 @@ function AllProducts(props) {
       <div id="filtering">
         <h2>Filter</h2>
         <h3>Region:</h3>
-        <div>Region 1</div>
-        <div>Region 2</div>
-        <div>Region 3</div>
+        <div onClick={(evt) => setRegionFilter(evt.target.value)}>
+          United States
+        </div>
+        <div onClick={(evt) => setRegionFilter(evt.target.value)}>France</div>
+        <div onClick={(evt) => setRegionFilter(evt.target.value)}>Sweden</div>
+        <div onClick={(evt) => setRegionFilter(evt.target.value)}>Poland</div>
+        <div onClick={(evt) => setRegionFilter(evt.target.value)}>Ukrain</div>
+        <div onClick={(evt) => setRegionFilter(evt.target.value)}>Iceland</div>
+        <div onClick={(evt) => setRegionFilter(evt.target.value)}>
+          Netherlands
+        </div>
         <h3>Main Ingredient</h3>
-        <div>Ingredient 1</div>
-        <div>Ingredient 2</div>
-        <div>Ingredient 3</div>
+        <div onClick={(evt) => setIngredientFilter(evt.target.value)}>
+          Wheat
+        </div>
+        <div onClick={(evt) => setIngredientFilter(evt.target.value)}>
+          Potato
+        </div>
+        <div onClick={(evt) => setIngredientFilter(evt.target.value)}>
+          Grape
+        </div>
+        <div onClick={(evt) => setIngredientFilter(evt.target.value)}>
+          Sugar Cane
+        </div>
+        <div onClick={(evt) => setIngredientFilter(evt.target.value)}>
+          Wheat and Barley
+        </div>
+        <div onClick={(evt) => setIngredientFilter(evt.target.value)}>Corn</div>
+        <div onClick={(evt) => setIngredientFilter(evt.target.value)}>Rye</div>
+        <div onClick={(evt) => setIngredientFilter(evt.target.value)}>
+          Spelt Grain
+        </div>
       </div>
       <div id="products">
         {products.map((product) => {
