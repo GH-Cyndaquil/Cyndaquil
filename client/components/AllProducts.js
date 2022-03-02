@@ -63,7 +63,8 @@ function AllProducts(props) {
                 <img src={product.imageUrl} />
               </NavLink>
               <h2>{product.name}</h2>
-              <h3>{product.price}</h3>
+              <h3>#{product.price}</h3>
+              <input type="number" min="0"></input>
               <button>Add to Cart</button>
             </div>
           );

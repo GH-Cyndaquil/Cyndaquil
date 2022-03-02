@@ -22,9 +22,11 @@ function SingleProduct(props) {
       </div>
       <div id="product-info">
         <h1>{currentProduct.name}</h1>
-        <h2>{currentProduct.price}</h2>
+        <h2>${currentProduct.price}</h2>
         <p>{currentProduct.description}</p>
         <div>In stock: {currentProduct.quantity}</div>
+        <input type="number" min="0"></input>
+        <button>Add to Cart</button>
       </div>
     </main>
   );
