@@ -1,19 +1,15 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProducts } from '../store/products';
 
 function AllProducts(props) {
-  let [products, setProducts] = useState([]);
+  const dispatch = useDispatch();
+  const products = useSelector((state) => {
+    return state.products;
+  });
 
   useEffect(() => {
-    const fetchProduct = async () => {
-      try {
-        let { data } = await axios.get('/api/products');
-        setProducts(data);
-      } catch (err) {
-        console.log(err);
-      }
-    };
-    fetchProduct();
+    dispatch(fetchProducts());
   }, []);
 
   //define addToCart function here
