@@ -6,14 +6,7 @@ import Home from './components/Home';
 import { me } from './store';
 import AllProducts from './components/AllProducts';
 import SingleProduct from './components/SingleProduct';
-import React, { Component, Fragment } from 'react';
-import { connect } from 'react-redux';
-import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
-import { Signup } from './components/AuthForm';
 import Login from './components/Login';
-import Home from './components/Home';
-import { me } from './store';
-import AllProducts from './components/AllProducts';
 import ViewCart from './components/ViewCart';
 
 /**
