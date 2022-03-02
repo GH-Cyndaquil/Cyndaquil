@@ -1,21 +1,32 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
 
 function AllProducts(props) {
   let [products, setProducts] = useState([]);
 
   useEffect(() => {
-    //grab all products from DB
-  });
+    const fetchProduct = async () => {
+      try {
+        let { data } = await axios.get('/api/products');
+        setProducts(data);
+      } catch (err) {
+        console.log(err);
+      }
+    };
+    fetchProduct();
+  }, []);
 
   return (
-    <main>
+    <main id="all-products">
       {products.map((product) => {
-        <div>
-          <img src={product.imageUrl} />
-          <h2>{product.name}</h2>
-          <h3>{product.price}</h3>
-          <button>Add to Cart</button>
-        </div>;
+        return (
+          <div key={product.id}>
+            <img src={product.imageUrl.slice(10)} />
+            <h2>{product.name}</h2>
+            <h3>{product.price}</h3>
+            <button>Add to Cart</button>
+          </div>
+        );
       })}
     </main>
   );
