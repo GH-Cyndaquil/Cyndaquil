@@ -30,6 +30,7 @@ router.get("/me", async (req, res, next) => {
     const user = await User.findByToken(req.headers.authorization);
     res.send({
       id: user.id,
+      username: user.username,
       firstName: user.firstName,
       lastName: user.lastName,
       isAdmin: user.isAdmin,
