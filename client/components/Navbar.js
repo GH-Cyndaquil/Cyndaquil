@@ -26,9 +26,9 @@ const Navbar = ({ handleClick, isLoggedIn }) => (
           {/* The navbar will show these links before you log in */}
           <Link to="/login">Login</Link>
           <Link to="/signup">Sign Up</Link>
-          {/* <img src="/matini icon.png"></img> */}
         </div>
       )}
+      <img id="cartIcon" src="images/carticon.png" />
     </nav>
     <hr />
   </div>
