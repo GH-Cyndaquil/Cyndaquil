@@ -8,7 +8,7 @@ import { me } from "./store";
 import AllProducts from "./components/AllProducts";
 // import ViewCart from "./components/ViewCart";
 import SingleProduct from "./components/SingleProduct";
-
+import SingleUser from "./components/SingleUser";
 /**
  * COMPONENT
  */
@@ -25,15 +25,16 @@ class Routes extends Component {
         {isLoggedIn ? (
           <Switch>
             <Route path="/home" component={Home} />
-            <Route path="/products" component={AllProducts} />
+            <Route exact path="/products" component={AllProducts} />
             <Route path="/products/:id" component={SingleProduct} />
+            <Route path="/users/:id" component={SingleUser} />
           </Switch>
         ) : (
           <Switch>
             <Route path="/" exact component={Login} />
             <Route path="/login" component={Login} />
             <Route path="/signup" component={Signup} />
-            <Route path="/products" component={AllProducts} />
+            <Route exact path="/products" component={AllProducts} />
             <Route path="/products/:id" component={SingleProduct} />
             {/* <Route path="/viewcart" component={ViewCart} /> */}
           </Switch>
