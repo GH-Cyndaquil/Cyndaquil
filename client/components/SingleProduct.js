@@ -57,13 +57,13 @@ function SingleProduct(props) {
               .name
           }
         </h4>
+        {quantityPrice > 0 ? <h5>Adding to cart: ${quantityPrice}</h5> : null}
         <input
           type="number"
           min="0"
           onChange={(evt) => handleQuantityChange(evt)}
         ></input>
         <button>Add to Cart</button>
-        {quantityPrice > 0 ? <h5>Price: ${quantityPrice}</h5> : null}
       </div>
     </main>
   ) : null;
