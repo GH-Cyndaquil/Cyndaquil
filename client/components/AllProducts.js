@@ -1,22 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts } from "../store/products";
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts } from "../store/products";
-import { NavLink } from "react-router-dom";
-import { fetchIngredients } from "../store/ingredients";
-import { fetchRegions } from "../store/regions";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProducts } from '../store/products';
+import { NavLink } from 'react-router-dom';
+import { fetchIngredients } from '../store/ingredients';
+import { fetchRegions } from '../store/regions';
 
 function AllProducts(props) {
   const dispatch = useDispatch();
   const products = useSelector((state) => {
     return state.products;
   });
-  let [regionFilter, setRegionFilter] = useState("");
-  let [ingredientFilter, setIngredientFilter] = useState("");
-  let [regionFilter, setRegionFilter] = useState(0);
-  let [ingredientFilter, setIngredientFilter] = useState(0);
+  let [regionFilter, setRegionFilter] = useState('');
+  let [ingredientFilter, setIngredientFilter] = useState('');
   const ingredients = useSelector((state) => {
     return state.ingredients;
   });
@@ -93,8 +88,8 @@ function AllProducts(props) {
               <div className="product" key={product.id}>
                 <NavLink to={`/products/${product.id}`}>
                   <img
-                    style={{ width: "100px" }}
-                    className={"img"}
+                    style={{ width: '100px' }}
+                    className={'img'}
                     src={product.imageUrl}
                   />
                 </NavLink>
