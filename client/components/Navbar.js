@@ -34,7 +34,7 @@ const Navbar = () => {
           </div>
         )}
         <Link to="/viewcart">
-          <img id="cartIcon" src="images/carticon.png" />
+          <img id="cartIcon" src="/images/carticon.png" />
         </Link>
       </nav>
       <hr />

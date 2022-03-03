@@ -8,16 +8,30 @@ const TOKEN = "token";
  */
 const SET_USER = "SET_USER";
 const GOT_ALL_USERS = "GOT_ALL_USERS";
+const UPDATE_USER = "UPDATE_USER";
 
 /**
  * ACTION CREATORS
  */
 const setUser = (user) => ({ type: SET_USER, user });
 const gotAllUsers = (users) => ({ type: GOT_ALL_USERS, users });
+const editUser = (user) => ({ type: UPDATE_USER, user });
 
 /**
  * THUNK CREATORS
  */
+export const updateUser = (id, newUser) => {
+  return async (dispatch) => {
+    const token = window.localStorage.getItem(TOKEN);
+    if (token) {
+      const { data } = await axios.put(`/api/users/${id}`, newUser, {
+        headers: { authorization: token },
+      });
+      dispatch(editUser(data));
+    }
+  };
+};
+
 export const me = () => async (dispatch) => {
   const token = window.localStorage.getItem(TOKEN);
   if (token) {
@@ -76,6 +90,8 @@ export default function (state = {}, action) {
       return action.user;
     case GOT_ALL_USERS:
       return { ...state, allUsers: action.users };
+    case UPDATE_USER:
+      return { ...state, ...action.user };
     default:
       return state;
   }

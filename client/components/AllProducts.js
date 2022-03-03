@@ -2,6 +2,8 @@ import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../store/products';
 import { NavLink } from 'react-router-dom';
+import { fetchIngredients } from '../store/ingredients';
+import { fetchRegions } from '../store/regions';
 
 function AllProducts(props) {
   const dispatch = useDispatch();
@@ -10,12 +12,22 @@ function AllProducts(props) {
   });
   let [regionFilter, setRegionFilter] = useState(0);
   let [ingredientFilter, setIngredientFilter] = useState(0);
+  const ingredients = useSelector((state) => {
+    return state.ingredients;
+  });
+  const regions = useSelector((state) => {
+    return state.regions;
+  });
 
   useEffect(() => {
     dispatch(fetchProducts());
+    dispatch(fetchIngredients());
+    dispatch(fetchRegions());
   }, []);
 
   //define addToCart function here
+
+  console.log(products);
 
   return (
     <main id="all-products">
@@ -24,27 +36,26 @@ function AllProducts(props) {
         <h3>Region:</h3>
         <select onChange={(evt) => setRegionFilter(Number(evt.target.value))}>
           <option value={0}>All</option>
-          <option value={1}>United States</option>
-          <option value={2}>France</option>
-          <option value={3}>Sweden</option>
-          <option value={4}>Poland</option>
-          <option value={5}>Ukrain</option>
-          <option value={6}>Iceland</option>
-          <option value={7}>Netherlands</option>
+          {regions.map((region) => {
+            return (
+              <option value={region.id} key={region.id}>
+                {region.name}
+              </option>
+            );
+          })}
         </select>
-        <h3>Main Ingredient</h3>
+        <h3>Main Ingredient:</h3>
         <select
           onChange={(evt) => setIngredientFilter(Number(evt.target.value))}
         >
           <option value={0}>All</option>
-          <option value={1}>Wheat</option>
-          <option value={2}>Potato</option>
-          <option value={3}>Grape</option>
-          <option value={4}>Sugar Cane</option>
-          <option value={5}>Wheat and Barley</option>
-          <option value={6}>Corn</option>
-          <option value={7}>Rye</option>
-          <option value={8}>Spelt Grain</option>
+          {ingredients.map((ingredient) => {
+            return (
+              <option value={ingredient.id} key={ingredient.id}>
+                {ingredient.name}
+              </option>
+            );
+          })}
         </select>
       </div>
       <div id="products">
@@ -66,7 +77,7 @@ function AllProducts(props) {
           .map((product) => {
             return (
               <div className="product" key={product.id}>
-                <NavLink to={`/product/${product.id}`}>
+                <NavLink to={`/products/${product.id}`}>
                   <img
                     style={{ width: '100px' }}
                     className={'img'}
@@ -76,7 +87,8 @@ function AllProducts(props) {
                 <h2>{product.name}</h2>
                 <h3>${product.price}</h3>
                 <input type="number" min="0"></input>
-                <button>Add to Cart</button>
+                {/* product.id on button to add that specific item to cart on click */}
+                <button id={product.id}>Add to Cart</button>
               </div>
             );
           })}

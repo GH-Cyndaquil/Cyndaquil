@@ -87,3 +87,9 @@ form div {
   display: flex;
   flex-direction: column;
 }
+
+.product {
+  border-style: solid;
+  border-radius: 5px;
+  border-color: #964b00;
+}
