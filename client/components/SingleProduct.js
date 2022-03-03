@@ -43,9 +43,7 @@ function SingleProduct(props) {
   } else {
     return (
       <main id="single-product">
-        <div>
-          <img src={currentProduct.imageUrl} />
-        </div>
+        <img src={currentProduct.imageUrl} />
         <div id="product-info">
           <h1>{currentProduct.name}</h1>
           <h2>${currentProduct.price}</h2>

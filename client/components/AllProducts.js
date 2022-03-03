@@ -27,15 +27,13 @@ function AllProducts(props) {
 
   //define addToCart function here
 
-  console.log(products);
-
   return (
     <main id="all-products">
       <div id="filtering">
-        <h2>Filter</h2>
+        <h2>Filter by -</h2>
         <h3>Region:</h3>
         <select onChange={(evt) => setRegionFilter(Number(evt.target.value))}>
-          <option value={0}>All</option>
+          <option value={0}>No Filter</option>
           {regions.map((region) => {
             return (
               <option value={region.id} key={region.id}>
@@ -48,7 +46,7 @@ function AllProducts(props) {
         <select
           onChange={(evt) => setIngredientFilter(Number(evt.target.value))}
         >
-          <option value={0}>All</option>
+          <option value={0}>No Filter</option>
           {ingredients.map((ingredient) => {
             return (
               <option value={ingredient.id} key={ingredient.id}>
@@ -87,8 +85,10 @@ function AllProducts(props) {
                 <h2>{product.name}</h2>
                 <h3>${product.price}</h3>
                 <input type="number" min="0"></input>
-                {/* product.id on button to add that specific item to cart on click */}
-                <button id={product.id}>Add to Cart</button>
+                <p>
+                  {/* product.id on button to add that specific item to cart on click */}
+                  <button id={product.id}>Add to Cart</button>
+                </p>
               </div>
             );
           })}
