@@ -10,8 +10,8 @@ function AllProducts(props) {
   const products = useSelector((state) => {
     return state.products;
   });
-  let [regionFilter, setRegionFilter] = useState('');
-  let [ingredientFilter, setIngredientFilter] = useState('');
+  let [regionFilter, setRegionFilter] = useState(0);
+  let [ingredientFilter, setIngredientFilter] = useState(0);
   const ingredients = useSelector((state) => {
     return state.ingredients;
   });
@@ -27,22 +27,13 @@ function AllProducts(props) {
 
   //define addToCart function here
 
+  console.log(products);
+
   return (
     <main id="all-products">
       <div id="filtering">
         <h2>Filter</h2>
         <h3>Region:</h3>
-        <div onClick={(evt) => setRegionFilter(evt.target.value)}>
-          United States
-        </div>
-        <div onClick={(evt) => setRegionFilter(evt.target.value)}>France</div>
-        <div onClick={(evt) => setRegionFilter(evt.target.value)}>Sweden</div>
-        <div onClick={(evt) => setRegionFilter(evt.target.value)}>Poland</div>
-        <div onClick={(evt) => setRegionFilter(evt.target.value)}>Ukraine</div>
-        <div onClick={(evt) => setRegionFilter(evt.target.value)}>Iceland</div>
-        <div onClick={(evt) => setRegionFilter(evt.target.value)}>
-          Netherlands
-        </div>
         <select onChange={(evt) => setRegionFilter(Number(evt.target.value))}>
           <option value={0}>All</option>
           {regions.map((region) => {
@@ -53,7 +44,7 @@ function AllProducts(props) {
             );
           })}
         </select>
-        <h3>Main Ingredient</h3>
+        <h3>Main Ingredient:</h3>
         <select
           onChange={(evt) => setIngredientFilter(Number(evt.target.value))}
         >
