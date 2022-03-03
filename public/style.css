@@ -123,10 +123,7 @@ form div {
 }
 
 nav {
+  height: 45px;
   display: flex;
   flex-direction: row;
-}
-
-#navbar {
-  background-image: url('https://media.discordapp.net/attachments/934585870806310912/948730321388568676/9e64dafaafe4b3ee43001a9557397751.png?width=708&height=585');
 }
