@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import { addProduct } from "../store/product";
+import { addProduct } from "../../store/products";
 import AddForm from "./AddProductForm";
 
 class AddProduct extends React.Component {
@@ -47,8 +47,8 @@ class AddProduct extends React.Component {
   render() {
     return (
       <div className="single-product-div">
-        <div id="backgrounding">
-          <h1>ADD PRODUCT PAGE</h1>
+        <div>
+          <h1 className="productHeader">ADD PRODUCT</h1>
           <AddForm
             handleSubmit={this.handleSubmit}
             handleChange={this.handleChange}
