@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts } from '../store/products';
-import { NavLink } from 'react-router-dom';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProducts } from "../store/products";
+import { NavLink } from "react-router-dom";
 
 function AllProducts(props) {
   const dispatch = useDispatch();
@@ -66,10 +66,10 @@ function AllProducts(props) {
           .map((product) => {
             return (
               <div className="product" key={product.id}>
-                <NavLink to={`/product/${product.id}`}>
+                <NavLink to={`/products/${product.id}`}>
                   <img
-                    style={{ width: '100px' }}
-                    className={'img'}
+                    style={{ width: "100px" }}
+                    className={"img"}
                     src={product.imageUrl}
                   />
                 </NavLink>
