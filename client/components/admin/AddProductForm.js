@@ -1,7 +1,15 @@
 import React from "react";
 
 const AddForm = (props) => {
-  const { handleSubmit, handleChange, name, price, imageUrl, stock } = props;
+  const {
+    handleSubmit,
+    handleChange,
+    name,
+    price,
+    imageUrl,
+    quantity,
+    description,
+  } = props;
   return (
     <form
       className="UpdateProductForm"
@@ -35,14 +43,22 @@ const AddForm = (props) => {
         value={price}
         onChange={handleChange}
       />
-      <label htmlFor="stock">Product Stock</label>
+      <label htmlFor="quantity">Product Quantity</label>
       <input
         className="ProductFormInput"
         type="number"
         min="1"
         step="any"
-        name="stock"
-        value={stock}
+        name="quantity"
+        value={quantity}
+        onChange={handleChange}
+      />
+      <label htmlFor="description">Product Description</label>
+      <input
+        className="ProductFormInput"
+        type="text"
+        name="description"
+        value={description}
         onChange={handleChange}
       />
       <button
