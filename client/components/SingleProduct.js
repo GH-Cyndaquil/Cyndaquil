@@ -4,16 +4,23 @@ import {
   fetchSelectedProduct,
   setSelectedProduct,
 } from '../store/selectedProduct';
+import { fetchIngredients } from '../store/ingredients';
 
 function SingleProduct(props) {
   let dispatch = useDispatch();
   let currentProduct = useSelector((state) => {
     return state.selectedProduct;
   });
+  let ingredients = useSelector((state) => {
+    return state.ingredients;
+  });
 
   useEffect(() => {
     dispatch(fetchSelectedProduct(props.match.params.id));
+    dispatch(fetchIngredients());
   }, []);
+
+  console.log(ingredients);
 
   return (
     <main id="single-product">
