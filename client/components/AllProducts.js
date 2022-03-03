@@ -1,14 +1,14 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts } from '../store/products';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProducts } from "../store/products";
 
 function AllProducts(props) {
   const dispatch = useDispatch();
   const products = useSelector((state) => {
     return state.products;
   });
-  let [regionFilter, setRegionFilter] = useState('');
-  let [ingredientFilter, setIngredientFilter] = useState('');
+  let [regionFilter, setRegionFilter] = useState("");
+  let [ingredientFilter, setIngredientFilter] = useState("");
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -27,7 +27,7 @@ function AllProducts(props) {
         <div onClick={(evt) => setRegionFilter(evt.target.value)}>France</div>
         <div onClick={(evt) => setRegionFilter(evt.target.value)}>Sweden</div>
         <div onClick={(evt) => setRegionFilter(evt.target.value)}>Poland</div>
-        <div onClick={(evt) => setRegionFilter(evt.target.value)}>Ukrain</div>
+        <div onClick={(evt) => setRegionFilter(evt.target.value)}>Ukraine</div>
         <div onClick={(evt) => setRegionFilter(evt.target.value)}>Iceland</div>
         <div onClick={(evt) => setRegionFilter(evt.target.value)}>
           Netherlands
