@@ -6,6 +6,9 @@ import Login from "./components/Login";
 import Home from "./components/Home";
 import { me } from "./store";
 import AdminPage from "./components/admin/AdminPage";
+import AdminUser from "./components/admin/AdminUser";
+import AddProduct from "./components/admin/AddProduct";
+import AllProducts from "./components/AllProducts";
 // import ViewCart from "./components/ViewCart";
 import SingleProduct from "./components/SingleProduct";
 import SingleUser from "./components/SingleUser";
@@ -29,6 +32,8 @@ class Routes extends Component {
             <Route path="/products/:id" component={SingleProduct} />
             <Route path="/users/:id" component={SingleUser} />
             <Route path="/admin" component={AdminPage} />
+            <Route path="/adminrights" component={AdminUser} />
+            <Route path="/addproduct" component={AddProduct} />
           </Switch>
         ) : (
           <Switch>
