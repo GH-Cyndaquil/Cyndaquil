@@ -18,12 +18,19 @@ function SingleProduct(props) {
   const regions = useSelector((state) => {
     return state.regions;
   });
+  const [quantityPrice, setQuantityPrice] = useState(0);
 
   useEffect(() => {
     dispatch(fetchSelectedProduct(props.match.params.id));
     dispatch(fetchIngredients());
     dispatch(fetchRegions());
   }, []);
+
+  function handleQuantityChange(evt) {
+    let price = (evt.target.value * currentProduct.price).toString().split('.');
+    let newPrice = Number(`${price[0]}.${price[1].slice(0, 2)}`);
+    setQuantityPrice(newPrice);
+  }
 
   return regions.length > 0 ? (
     <main id="single-product">
@@ -50,8 +57,13 @@ function SingleProduct(props) {
               .name
           }
         </h4>
-        <input type="number" min="0"></input>
+        <input
+          type="number"
+          min="0"
+          onChange={(evt) => handleQuantityChange(evt)}
+        ></input>
         <button>Add to Cart</button>
+        {quantityPrice > 0 ? <h5>Price: ${quantityPrice}</h5> : null}
       </div>
     </main>
   ) : null;
