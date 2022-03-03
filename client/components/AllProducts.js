@@ -27,6 +27,8 @@ function AllProducts(props) {
 
   //define addToCart function here
 
+  console.log(products);
+
   return (
     <main id="all-products">
       <div id="filtering">
@@ -42,7 +44,7 @@ function AllProducts(props) {
             );
           })}
         </select>
-        <h3>Main Ingredient</h3>
+        <h3>Main Ingredient:</h3>
         <select
           onChange={(evt) => setIngredientFilter(Number(evt.target.value))}
         >

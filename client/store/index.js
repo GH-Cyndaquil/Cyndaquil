@@ -5,6 +5,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import userReducer from './user';
 import productsReducer from './products';
 import selectedProductReducer from './selectedProduct';
+import orderReducer from './orders';
 import ingredientsReducer from './ingredients';
 import regionsReducer from './regions';
 
@@ -12,6 +13,7 @@ const reducer = combineReducers({
   user: userReducer,
   products: productsReducer,
   selectedProduct: selectedProductReducer,
+  orders: orderReducer,
   ingredients: ingredientsReducer,
   regions: regionsReducer,
 });

@@ -49,3 +49,9 @@ form div {
   width: 300px;
   object-fit: scale-down;
 }
+
+.product {
+  border-style: solid;
+  border-radius: 5px;
+  border-color: #964b00;
+}

@@ -21,8 +21,8 @@ function SingleProduct(props) {
   const [quantityPrice, setQuantityPrice] = useState(0);
 
   useEffect(() => {
-    dispatch(fetchSelectedProduct(props.match.params.id));
     dispatch(fetchIngredients());
+    dispatch(fetchSelectedProduct(props.match.params.id));
     dispatch(fetchRegions());
   }, []);
 
@@ -38,41 +38,44 @@ function SingleProduct(props) {
     setQuantityPrice(price);
   }
 
-  return regions.length > 0 ? (
-    <main id="single-product">
-      <div>
-        <img src={currentProduct.imageUrl} />
-      </div>
-      <div id="product-info">
-        <h1>{currentProduct.name}</h1>
-        <h2>${currentProduct.price}</h2>
-        <div>In stock: {currentProduct.quantity}</div>
-        <p>{currentProduct.description}</p>
-        <h4>
-          Main ingredient:{' '}
-          {
-            ingredients.filter(
-              (ingredient) => ingredient.id === currentProduct.ingredientId
-            )[0].name
-          }
-        </h4>
-        <h4>
-          Region:{' '}
-          {
-            regions.filter((region) => region.id === currentProduct.regionId)[0]
-              .name
-          }
-        </h4>
-        {quantityPrice > 0 ? <h5>Adding to cart: ${quantityPrice}</h5> : null}
-        <input
-          type="number"
-          min="0"
-          onChange={(evt) => handleQuantityChange(evt)}
-        ></input>
-        <button>Add to Cart</button>
-      </div>
-    </main>
-  ) : null;
+  if (ingredients.length === 0) {
+    return null;
+  } else {
+    return (
+      <main id="single-product">
+        <div>
+          <img src={currentProduct.imageUrl} />
+        </div>
+        <div id="product-info">
+          <h1>{currentProduct.name}</h1>
+          <h2>${currentProduct.price}</h2>
+          <div>In stock: {currentProduct.quantity}</div>
+          <p>{currentProduct.description}</p>
+          <h4>
+            Main ingredient:{' '}
+            {ingredients
+              .filter(
+                (ingredient) => ingredient.id === currentProduct.ingredientId
+              )
+              .map((ingredient) => ingredient.name)}
+          </h4>
+          <h4>
+            Region:{' '}
+            {regions
+              .filter((region) => region.id === currentProduct.regionId)
+              .map((region) => region.name)}
+          </h4>
+          {quantityPrice > 0 ? <h5>Adding to cart: ${quantityPrice}</h5> : null}
+          <input
+            type="number"
+            min="0"
+            onChange={(evt) => handleQuantityChange(evt)}
+          ></input>
+          <button>Add to Cart</button>
+        </div>
+      </main>
+    );
+  }
 }
 
 export default SingleProduct;
