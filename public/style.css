@@ -23,21 +23,19 @@ form div {
 #all-products {
   display: flex;
   flex-direction: row;
-  flex-wrap: wrap;
-  justify-content: space-evenly;
+  justify-content: flex-start;
 }
 
 #filtering {
-  flex-grow: 1;
+  margin: 1em;
 }
 
 #products {
+  display: flex;
+  flex-wrap: wrap;
   flex-direction: row;
-  flex-grow: 2;
-}
-
-#products > div {
-  padding: 0px;
+  justify-content: space-between;
+  gap: 20px;
 }
 
 #single-product {
