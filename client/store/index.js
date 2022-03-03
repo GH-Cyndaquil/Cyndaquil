@@ -6,12 +6,23 @@ import userReducer from "./user";
 import productsReducer from "./products";
 import selectedProductReducer from "./selectedProduct";
 import orderReducer from "./orders";
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import { createLogger } from "redux-logger";
+import thunkMiddleware from "redux-thunk";
+import { composeWithDevTools } from "redux-devtools-extension";
+import userReducer from "./user";
+import productsReducer from "./products";
+import selectedProductReducer from "./selectedProduct";
+import ingredientsReducer from "./ingredients";
+import regionsReducer from "./regions";
 
 const reducer = combineReducers({
   user: userReducer,
   products: productsReducer,
   selectedProduct: selectedProductReducer,
   orders: orderReducer,
+  ingredients: ingredientsReducer,
+  regions: regionsReducer,
 });
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))

@@ -4,31 +4,75 @@ import {
   fetchSelectedProduct,
   setSelectedProduct,
 } from '../store/selectedProduct';
-import axios from 'axios';
+import { fetchIngredients } from '../store/ingredients';
+import { fetchRegions } from '../store/regions';
 
 function SingleProduct(props) {
-  let dispatch = useDispatch();
-  let currentProduct = useSelector((state) => {
+  const dispatch = useDispatch();
+  const currentProduct = useSelector((state) => {
     return state.selectedProduct;
   });
+  const ingredients = useSelector((state) => {
+    return state.ingredients;
+  });
+  const regions = useSelector((state) => {
+    return state.regions;
+  });
+  const [quantityPrice, setQuantityPrice] = useState(0);
 
-  console.log(currentProduct);
   useEffect(() => {
     dispatch(fetchSelectedProduct(props.match.params.id));
+    dispatch(fetchIngredients());
+    dispatch(fetchRegions());
   }, []);
-  return (
+
+  function handleQuantityChange(evt) {
+    //toFixed ensures we don't display prices like $19.99999999998
+    let price = Number((evt.target.value * currentProduct.price).toFixed(2));
+    if (price !== 0) {
+      if (price.toString().split('.')[1].length === 1) {
+        price = price.toString() + 0;
+      }
+    }
+
+    setQuantityPrice(price);
+  }
+
+  return regions.length > 0 ? (
     <main id="single-product">
       <div>
         <img src={currentProduct.imageUrl} />
       </div>
       <div id="product-info">
         <h1>{currentProduct.name}</h1>
-        <h2>{currentProduct.price}</h2>
+        <h2>${currentProduct.price}</h2>
+        <div>In stock: {currentProduct.quantity}</div>
         <p>{currentProduct.description}</p>
-        <div>{currentProduct.quantity}</div>
+        <h4>
+          Main ingredient:{' '}
+          {
+            ingredients.filter(
+              (ingredient) => ingredient.id === currentProduct.ingredientId
+            )[0].name
+          }
+        </h4>
+        <h4>
+          Region:{' '}
+          {
+            regions.filter((region) => region.id === currentProduct.regionId)[0]
+              .name
+          }
+        </h4>
+        {quantityPrice > 0 ? <h5>Adding to cart: ${quantityPrice}</h5> : null}
+        <input
+          type="number"
+          min="0"
+          onChange={(evt) => handleQuantityChange(evt)}
+        ></input>
+        <button>Add to Cart</button>
       </div>
     </main>
-  );
+  ) : null;
 }
 
 export default SingleProduct;

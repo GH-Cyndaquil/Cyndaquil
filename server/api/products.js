@@ -44,7 +44,7 @@ router.post("/", requireToken, async (req, res, next) => {
       res.send();
     } else {
       const error = new Error("Only Admins can create products");
-      error.status = 504;
+      error.status = 401;
       throw error;
     }
   } catch (error) {

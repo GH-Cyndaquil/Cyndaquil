@@ -1,6 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchProducts } from "../store/products";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProducts } from "../store/products";
+import { NavLink } from "react-router-dom";
+import { fetchIngredients } from "../store/ingredients";
+import { fetchRegions } from "../store/regions";
 
 function AllProducts(props) {
   const dispatch = useDispatch();
@@ -9,9 +15,19 @@ function AllProducts(props) {
   });
   let [regionFilter, setRegionFilter] = useState("");
   let [ingredientFilter, setIngredientFilter] = useState("");
+  let [regionFilter, setRegionFilter] = useState(0);
+  let [ingredientFilter, setIngredientFilter] = useState(0);
+  const ingredients = useSelector((state) => {
+    return state.ingredients;
+  });
+  const regions = useSelector((state) => {
+    return state.regions;
+  });
 
   useEffect(() => {
     dispatch(fetchProducts());
+    dispatch(fetchIngredients());
+    dispatch(fetchRegions());
   }, []);
 
   //define addToCart function here
@@ -32,39 +48,64 @@ function AllProducts(props) {
         <div onClick={(evt) => setRegionFilter(evt.target.value)}>
           Netherlands
         </div>
+        <select onChange={(evt) => setRegionFilter(Number(evt.target.value))}>
+          <option value={0}>All</option>
+          {regions.map((region) => {
+            return (
+              <option value={region.id} key={region.id}>
+                {region.name}
+              </option>
+            );
+          })}
+        </select>
         <h3>Main Ingredient</h3>
-        <div onClick={(evt) => setIngredientFilter(evt.target.value)}>
-          Wheat
-        </div>
-        <div onClick={(evt) => setIngredientFilter(evt.target.value)}>
-          Potato
-        </div>
-        <div onClick={(evt) => setIngredientFilter(evt.target.value)}>
-          Grape
-        </div>
-        <div onClick={(evt) => setIngredientFilter(evt.target.value)}>
-          Sugar Cane
-        </div>
-        <div onClick={(evt) => setIngredientFilter(evt.target.value)}>
-          Wheat and Barley
-        </div>
-        <div onClick={(evt) => setIngredientFilter(evt.target.value)}>Corn</div>
-        <div onClick={(evt) => setIngredientFilter(evt.target.value)}>Rye</div>
-        <div onClick={(evt) => setIngredientFilter(evt.target.value)}>
-          Spelt Grain
-        </div>
+        <select
+          onChange={(evt) => setIngredientFilter(Number(evt.target.value))}
+        >
+          <option value={0}>All</option>
+          {ingredients.map((ingredient) => {
+            return (
+              <option value={ingredient.id} key={ingredient.id}>
+                {ingredient.name}
+              </option>
+            );
+          })}
+        </select>
       </div>
       <div id="products">
-        {products.map((product) => {
-          return (
-            <div key={product.id}>
-              <img src={product.imageUrl} />
-              <h2>{product.name}</h2>
-              <h3>{product.price}</h3>
-              <button>Add to Cart</button>
-            </div>
-          );
-        })}
+        {products
+          .filter((product) => {
+            if (regionFilter === 0) {
+              return product;
+            } else if (product.regionId === regionFilter) {
+              return product;
+            }
+          })
+          .filter((product) => {
+            if (ingredientFilter === 0) {
+              return product;
+            } else if (product.ingredientId === ingredientFilter) {
+              return product;
+            }
+          })
+          .map((product) => {
+            return (
+              <div className="product" key={product.id}>
+                <NavLink to={`/products/${product.id}`}>
+                  <img
+                    style={{ width: "100px" }}
+                    className={"img"}
+                    src={product.imageUrl}
+                  />
+                </NavLink>
+                <h2>{product.name}</h2>
+                <h3>${product.price}</h3>
+                <input type="number" min="0"></input>
+                {/* product.id on button to add that specific item to cart on click */}
+                <button id={product.id}>Add to Cart</button>
+              </div>
+            );
+          })}
       </div>
     </main>
   );

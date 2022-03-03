@@ -1,7 +1,7 @@
-import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import { logout } from "../store";
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { logout } from '../store';
 
 const Navbar = () => {
   const userId = useSelector((state) => state.user.id);
@@ -34,7 +34,7 @@ const Navbar = () => {
           </div>
         )}
         <Link to="/viewcart">
-          <img id="cartIcon" src="images/carticon.png" />
+          <img id="cartIcon" src="/images/carticon.png" />
         </Link>
       </nav>
       <hr />
