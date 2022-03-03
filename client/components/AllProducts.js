@@ -1,15 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchProducts } from '../store/products';
-import { NavLink } from 'react-router-dom';
-import { fetchIngredients } from '../store/ingredients';
-import { fetchRegions } from '../store/regions';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProducts } from "../store/products";
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchProducts } from "../store/products";
+import { NavLink } from "react-router-dom";
+import { fetchIngredients } from "../store/ingredients";
+import { fetchRegions } from "../store/regions";
 
 function AllProducts(props) {
   const dispatch = useDispatch();
   const products = useSelector((state) => {
     return state.products;
   });
+  let [regionFilter, setRegionFilter] = useState("");
+  let [ingredientFilter, setIngredientFilter] = useState("");
   let [regionFilter, setRegionFilter] = useState(0);
   let [ingredientFilter, setIngredientFilter] = useState(0);
   const ingredients = useSelector((state) => {
@@ -32,6 +37,17 @@ function AllProducts(props) {
       <div id="filtering">
         <h2>Filter</h2>
         <h3>Region:</h3>
+        <div onClick={(evt) => setRegionFilter(evt.target.value)}>
+          United States
+        </div>
+        <div onClick={(evt) => setRegionFilter(evt.target.value)}>France</div>
+        <div onClick={(evt) => setRegionFilter(evt.target.value)}>Sweden</div>
+        <div onClick={(evt) => setRegionFilter(evt.target.value)}>Poland</div>
+        <div onClick={(evt) => setRegionFilter(evt.target.value)}>Ukraine</div>
+        <div onClick={(evt) => setRegionFilter(evt.target.value)}>Iceland</div>
+        <div onClick={(evt) => setRegionFilter(evt.target.value)}>
+          Netherlands
+        </div>
         <select onChange={(evt) => setRegionFilter(Number(evt.target.value))}>
           <option value={0}>All</option>
           {regions.map((region) => {
@@ -77,8 +93,8 @@ function AllProducts(props) {
               <div className="product" key={product.id}>
                 <NavLink to={`/products/${product.id}`}>
                   <img
-                    style={{ width: '100px' }}
-                    className={'img'}
+                    style={{ width: "100px" }}
+                    className={"img"}
                     src={product.imageUrl}
                   />
                 </NavLink>
