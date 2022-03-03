@@ -8,8 +8,8 @@ function AllProducts(props) {
   const products = useSelector((state) => {
     return state.products;
   });
-  let [regionFilter, setRegionFilter] = useState('');
-  let [ingredientFilter, setIngredientFilter] = useState('');
+  let [regionFilter, setRegionFilter] = useState(0);
+  let [ingredientFilter, setIngredientFilter] = useState(0);
 
   useEffect(() => {
     dispatch(fetchProducts());
@@ -17,58 +17,82 @@ function AllProducts(props) {
 
   //define addToCart function here
 
+  console.log(regionFilter);
   return (
     <main id="all-products">
-      <div id="filtering">
+      <ul id="filtering">
         <h2>Filter</h2>
         <h3>Region:</h3>
-        <div onClick={(evt) => setRegionFilter(evt.target.value)}>
+        <li value={1} onClick={(evt) => setRegionFilter(evt.target.value)}>
           United States
-        </div>
-        <div onClick={(evt) => setRegionFilter(evt.target.value)}>France</div>
-        <div onClick={(evt) => setRegionFilter(evt.target.value)}>Sweden</div>
-        <div onClick={(evt) => setRegionFilter(evt.target.value)}>Poland</div>
-        <div onClick={(evt) => setRegionFilter(evt.target.value)}>Ukrain</div>
-        <div onClick={(evt) => setRegionFilter(evt.target.value)}>Iceland</div>
-        <div onClick={(evt) => setRegionFilter(evt.target.value)}>
+        </li>
+        <li value={2} onClick={(evt) => setRegionFilter(evt.target.value)}>
+          France
+        </li>
+        <li value={3} onClick={(evt) => setRegionFilter(evt.target.value)}>
+          Sweden
+        </li>
+        <li value={4} onClick={(evt) => setRegionFilter(evt.target.value)}>
+          Poland
+        </li>
+        <li value={5} onClick={(evt) => setRegionFilter(evt.target.value)}>
+          Ukrain
+        </li>
+        <li value={6} onClick={(evt) => setRegionFilter(evt.target.value)}>
+          Iceland
+        </li>
+        <li value={7} onClick={(evt) => setRegionFilter(evt.target.value)}>
           Netherlands
-        </div>
+        </li>
         <h3>Main Ingredient</h3>
-        <div onClick={(evt) => setIngredientFilter(evt.target.value)}>
-          Wheat
-        </div>
-        <div onClick={(evt) => setIngredientFilter(evt.target.value)}>
-          Potato
-        </div>
-        <div onClick={(evt) => setIngredientFilter(evt.target.value)}>
-          Grape
-        </div>
-        <div onClick={(evt) => setIngredientFilter(evt.target.value)}>
+        <li onClick={(evt) => setIngredientFilter(evt.target.value)}>Wheat</li>
+        <li onClick={(evt) => setIngredientFilter(evt.target.value)}>Potato</li>
+        <li onClick={(evt) => setIngredientFilter(evt.target.value)}>Grape</li>
+        <li onClick={(evt) => setIngredientFilter(evt.target.value)}>
           Sugar Cane
-        </div>
-        <div onClick={(evt) => setIngredientFilter(evt.target.value)}>
+        </li>
+        <li onClick={(evt) => setIngredientFilter(evt.target.value)}>
           Wheat and Barley
-        </div>
-        <div onClick={(evt) => setIngredientFilter(evt.target.value)}>Corn</div>
-        <div onClick={(evt) => setIngredientFilter(evt.target.value)}>Rye</div>
-        <div onClick={(evt) => setIngredientFilter(evt.target.value)}>
+        </li>
+        <li onClick={(evt) => setIngredientFilter(evt.target.value)}>Corn</li>
+        <li onClick={(evt) => setIngredientFilter(evt.target.value)}>Rye</li>
+        <li onClick={(evt) => setIngredientFilter(evt.target.value)}>
           Spelt Grain
-        </div>
-      </div>
+        </li>
+      </ul>
       <div id="products">
-        {products.map((product) => {
-          return (
-            <div key={product.id}>
-              <NavLink to={`/product/${product.id}`}>
-                <img src={product.imageUrl} />
-              </NavLink>
-              <h2>{product.name}</h2>
-              <h3>#{product.price}</h3>
-              <input type="number" min="0"></input>
-              <button>Add to Cart</button>
-            </div>
-          );
-        })}
+        {products
+          .filter((product) => {
+            if (regionFilter === 0) {
+              return product;
+            } else if (product.regionId === regionFilter) {
+              return product;
+            }
+          })
+          .filter((product) => {
+            if (ingredientFilter === 0) {
+              return product;
+            } else if (product.ingredientId === ingredientFilter) {
+              return product;
+            }
+          })
+          .map((product) => {
+            return (
+              <div className="product" key={product.id}>
+                <NavLink to={`/product/${product.id}`}>
+                  <img
+                    style={{ width: '100px' }}
+                    className={'img'}
+                    src={product.imageUrl}
+                  />
+                </NavLink>
+                <h2>{product.name}</h2>
+                <h3>${product.price}</h3>
+                <input type="number" min="0"></input>
+                <button>Add to Cart</button>
+              </div>
+            );
+          })}
       </div>
     </main>
   );
