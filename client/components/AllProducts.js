@@ -66,7 +66,7 @@ function AllProducts(props) {
           .map((product) => {
             return (
               <div className="product" key={product.id}>
-                <NavLink to={`/product/${product.id}`}>
+                <NavLink to={`/products/${product.id}`}>
                   <img
                     style={{ width: '100px' }}
                     className={'img'}
