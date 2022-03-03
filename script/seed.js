@@ -359,10 +359,48 @@ async function seed() {
 
   //add userId, productId, quantityOrdered, price, fullfiled
   await orders[0].setUser(1);
+  await orders[0].addProduct(products[0], {
+    through: { price: products[0].price, quantityOrdered: 3, fulfilled: true },
+  });
+  await orders[0].addProduct(products[2], {
+    through: { price: products[2].price, quantityOrdered: 1, fulfilled: true },
+  });
   await orders[1].setUser(2);
+  await orders[1].addProduct(products[5], {
+    through: { price: products[5].price, quantityOrdered: 2, fulfilled: false },
+  });
+  await orders[1].addProduct(products[7], {
+    through: { price: products[7].price, quantityOrdered: 4, fulfilled: false },
+  });
   await orders[2].setUser(3);
+  await orders[2].addProduct(products[4], {
+    through: { price: products[4].price, quantityOrdered: 1, fulfilled: true },
+  });
+  await orders[2].addProduct(products[8], {
+    through: { price: products[8].price, quantityOrdered: 5, fulfilled: true },
+  });
   await orders[3].setUser(4);
+  await orders[3].addProduct(products[13], {
+    through: {
+      price: products[13].price,
+      quantityOrdered: 4,
+      fulfilled: false,
+    },
+  });
+  await orders[3].addProduct(products[11], {
+    through: {
+      price: products[11].price,
+      quantityOrdered: 1,
+      fulfilled: false,
+    },
+  });
   await orders[4].setUser(5);
+  await orders[4].addProduct(products[19], {
+    through: { price: products[19].price, quantityOrdered: 9, fulfilled: true },
+  });
+  await orders[4].addProduct(products[16], {
+    through: { price: products[16].price, quantityOrdered: 6, fulfilled: true },
+  });
 }
 
 /*

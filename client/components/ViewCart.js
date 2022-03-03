@@ -18,9 +18,30 @@ import axios from 'axios';
 // //   fetchProduct();
 // // }, []);
 
-//   return (
-//     <main id="cart">
-//       <table>
+// return (
+//   <main id="cart">
+//     <h1>Your Cart</h1>
+
+//     {cart.map((item) => {
+//       return (
+//         <div key={item.id}>
+//           <img src={product.imageUrl} />
+//           {/* this will need to come from the product model not order details */}
+//           <h3>Item</h3>
+//           <h2>{regionId}</h2>
+//           {/* this will need to come from the region table */}
+//           <h2>{ingredientId}</h2>
+//           {/* this will need to come from the ingredient table */}
+//           <h3>QTY.</h3>
+//           <h2>{orderDetails.price}</h2>
+//           {/* from order details table */}
+//           <h3>Subtotal</h3>
+//           <h2></h2>
+//         </div>
+//       );
+//     })}
+//   </main>
+// );
 
 //         </table>
 
