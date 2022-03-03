@@ -1,6 +1,6 @@
 const router = require("express").Router();
 const {
-  models: { User },
+  models: { User, Order, Product },
 } = require("../db");
 module.exports = router;
 
@@ -28,6 +28,12 @@ router.post("/signup", async (req, res, next) => {
 router.get("/me", async (req, res, next) => {
   try {
     const user = await User.findByToken(req.headers.authorization);
+    const orders = await Order.findAll({
+      where: {
+        userId: user.id,
+      },
+      include: Product,
+    });
     res.send({
       id: user.id,
       username: user.username,
@@ -39,6 +45,7 @@ router.get("/me", async (req, res, next) => {
       state: user.state,
       postalCode: user.postalCode,
       email: user.email,
+      orders,
     });
   } catch (ex) {
     next(ex);

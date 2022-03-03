@@ -22,7 +22,24 @@ const SingleUser = () => {
       </div>
       <h1>Order History</h1>
       <div>
-        <h3>No orders to show...</h3>
+        {user.orders.map((order) => {
+          return (
+            <div>
+              <h3>Order Number: {order.id}</h3>
+              <p>Date Ordered: {order.orderDate.substring(0, 10)}</p>
+              <p>
+                Order Total: $
+                {order.products.reduce((prev, curr) => {
+                  return (
+                    prev +
+                    Number(curr["order-details"].price) *
+                      curr["order-details"].quantityOrdered
+                  );
+                }, 0)}
+              </p>
+            </div>
+          );
+        })}
       </div>
     </div>
   );
