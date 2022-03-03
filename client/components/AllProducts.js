@@ -35,7 +35,11 @@ function AllProducts(props) {
         <select onChange={(evt) => setRegionFilter(Number(evt.target.value))}>
           <option value={0}>All</option>
           {regions.map((region) => {
-            return <option value={region.id}>{region.name}</option>;
+            return (
+              <option value={region.id} key={region.id}>
+                {region.name}
+              </option>
+            );
           })}
         </select>
         <h3>Main Ingredient</h3>
@@ -44,7 +48,11 @@ function AllProducts(props) {
         >
           <option value={0}>All</option>
           {ingredients.map((ingredient) => {
-            return <option value={ingredient.id}>{ingredient.name}</option>;
+            return (
+              <option value={ingredient.id} key={ingredient.id}>
+                {ingredient.name}
+              </option>
+            );
           })}
         </select>
       </div>
@@ -77,7 +85,8 @@ function AllProducts(props) {
                 <h2>{product.name}</h2>
                 <h3>${product.price}</h3>
                 <input type="number" min="0"></input>
-                <button>Add to Cart</button>
+                {/* product.id on button to add that specific item to cart on click */}
+                <button id={product.id}>Add to Cart</button>
               </div>
             );
           })}

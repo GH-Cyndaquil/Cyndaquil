@@ -27,9 +27,15 @@ function SingleProduct(props) {
   }, []);
 
   function handleQuantityChange(evt) {
-    let price = (evt.target.value * currentProduct.price).toString().split('.');
-    let newPrice = Number(`${price[0]}.${price[1].slice(0, 2)}`);
-    setQuantityPrice(newPrice);
+    //toFixed ensures we don't display prices like $19.99999999998
+    let price = Number((evt.target.value * currentProduct.price).toFixed(2));
+    if (price !== 0) {
+      if (price.toString().split('.')[1].length === 1) {
+        price = price.toString() + 0;
+      }
+    }
+
+    setQuantityPrice(price);
   }
 
   return regions.length > 0 ? (
