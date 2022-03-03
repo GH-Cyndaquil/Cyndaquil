@@ -17,49 +17,36 @@ function AllProducts(props) {
 
   //define addToCart function here
 
-  console.log(regionFilter);
   return (
     <main id="all-products">
-      <ul id="filtering">
+      <div id="filtering">
         <h2>Filter</h2>
         <h3>Region:</h3>
-        <li value={1} onClick={(evt) => setRegionFilter(evt.target.value)}>
-          United States
-        </li>
-        <li value={2} onClick={(evt) => setRegionFilter(evt.target.value)}>
-          France
-        </li>
-        <li value={3} onClick={(evt) => setRegionFilter(evt.target.value)}>
-          Sweden
-        </li>
-        <li value={4} onClick={(evt) => setRegionFilter(evt.target.value)}>
-          Poland
-        </li>
-        <li value={5} onClick={(evt) => setRegionFilter(evt.target.value)}>
-          Ukrain
-        </li>
-        <li value={6} onClick={(evt) => setRegionFilter(evt.target.value)}>
-          Iceland
-        </li>
-        <li value={7} onClick={(evt) => setRegionFilter(evt.target.value)}>
-          Netherlands
-        </li>
+        <select onChange={(evt) => setRegionFilter(Number(evt.target.value))}>
+          <option value={0}>All</option>
+          <option value={1}>United States</option>
+          <option value={2}>France</option>
+          <option value={3}>Sweden</option>
+          <option value={4}>Poland</option>
+          <option value={5}>Ukrain</option>
+          <option value={6}>Iceland</option>
+          <option value={7}>Netherlands</option>
+        </select>
         <h3>Main Ingredient</h3>
-        <li onClick={(evt) => setIngredientFilter(evt.target.value)}>Wheat</li>
-        <li onClick={(evt) => setIngredientFilter(evt.target.value)}>Potato</li>
-        <li onClick={(evt) => setIngredientFilter(evt.target.value)}>Grape</li>
-        <li onClick={(evt) => setIngredientFilter(evt.target.value)}>
-          Sugar Cane
-        </li>
-        <li onClick={(evt) => setIngredientFilter(evt.target.value)}>
-          Wheat and Barley
-        </li>
-        <li onClick={(evt) => setIngredientFilter(evt.target.value)}>Corn</li>
-        <li onClick={(evt) => setIngredientFilter(evt.target.value)}>Rye</li>
-        <li onClick={(evt) => setIngredientFilter(evt.target.value)}>
-          Spelt Grain
-        </li>
-      </ul>
+        <select
+          onChange={(evt) => setIngredientFilter(Number(evt.target.value))}
+        >
+          <option value={0}>All</option>
+          <option value={1}>Wheat</option>
+          <option value={2}>Potato</option>
+          <option value={3}>Grape</option>
+          <option value={4}>Sugar Cane</option>
+          <option value={5}>Wheat and Barley</option>
+          <option value={6}>Corn</option>
+          <option value={7}>Rye</option>
+          <option value={8}>Spelt Grain</option>
+        </select>
+      </div>
       <div id="products">
         {products
           .filter((product) => {
