@@ -36,6 +36,14 @@ function SingleProduct(props) {
         <div>In stock: {currentProduct.quantity}</div>
         <p>{currentProduct.description}</p>
         <h4>
+          Main ingredient:{' '}
+          {
+            ingredients.filter(
+              (ingredient) => ingredient.id === currentProduct.ingredientId
+            )[0].name
+          }
+        </h4>
+        <h4>
           Region:{' '}
           {
             regions.filter((region) => region.id === currentProduct.regionId)[0]
