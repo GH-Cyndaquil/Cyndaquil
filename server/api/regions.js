@@ -6,7 +6,7 @@ const {
 //mounted on /api/regions
 router.get('/', async (req, res, next) => {
   try {
-    let regions = await Region.findAll();
+    let regions = await Region.findAll({ order: [['id', 'ASC']] });
     res.status(200).send(regions);
   } catch (err) {
     next(err);

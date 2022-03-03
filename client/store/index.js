@@ -6,12 +6,14 @@ import userReducer from './user';
 import productsReducer from './products';
 import selectedProductReducer from './selectedProduct';
 import ingredientsReducer from './ingredients';
+import regionsReducer from './regions';
 
 const reducer = combineReducers({
   user: userReducer,
   products: productsReducer,
   selectedProduct: selectedProductReducer,
   ingredients: ingredientsReducer,
+  regions: regionsReducer,
 });
 const middleware = composeWithDevTools(
   applyMiddleware(thunkMiddleware, createLogger({ collapsed: true }))

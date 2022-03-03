@@ -5,24 +5,27 @@ import {
   setSelectedProduct,
 } from '../store/selectedProduct';
 import { fetchIngredients } from '../store/ingredients';
+import { fetchRegions } from '../store/regions';
 
 function SingleProduct(props) {
-  let dispatch = useDispatch();
-  let currentProduct = useSelector((state) => {
+  const dispatch = useDispatch();
+  const currentProduct = useSelector((state) => {
     return state.selectedProduct;
   });
-  let ingredients = useSelector((state) => {
+  const ingredients = useSelector((state) => {
     return state.ingredients;
+  });
+  const regions = useSelector((state) => {
+    return state.regions;
   });
 
   useEffect(() => {
     dispatch(fetchSelectedProduct(props.match.params.id));
     dispatch(fetchIngredients());
+    dispatch(fetchRegions());
   }, []);
 
-  console.log(ingredients);
-
-  return (
+  return regions.length > 0 ? (
     <main id="single-product">
       <div>
         <img src={currentProduct.imageUrl} />
@@ -30,13 +33,20 @@ function SingleProduct(props) {
       <div id="product-info">
         <h1>{currentProduct.name}</h1>
         <h2>${currentProduct.price}</h2>
-        <p>{currentProduct.description}</p>
         <div>In stock: {currentProduct.quantity}</div>
+        <p>{currentProduct.description}</p>
+        <h4>
+          Region:{' '}
+          {
+            regions.filter((region) => region.id === currentProduct.regionId)[0]
+              .name
+          }
+        </h4>
         <input type="number" min="0"></input>
         <button>Add to Cart</button>
       </div>
     </main>
-  );
+  ) : null;
 }
 
 export default SingleProduct;
