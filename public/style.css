@@ -34,7 +34,7 @@ form div {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  justify-content: space-between;
+  justify-content: flex-start;
   gap: 20px;
 }
 
@@ -54,6 +54,16 @@ form div {
   object-fit: scale-down;
   align-items: center;
   justify-content: center;
+}
+
+#cartIcon {
+  height: 30px;
+  width: 50px;
+}
+
+#cart {
+  display: flex;
+  flex-direction: row;
 }
 
 .ButtonDeleteUser .ButtonUpdateProduct {
@@ -110,4 +120,10 @@ form div {
   padding-bottom: 25px;
   padding-right: 25px;
   padding-left: 25px;
+}
+
+nav {
+  height: 45px;
+  display: flex;
+  flex-direction: row;
 }
