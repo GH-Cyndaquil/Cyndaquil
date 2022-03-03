@@ -27,4 +27,26 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
+router.post("/", async (req, res, next) => {
+  try {
+    const [item, wasCreated] = await Order.findOrCreate({
+      where: {
+        fulfilled: false,
+      },
+      include: Product,
+    });
+    item.addProduct(req.body, {
+      through: {
+        price: req.body.price,
+        quantityOrdered: req.body.quantityOrdered,
+        fulfilled: false,
+      },
+    });
+
+    res.send(item);
+  } catch (error) {
+    next(error);
+  }
+});
+
 module.exports = router;

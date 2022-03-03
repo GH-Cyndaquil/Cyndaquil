@@ -86,7 +86,7 @@ function AllProducts(props) {
                 <h3>${product.price}</h3>
                 <input type="number" min="0"></input>
                 {/* product.id on button to add that specific item to cart on click */}
-                <button id={product.id}>Add to Cart</button>
+                <button onClick={() => } id={product.id}>Add to Cart</button>
               </div>
             );
           })}
