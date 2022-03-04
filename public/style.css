@@ -2,6 +2,27 @@ body {
   font-family: sans-serif;
   padding: 0;
   margin: 0;
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+  width: 100vw;
+}
+
+#app {
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+  width: 100vw;
+}
+
+#app > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+  width: 100vw;
 }
 
 a {
@@ -133,11 +154,18 @@ nav {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
+}
+
+#hello-user {
+  font-size: 15px;
 }
 
 #navbar {
   background-image: url('https://static.wixstatic.com/media/84465c_8a62d497e52f417ebfe985eefda9778c~mv2.jpg/v1/fill/w_740,h_493,al_c,q_90/84465c_8a62d497e52f417ebfe985eefda9778c~mv2.webp');
   background-size: cover;
+  top: 0%;
+  position: sticky;
 }
 
 #shopping-cart {
@@ -159,6 +187,37 @@ nav {
     -0.05em -0.05em black, -0.05em 0.05em black, 0.05em -0.05em black,
     0.05em 0.05em black;
   align-items: center;
+}
+
+.nav-button:hover {
+  border-style: solid;
+  border-radius: 5px;
+  border-color: black;
+}
+
+#footer {
+  bottom: 0%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(49, 47, 47);
+  color: white;
+  text-shadow: 0.05em 0 black, 0 0.05em black, -0.05em 0 black, 0 -0.05em black,
+    -0.05em -0.05em black, -0.05em 0.05em black, 0.05em -0.05em black,
+    0.05em 0.05em black;
+}
+
+.footer-link-img {
+  width: 30px;
+  height: 30px;
+  margin: 10px;
+}
+
+.footer-link-img:hover {
+  border-style: solid;
+  border-radius: 5px;
+  border-color: white;
 }
 
 .login-form {
