@@ -8,31 +8,31 @@ const Order = db.define("order", {
   },
   shipAddress: {
     type: Sequelize.STRING,
-    allowNull: false,
     validate: {
       notEmpty: true,
     },
   },
   shipState: {
     type: Sequelize.STRING,
-    allowNull: false,
     validate: {
       notEmpty: true,
     },
   },
   shipCity: {
     type: Sequelize.STRING,
-    allowNull: false,
     validate: {
       notEmpty: true,
     },
   },
   shipPostalCode: {
     type: Sequelize.STRING,
-    allowNull: false,
     validate: {
       notEmpty: true,
     },
+  },
+  fulfilled: {
+    type: Sequelize.BOOLEAN,
+    defaultValue: false,
   },
 });
 
