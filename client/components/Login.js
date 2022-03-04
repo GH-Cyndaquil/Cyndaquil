@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { authenticate } from "../store";
 import Signup from "./Signup";
 import { Link } from "react-router-dom";
@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 const Login = () => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const error = useSelector((state) => state.user.error);
   const dispatch = useDispatch();
 
   const handleSubmit = (e) => {
@@ -44,6 +45,9 @@ const Login = () => {
           </div>
           <button type="submit">Login</button>
           <Link to="/signup">Don't have an account? Sign Up</Link>
+          {error && error.response && (
+            <div className="error">{error.response.data}</div>
+          )}
         </form>
       </div>
     </div>
