@@ -9,7 +9,7 @@ const Navbar = () => {
   const dispatch = useDispatch();
 
   return (
-    <div>
+    <div id="navbar">
       <h1>NYET</h1>
       <nav>
         <div>
@@ -20,7 +20,6 @@ const Navbar = () => {
 
         {isLoggedIn ? (
           <div>
-            {/* The navbar will show these links after you log in */}
             <Link to={`/users/${userId}`}>Account</Link>
             <a href="#" onClick={() => dispatch(logout())}>
               Logout
@@ -28,13 +27,14 @@ const Navbar = () => {
           </div>
         ) : (
           <div>
-            {/* The navbar will show these links before you log in */}
             <Link to="/login">Login</Link>
             <Link to="/signup">Sign Up</Link>
           </div>
         )}
+
         <Link to="/viewcart">
           <img id="cartIcon" src="/images/carticon.png" />
+          {/* <h5>{number of items in cart}</h5> */}
         </Link>
       </nav>
       <hr />
