@@ -34,7 +34,8 @@ form div {
   display: flex;
   flex-wrap: wrap;
   flex-direction: row;
-  justify-content: flex-start;
+  align-items: center;
+  justify-content: space-evenly;
   gap: 20px;
 }
 
@@ -117,9 +118,12 @@ form div {
   border-style: solid;
   border-radius: 5px;
   border-color: #964b00;
-  padding-bottom: 25px;
-  padding-right: 25px;
-  padding-left: 25px;
+  padding-bottom: 50px;
+  padding-right: 50px;
+  padding-left: 50px;
+  margin: 50px;
+  height: 500px;
+  width: 250px;
 }
 
 nav {

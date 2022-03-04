@@ -63,13 +63,14 @@ function SingleProduct(props) {
               .filter((region) => region.id === currentProduct.regionId)
               .map((region) => region.name)}
           </h4>
-          {quantityPrice > 0 ? <h5>Adding to cart: ${quantityPrice}</h5> : null}
           <input
             type="number"
-            min="0"
+            min={0}
+            max={currentProduct.quantity}
             onChange={(evt) => handleQuantityChange(evt)}
           ></input>
           <button>Add to Cart</button>
+          <h5>Adding to cart: ${quantityPrice}</h5>
         </div>
       </main>
     );
