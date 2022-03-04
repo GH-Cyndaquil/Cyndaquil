@@ -196,6 +196,7 @@ nav {
 }
 
 #footer {
+  height: 100px;
   bottom: 0%;
   display: flex;
   flex-direction: column;
@@ -265,7 +266,7 @@ nav {
 }
 
 .signup-background {
-  background-image: url("./images/login-background.jpeg");
+  background-image: url('./images/login-background.jpeg');
   width: 60%;
   height: 100vh;
   background-size: cover;
