@@ -1,5 +1,7 @@
 body {
   font-family: sans-serif;
+  padding: 0;
+  margin: 0;
 }
 
 a {
@@ -127,7 +129,7 @@ form div {
 }
 
 nav {
-  height: 45px;
+  height: 60px;
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -150,4 +152,56 @@ nav {
   text-shadow: 0.05em 0 black, 0 0.05em black, -0.05em 0 black, 0 -0.05em black,
     -0.05em -0.05em black, -0.05em 0.05em black, 0.05em -0.05em black,
     0.05em 0.05em black;
+  align-items: center;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 150px;
+}
+
+.login-form input {
+  height: 40px;
+  min-width: 400px;
+  max-width: 400px;
+  border: 1px solid lightgray;
+  flex-grow: 1;
+}
+.login-form button {
+  height: 40px;
+  min-width: 400px;
+  max-width: 400px;
+  background-color: rgb(209, 36, 36);
+  border: none;
+  color: white;
+  margin: 20px;
+}
+
+.form-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  width: 40%;
+  min-width: 500px;
+  box-shadow: 0 4px 2px -2px gray;
+}
+.login-container {
+  display: flex;
+  flex-direction: row;
+}
+
+.login-background {
+  background-image: url('./images/login-background.jpeg');
+  width: 60%;
+  height: 100vh;
+  background-size: cover;
+}
+hr {
+  margin: 0;
+}
+
+.error {
+  color: rgb(209, 36, 36);
 }

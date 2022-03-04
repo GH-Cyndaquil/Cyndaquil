@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { logout } from '../store';
@@ -11,8 +11,8 @@ const Navbar = (props) => {
 
   return (
     <div id="navbar">
-      <h1>NYET</h1>
       <nav>
+        <h1>NYET</h1>
         <div>
           {/* The navbar will show these links after you log in */}
           <Link to="/home" className="nav-button">
@@ -56,7 +56,6 @@ const Navbar = (props) => {
           </div>
         )}
       </nav>
-      <hr />
     </div>
   );
 };
