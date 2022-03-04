@@ -122,6 +122,8 @@ form div {
   padding-right: 50px;
   padding-left: 50px;
   margin: 50px;
+  height: 500px;
+  width: 250px;
 }
 
 nav {
