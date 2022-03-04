@@ -50,7 +50,7 @@ const Navbar = (props) => {
               Sign Up
             </Link>
             <Link to="/viewcart" className="nav-button">
-              Cart
+              <i className="fas fa-shopping-cart" id="shopping-cart"></i>
               {/* <h5>{number of items in cart}</h5> */}
             </Link>
           </div>
