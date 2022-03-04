@@ -178,6 +178,14 @@ nav {
   height: 100vh;
   background-size: cover;
 }
+
+.signup-background {
+  background-image: url("./images/login-background.jpeg");
+  width: 60%;
+  height: 100vh;
+  background-size: cover;
+}
+
 hr {
   margin: 0;
 }
