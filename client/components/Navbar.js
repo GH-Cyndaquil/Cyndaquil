@@ -1,7 +1,7 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { logout } from '../store';
+import React from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { logout } from "../store";
 
 const Navbar = () => {
   const userId = useSelector((state) => state.user.id);
@@ -10,8 +10,8 @@ const Navbar = () => {
 
   return (
     <div id="navbar">
-      <h1>NYET</h1>
       <nav>
+        <h1>NYET</h1>
         <div>
           {/* The navbar will show these links after you log in */}
           <Link to="/home">Home</Link>
@@ -37,7 +37,6 @@ const Navbar = () => {
           {/* <h5>{number of items in cart}</h5> */}
         </Link>
       </nav>
-      <hr />
     </div>
   );
 };
