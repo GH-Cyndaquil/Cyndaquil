@@ -30,31 +30,71 @@ function AllProducts(props) {
   return (
     <main id="all-products">
       <div id="filtering">
-        <h2>Filter by -</h2>
+        <h2>Filter by:</h2>
         <h3>Region:</h3>
-        <select onChange={(evt) => setRegionFilter(Number(evt.target.value))}>
-          <option value={0}>No Filter</option>
+        <div>
+          <label>
+            <input
+              type="radio"
+              name="region-filter"
+              onChange={(evt) => {
+                if (evt.target.checked) {
+                  setRegionFilter(0);
+                }
+              }}
+            />
+            {'All'}
+          </label>
           {regions.map((region) => {
             return (
-              <option value={region.id} key={region.id}>
+              <label key={region.id}>
+                <input
+                  type="radio"
+                  name="region-filter"
+                  value={region.id}
+                  onChange={(evt) => {
+                    if (evt.target.checked) {
+                      setRegionFilter(Number(evt.target.value));
+                    }
+                  }}
+                />
                 {region.name}
-              </option>
+              </label>
             );
           })}
-        </select>
+        </div>
         <h3>Main Ingredient:</h3>
-        <select
-          onChange={(evt) => setIngredientFilter(Number(evt.target.value))}
-        >
-          <option value={0}>No Filter</option>
+        <div>
+          <label>
+            <input
+              type="radio"
+              name="ingredient-filter"
+              onChange={(evt) => {
+                if (evt.target.checked) {
+                  setIngredientFilter(0);
+                }
+              }}
+            />
+            {'All'}
+          </label>
           {ingredients.map((ingredient) => {
             return (
-              <option value={ingredient.id} key={ingredient.id}>
+              <label key={ingredient.id}>
+                <input
+                  type="radio"
+                  name="ingredient-filter"
+                  value={ingredient.id}
+                  onChange={(evt) => {
+                    if (evt.target.checked) {
+                      setIngredientFilter(Number(evt.target.value));
+                    }
+                  }}
+                />
                 {ingredient.name}
-              </option>
+              </label>
             );
           })}
-        </select>
+        </div>
       </div>
       <div id="products">
         {products
@@ -84,7 +124,7 @@ function AllProducts(props) {
                 </NavLink>
                 <h2>{product.name}</h2>
                 <h3>${product.price}</h3>
-                <input type="number" min="0"></input>
+                <input type="number" min="0" max={product.quantity}></input>
                 <p>
                   {/* product.id on button to add that specific item to cart on click */}
                   <button id={product.id}>Add to Cart</button>
