@@ -4,6 +4,7 @@ import { fetchProducts } from "../store/products";
 import { NavLink } from "react-router-dom";
 import { fetchIngredients } from "../store/ingredients";
 import { fetchRegions } from "../store/regions";
+import { addItem } from "../store/orders";
 
 function AllProducts(props) {
   const dispatch = useDispatch();
@@ -17,6 +18,10 @@ function AllProducts(props) {
   });
   const regions = useSelector((state) => {
     return state.regions;
+  });
+
+  const userId = useSelector((state) => {
+    return state.userId;
   });
 
   useEffect(() => {
@@ -43,7 +48,7 @@ function AllProducts(props) {
                 }
               }}
             />
-            {'All'}
+            {"All"}
           </label>
           {regions.map((region) => {
             return (
@@ -75,7 +80,7 @@ function AllProducts(props) {
                 }
               }}
             />
-            {'All'}
+            {"All"}
           </label>
           {ingredients.map((ingredient) => {
             return (
@@ -124,10 +129,29 @@ function AllProducts(props) {
                 </NavLink>
                 <h2>{product.name}</h2>
                 <h3>${product.price}</h3>
-                <input type="number" min="0" max={product.quantity}></input>
+                <input
+                  name="bottleQty"
+                  type="number"
+                  min="0"
+                  max={product.quantity}
+                ></input>
                 <p>
                   {/* product.id on button to add that specific item to cart on click */}
-                  <button id={product.id}>Add to Cart</button>
+                  <button
+                    id={product.id}
+                    onClick={(evt) =>
+                      dispatch(
+                        addItem({
+                          productId: product.id,
+                          price: product.price,
+                          quantity: bottleQty.value,
+                          userId: userId,
+                        })
+                      )
+                    }
+                  >
+                    Add to Cart
+                  </button>
                 </p>
               </div>
             );

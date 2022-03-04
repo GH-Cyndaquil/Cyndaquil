@@ -16,10 +16,6 @@ const OrderDetails = db.define("order-details", {
       notEmpty: true,
     },
   },
-  fulfilled: {
-    type: Sequelize.BOOLEAN,
-    defaultValue: false,
-  },
 });
 
 module.exports = OrderDetails;

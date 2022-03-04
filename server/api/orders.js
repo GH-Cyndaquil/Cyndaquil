@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const Order = require("../db/models/Order");
 const Product = require("../db/models/Product");
+const OrderDetails = require("../db/models/OrderDetails");
 
 router.get("/", async (req, res, next) => {
   try {
@@ -31,19 +32,32 @@ router.post("/", async (req, res, next) => {
   try {
     const [item, wasCreated] = await Order.findOrCreate({
       where: {
+        userId: req.body.userId,
         fulfilled: false,
       },
-      include: Product,
-    });
-    item.addProduct(req.body, {
-      through: {
-        price: req.body.price,
-        quantityOrdered: req.body.quantityOrdered,
-        fulfilled: false,
+      include: {
+        model: Product,
       },
     });
 
-    res.send(item);
+    await item.addProduct(req.body.productId, {
+      through: {
+        price: req.body.price,
+        quantityOrdered: req.body.quantity,
+      },
+    });
+
+    const newCart = await Order.findOne({
+      where: {
+        userId: req.body.userId,
+        fulfilled: false,
+      },
+      include: {
+        model: Product,
+      },
+    });
+
+    res.send(newCart);
   } catch (error) {
     next(error);
   }
