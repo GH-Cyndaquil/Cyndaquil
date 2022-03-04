@@ -2,6 +2,27 @@ body {
   font-family: sans-serif;
   padding: 0;
   margin: 0;
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+  width: 100vw;
+}
+
+#app {
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+  width: 100vw;
+}
+
+#app > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100vh;
+  padding: 0;
+  margin: 0;
+  width: 100vw;
 }
 
 a {
@@ -175,6 +196,7 @@ nav {
 }
 
 #footer {
+  bottom: 0%;
   display: flex;
   flex-direction: column;
   align-items: center;
