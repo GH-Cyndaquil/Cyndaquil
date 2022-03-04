@@ -133,7 +133,6 @@ nav {
   display: flex;
   flex-direction: row;
   align-items: center;
-  box-shadow: 0 4px 2px -2px gray;
 }
 
 .login-form {
@@ -144,12 +143,15 @@ nav {
 
 .login-form input {
   height: 40px;
-  width: 400px;
+  min-width: 400px;
+  max-width: 400px;
   border: 1px solid lightgray;
+  flex-grow: 1;
 }
 .login-form button {
   height: 40px;
-  width: 400px;
+  min-width: 400px;
+  max-width: 400px;
   background-color: rgb(209, 36, 36);
   border: none;
   color: white;
@@ -161,7 +163,7 @@ nav {
   flex-direction: row;
   justify-content: center;
   width: 40%;
-  min-width: 700px;
+  box-shadow: 0 4px 2px -2px gray;
 }
 .login-container {
   display: flex;
