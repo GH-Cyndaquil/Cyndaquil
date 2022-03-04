@@ -66,7 +66,8 @@ function SingleProduct(props) {
           {quantityPrice > 0 ? <h5>Adding to cart: ${quantityPrice}</h5> : null}
           <input
             type="number"
-            min="0"
+            min={0}
+            max={currentProduct.quantity}
             onChange={(evt) => handleQuantityChange(evt)}
           ></input>
           <button>Add to Cart</button>
