@@ -12,7 +12,7 @@ const Navbar = (props) => {
   return (
     <div id="navbar">
       <nav>
-        <h1>NYET</h1>
+        <h1 className="nav-button">NYET</h1>
         <div>
           {/* The navbar will show these links after you log in */}
           <Link to="/home" className="nav-button">
