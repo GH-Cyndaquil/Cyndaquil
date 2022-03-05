@@ -215,6 +215,11 @@ function AllProducts(props) {
           {pages.map((page, i) => {
             return (
               <button
+                className={
+                  Number(props.location.search.split('=')[1]) == i + 1
+                    ? 'current-page'
+                    : ''
+                }
                 key={i}
                 onClick={() => props.history.push(`/products?page=${i + 1}`)}
               >
