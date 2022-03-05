@@ -33,21 +33,18 @@ function AllProducts(props) {
   }, []);
 
   function addToCart(evt) {
-    let currentItem = products.filter(
-      (product) => product.id == evt.target.id
-    )[0];
-    let price = (
-      Number(currentItem.price) * Number(productQuantities[evt.target.id])
-    ).toFixed(2);
-
     dispatch(
       addItem({
         productId: evt.target.id,
-        price: price,
-        quantity: Number(productQuantities[evt.target.id]),
+        price: Number(productQuantities[evt.target.id].price).toFixed(2),
+        quantity: Number(productQuantities[evt.target.id].quantity),
         userId: userId,
       })
     );
+  }
+
+  function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
 
   return (
@@ -154,7 +151,10 @@ function AllProducts(props) {
                   onChange={(evt) =>
                     setProductQuantities({
                       ...productQuantities,
-                      [product.id]: evt.target.value,
+                      [product.id]: {
+                        quantity: evt.target.value,
+                        price: evt.target.value * product.price,
+                      },
                     })
                   }
                 ></input>
@@ -163,6 +163,15 @@ function AllProducts(props) {
                     Add to Cart
                   </button>
                 </p>
+
+                <h5>
+                  Adding to cart: $
+                  {productQuantities[product.id]
+                    ? numberWithCommas(
+                        productQuantities[product.id].price.toFixed(2)
+                      )
+                    : 0}
+                </h5>
               </div>
             );
           })}
