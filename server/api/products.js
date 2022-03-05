@@ -21,7 +21,7 @@ router.get('/', async (req, res, next) => {
     const products = await Product.findAndCountAll({
       order: [['id', 'ASC']],
       offset: req.query.page * 10 - 10,
-      limit: 10,
+      limit: 11,
     });
     res.send(products.rows);
   } catch (error) {
