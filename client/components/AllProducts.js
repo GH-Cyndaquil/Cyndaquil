@@ -49,6 +49,11 @@ function AllProducts(props) {
     );
   }
 
+  console.log(
+    '%c ',
+    'background-image: url("https://i.gyazo.com/17b5a56f3e5cb9a0c696125c4ef69f11.png"); background-size: cover; background-position: center; padding: 50px 70px;'
+  );
+
   return (
     <main id="all-products">
       <div id="filtering">
@@ -147,7 +152,6 @@ function AllProducts(props) {
                 <h2>{product.name}</h2>
                 <h3>${product.price}</h3>
                 <input
-                  name="bottleQty"
                   type="number"
                   min="0"
                   max={product.quantity}
@@ -159,7 +163,6 @@ function AllProducts(props) {
                   }
                 ></input>
                 <p>
-                  {/* product.id on button to add that specific item to cart on click */}
                   <button id={product.id} onClick={addToCart}>
                     Add to Cart
                   </button>

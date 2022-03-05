@@ -14,7 +14,6 @@ const Navbar = (props) => {
       <nav>
         <h1 className="nav-button">NYET</h1>
         <div>
-          {/* The navbar will show these links after you log in */}
           <Link to="/home" className="nav-button">
             Home
           </Link>
@@ -37,7 +36,7 @@ const Navbar = (props) => {
               Logout
             </a>
             <Link to="/viewcart" className="nav-button">
-              Cart
+              <i className="fas fa-shopping-cart" id="shopping-cart"></i>
               {/* <h5>{number of items in cart}</h5> */}
             </Link>
           </div>

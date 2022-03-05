@@ -35,7 +35,11 @@ function SingleProduct(props) {
       }
     }
 
-    setQuantityPrice(price);
+    function numberWithCommas(x) {
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    }
+
+    setQuantityPrice(numberWithCommas(price));
   }
 
   if (ingredients.length === 0) {

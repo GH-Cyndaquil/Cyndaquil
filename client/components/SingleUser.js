@@ -1,9 +1,13 @@
-import React from "react";
-import { useSelector } from "react-redux";
-import { Link } from "react-router-dom";
+import React from 'react';
+import { useSelector } from 'react-redux';
+import { Link } from 'react-router-dom';
 
 const SingleUser = () => {
   const user = useSelector((state) => state.user);
+
+  function numberWithCommas(x) {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
 
   return (
     <div>
@@ -17,7 +21,7 @@ const SingleUser = () => {
         <p>
           {user.address
             ? `${user.address}, ${user.city}, ${user.state} ${user.postalCode}`
-            : "No Address Saved"}
+            : 'No Address Saved'}
         </p>
         <Link to={`/users/${user.id}/edit`}>Edit Account</Link>
       </div>
@@ -31,13 +35,17 @@ const SingleUser = () => {
                 <p>Date Ordered: {order.orderDate.substring(0, 10)}</p>
                 <p>
                   Order Total: $
-                  {order.products.reduce((prev, curr) => {
-                    return (
-                      prev +
-                      Number(curr["order-details"].price) *
-                        curr["order-details"].quantityOrdered
-                    );
-                  }, 0)}
+                  {numberWithCommas(
+                    order.products
+                      .reduce((prev, curr) => {
+                        return (
+                          prev +
+                          Number(curr['order-details'].price) *
+                            curr['order-details'].quantityOrdered
+                        );
+                      }, 0)
+                      .toFixed(2)
+                  )}
                 </p>
               </div>
             );
