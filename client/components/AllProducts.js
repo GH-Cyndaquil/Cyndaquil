@@ -17,6 +17,7 @@ function AllProducts(props) {
   let [productQuantities, setProductQuantities] = useState({});
   let [currentPage, setCurrentPage] = useState('');
   const pages = Array(Number(props.location.search.split('=')[1])).fill('');
+  const [search, setSearch] = useState('');
   const ingredients = useSelector((state) => {
     return state.ingredients;
   });
@@ -137,75 +138,151 @@ function AllProducts(props) {
                 );
               })}
             </div>
+            <p>Search</p>
+            <input
+              type="text"
+              onChange={(evt) => setSearch(evt.target.value)}
+            ></input>
           </div>
           <div id="products">
-            {products
-              .filter((product) => {
-                if (regionFilter === 0) {
-                  return product;
-                } else if (product.regionId === regionFilter) {
-                  return product;
-                }
-              })
-              .filter((product) => {
-                if (ingredientFilter === 0) {
-                  return product;
-                } else if (product.ingredientId === ingredientFilter) {
-                  return product;
-                }
-              })
-              .map((product) => {
-                return (
-                  <div className="product" key={product.id}>
-                    <NavLink
-                      to={`/products/${product.id}`}
-                      className="product-links"
-                    >
-                      <img
-                        style={{ width: '100px' }}
-                        className={'img'}
-                        src={product.imageUrl}
-                      />
-                    </NavLink>
-                    <NavLink
-                      to={`/products/${product.id}`}
-                      className="product-links"
-                    >
-                      <h2>{product.name}</h2>
-                    </NavLink>
+            {search === ''
+              ? products
+                  .filter((product) => {
+                    if (regionFilter === 0) {
+                      return product;
+                    } else if (product.regionId === regionFilter) {
+                      return product;
+                    }
+                  })
+                  .filter((product) => {
+                    if (ingredientFilter === 0) {
+                      return product;
+                    } else if (product.ingredientId === ingredientFilter) {
+                      return product;
+                    }
+                  })
+                  .map((product) => {
+                    return (
+                      <div className="product" key={product.id}>
+                        <NavLink
+                          to={`/products/${product.id}`}
+                          className="product-links"
+                        >
+                          <img
+                            style={{ width: '100px' }}
+                            className={'img'}
+                            src={product.imageUrl}
+                          />
+                        </NavLink>
+                        <NavLink
+                          to={`/products/${product.id}`}
+                          className="product-links"
+                        >
+                          <h2>{product.name}</h2>
+                        </NavLink>
 
-                    <h3>${product.price}</h3>
-                    <input
-                      type="number"
-                      min="0"
-                      max={product.quantity}
-                      onChange={(evt) =>
-                        setProductQuantities({
-                          ...productQuantities,
-                          [product.id]: {
-                            quantity: evt.target.value,
-                            price: evt.target.value * product.price,
-                          },
-                        })
-                      }
-                    ></input>
-                    <p>
-                      <button id={product.id} onClick={addToCart}>
-                        Add to Cart
-                      </button>
-                    </p>
+                        <h3>${product.price}</h3>
+                        <input
+                          type="number"
+                          min="0"
+                          max={product.quantity}
+                          onChange={(evt) =>
+                            setProductQuantities({
+                              ...productQuantities,
+                              [product.id]: {
+                                quantity: evt.target.value,
+                                price: evt.target.value * product.price,
+                              },
+                            })
+                          }
+                        ></input>
+                        <p>
+                          <button id={product.id} onClick={addToCart}>
+                            Add to Cart
+                          </button>
+                        </p>
 
-                    <h5>
-                      Adding to cart: $
-                      {productQuantities[product.id]
-                        ? numberWithCommas(
-                            productQuantities[product.id].price.toFixed(2)
-                          )
-                        : 0}
-                    </h5>
-                  </div>
-                );
-              })}
+                        <h5>
+                          Adding to cart: $
+                          {productQuantities[product.id]
+                            ? numberWithCommas(
+                                productQuantities[product.id].price.toFixed(2)
+                              )
+                            : 0}
+                        </h5>
+                      </div>
+                    );
+                  })
+              : products
+                  .filter((product) => {
+                    if (regionFilter === 0) {
+                      return product;
+                    } else if (product.regionId === regionFilter) {
+                      return product;
+                    }
+                  })
+                  .filter((product) => {
+                    if (ingredientFilter === 0) {
+                      return product;
+                    } else if (product.ingredientId === ingredientFilter) {
+                      return product;
+                    }
+                  })
+                  .filter((product) =>
+                    product.name.toLowerCase().includes(search.toLowerCase())
+                  )
+                  .map((product) => {
+                    return (
+                      <div className="product" key={product.id}>
+                        <NavLink
+                          to={`/products/${product.id}`}
+                          className="product-links"
+                        >
+                          <img
+                            style={{ width: '100px' }}
+                            className={'img'}
+                            src={product.imageUrl}
+                          />
+                        </NavLink>
+                        <NavLink
+                          to={`/products/${product.id}`}
+                          className="product-links"
+                        >
+                          <h2>{product.name}</h2>
+                        </NavLink>
+
+                        <h3>${product.price}</h3>
+                        <input
+                          type="number"
+                          min="0"
+                          max={product.quantity}
+                          onChange={(evt) =>
+                            setProductQuantities({
+                              ...productQuantities,
+                              [product.id]: {
+                                quantity: evt.target.value,
+                                price: evt.target.value * product.price,
+                              },
+                            })
+                          }
+                        ></input>
+                        <p>
+                          <button id={product.id} onClick={addToCart}>
+                            Add to Cart
+                          </button>
+                        </p>
+
+                        <h5>
+                          Adding to cart: $
+                          {productQuantities[product.id]
+                            ? numberWithCommas(
+                                productQuantities[product.id].price.toFixed(2)
+                              )
+                            : 0}
+                        </h5>
+                      </div>
+                    );
+                  })}
           </div>
         </main>
         <div id="pagination-buttons">
