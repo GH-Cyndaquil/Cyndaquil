@@ -19,7 +19,7 @@ function AllProducts(props) {
   let [regionFilter, setRegionFilter] = useState(0);
   let [ingredientFilter, setIngredientFilter] = useState(0);
   let [productQuantities, setProductQuantities] = useState({});
-  const pages = Array(Number(props.location.search.split('=')[1])).fill('');
+  let pages = [];
   const [search, setSearch] = useState('');
   const ingredients = useSelector((state) => {
     return state.ingredients;
@@ -33,17 +33,19 @@ function AllProducts(props) {
   });
 
   useEffect(() => {
-    dispatch(fetchIngredients());
-    dispatch(fetchRegions());
     let currentPageQuery = props.location.search.split('=')[1];
     if (props.location.search === '' || currentPageQuery == 0) {
       props.history.push('/products?page=1');
-      setCurrentPage('/products?page=1');
     }
   }, []);
 
   useEffect(() => {
     dispatch(fetchProducts(props.location));
+    dispatch(fetchIngredients());
+    dispatch(fetchRegions());
+    for (let i = 0; i < products.length; i++) {
+      pages.push('');
+    }
   }, [props.location.search]);
 
   function addToCart(evt) {
