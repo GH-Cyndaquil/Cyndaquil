@@ -6,17 +6,21 @@ import { fetchIngredients } from '../store/ingredients';
 import orders from './admin';
 import { fetchRegions } from '../store/regions';
 import { addItem } from '../store/orders';
+import axios from 'axios';
 
 function AllProducts(props) {
   const dispatch = useDispatch();
   const products = useSelector((state) => {
     return state.products;
   });
+  const tenProducts = [];
+  for (let i = 0; i < 10; i++) {
+    tenProducts.push(products[i]);
+  }
   let [regionFilter, setRegionFilter] = useState(0);
   let [ingredientFilter, setIngredientFilter] = useState(0);
   let [productQuantities, setProductQuantities] = useState({});
-  let [currentPage, setCurrentPage] = useState('');
-  const pages = Array(Number(props.location.search.split('=')[1])).fill('');
+  let [pages, setPages] = useState(1);
   const [search, setSearch] = useState('');
   const ingredients = useSelector((state) => {
     return state.ingredients;
@@ -30,17 +34,27 @@ function AllProducts(props) {
   });
 
   useEffect(() => {
-    dispatch(fetchIngredients());
-    dispatch(fetchRegions());
     let currentPageQuery = props.location.search.split('=')[1];
     if (props.location.search === '' || currentPageQuery == 0) {
       props.history.push('/products?page=1');
-      setCurrentPage('/products?page=1');
     }
   }, []);
 
   useEffect(() => {
+    axios
+      .get('/api/products')
+      .then((response) => setPages(Math.ceil(response.data.length / 10)));
+  });
+
+  let pagesArr = [];
+  for (let i = 1; i <= pages; i++) {
+    pagesArr.push(i);
+  }
+
+  useEffect(() => {
     dispatch(fetchProducts(props.location));
+    dispatch(fetchIngredients());
+    dispatch(fetchRegions());
   }, [props.location.search]);
 
   function addToCart(evt) {
@@ -146,7 +160,7 @@ function AllProducts(props) {
           </div>
           <div id="products">
             {search === ''
-              ? products
+              ? tenProducts
                   .filter((product) => {
                     if (regionFilter === 0) {
                       return product;
@@ -213,7 +227,7 @@ function AllProducts(props) {
                       </div>
                     );
                   })
-              : products
+              : tenProducts
                   .filter((product) => {
                     if (regionFilter === 0) {
                       return product;
@@ -299,7 +313,7 @@ function AllProducts(props) {
               Previous
             </button>
           )}
-          {pages.map((page, i) => {
+          {pagesArr.map((page, i) => {
             return (
               <button
                 className={
@@ -314,17 +328,19 @@ function AllProducts(props) {
               </button>
             );
           })}
-          <button
-            onClick={() =>
-              props.history.push(
-                `/products?page=${
-                  Number(props.location.search.split('=')[1]) + 1
-                }`
-              )
-            }
-          >
-            Next
-          </button>
+          {products.length > tenProducts.length ? (
+            <button
+              onClick={() =>
+                props.history.push(
+                  `/products?page=${
+                    Number(props.location.search.split('=')[1]) + 1
+                  }`
+                )
+              }
+            >
+              Next
+            </button>
+          ) : null}
         </div>
       </div>
     );
@@ -350,27 +366,21 @@ function AllProducts(props) {
               Previous
             </button>
           )}
-          {pages.map((page, i) => {
+          {pagesArr.map((page, i) => {
             return (
               <button
                 key={i}
+                className={
+                  Number(props.location.search.split('=')[1]) + 1 == i + 1
+                    ? 'current-page'
+                    : ''
+                }
                 onClick={() => props.history.push(`/products?page=${i + 1}`)}
               >
                 {i + 1}
               </button>
             );
           })}
-          <button
-            onClick={() =>
-              props.history.push(
-                `/products?page=${
-                  Number(props.location.search.split('=')[1]) + 1
-                }`
-              )
-            }
-          >
-            Next
-          </button>
         </div>
       </div>
     );
