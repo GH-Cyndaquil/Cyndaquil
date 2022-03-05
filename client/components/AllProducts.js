@@ -54,6 +54,7 @@ function AllProducts(props) {
     }
   }, [products]);
 
+  //mapped over to create individual page buttons
   let pagesArr = [];
   for (let i = 1; i <= pages; i++) {
     pagesArr.push(i);
@@ -63,6 +64,7 @@ function AllProducts(props) {
     dispatch(fetchProducts(props.location));
     dispatch(fetchIngredients());
     dispatch(fetchRegions());
+    window.scroll(0, 0);
   }, [props.location.search]);
 
   useEffect(() => {
