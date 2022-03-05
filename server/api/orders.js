@@ -59,7 +59,7 @@ router.post('/', async (req, res, next) => {
     } else {
       let newPrice = Number(ifOrderExists.dataValues.price) + Number(price);
       let newQuantityOrdered =
-        ifOrderExists.dataValues.quantityOrdered + quantity;
+        Number(ifOrderExists.dataValues.quantityOrdered) + Number(quantity);
       await ifOrderExists.update({
         price: newPrice,
         quantityOrdered: newQuantityOrdered,

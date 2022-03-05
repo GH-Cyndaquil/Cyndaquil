@@ -6,6 +6,7 @@ import {
 } from '../store/selectedProduct';
 import { fetchIngredients } from '../store/ingredients';
 import { fetchRegions } from '../store/regions';
+import { addItem } from '../store/orders';
 
 function SingleProduct(props) {
   const dispatch = useDispatch();
@@ -19,6 +20,10 @@ function SingleProduct(props) {
     return state.regions;
   });
   const [quantityPrice, setQuantityPrice] = useState(0);
+  const [currentQuantity, setCurrentQuantity] = useState(0);
+  const userId = useSelector((state) => {
+    return state.user.id;
+  });
 
   useEffect(() => {
     dispatch(fetchIngredients());
@@ -28,7 +33,8 @@ function SingleProduct(props) {
 
   function handleQuantityChange(evt) {
     //toFixed ensures we don't display prices like $19.99999999998
-    let price = Number((evt.target.value * currentProduct.price).toFixed(2));
+    let newQuantity = evt.target.value;
+    let price = Number((newQuantity * currentProduct.price).toFixed(2));
     if (price !== 0) {
       if (price.toString().split('.')[1].length === 1) {
         price = price.toString() + 0;
@@ -40,6 +46,18 @@ function SingleProduct(props) {
     }
 
     setQuantityPrice(numberWithCommas(price));
+    setCurrentQuantity(newQuantity);
+  }
+
+  function addToCart(evt) {
+    dispatch(
+      addItem({
+        productId: currentProduct.id,
+        price: quantityPrice,
+        quantity: currentQuantity,
+        userId: userId,
+      })
+    );
   }
 
   if (ingredients.length === 0) {
@@ -73,7 +91,7 @@ function SingleProduct(props) {
             max={currentProduct.quantity}
             onChange={(evt) => handleQuantityChange(evt)}
           ></input>
-          <button>Add to Cart</button>
+          <button onClick={addToCart}>Add to Cart</button>
           <h5>Adding to cart: ${quantityPrice}</h5>
         </div>
       </main>

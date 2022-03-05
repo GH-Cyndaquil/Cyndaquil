@@ -183,6 +183,15 @@ nav {
   align-items: center;
 }
 
+.title {
+  font-size: 30px;
+  text-decoration: none;
+  color: rgb(255, 94, 94);
+  text-shadow: 0.05em 0 black, 0 0.05em black, -0.05em 0 black, 0 -0.05em black,
+    -0.05em -0.05em black, -0.05em 0.05em black, 0.05em -0.05em black,
+    0.05em 0.05em black;
+}
+
 .nav-button {
   font-size: 30px;
   text-decoration: none;

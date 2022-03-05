@@ -12,7 +12,7 @@ const Navbar = (props) => {
   return (
     <div id="navbar">
       <nav>
-        <h1 className="nav-button">NYET</h1>
+        <h1 className="title">NYET</h1>
         <div>
           <Link to="/home" className="nav-button">
             Home
@@ -36,7 +36,10 @@ const Navbar = (props) => {
               Logout
             </a>
             <Link to="/viewcart" className="nav-button">
-              <i className="fas fa-shopping-cart" id="shopping-cart"></i>
+              <i
+                className="fa fa-shopping-cart"
+                style={{ fontSize: '45px' }}
+              ></i>
               {/* <h5>{number of items in cart}</h5> */}
             </Link>
           </div>
@@ -49,7 +52,10 @@ const Navbar = (props) => {
               Sign Up
             </Link>
             <Link to="/viewcart" className="nav-button">
-              <i className="fas fa-shopping-cart" id="shopping-cart"></i>
+              <i
+                className="fa fa-shopping-cart"
+                style={{ fontSize: '24px' }}
+              ></i>
               {/* <h5>{number of items in cart}</h5> */}
             </Link>
           </div>

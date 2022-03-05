@@ -248,7 +248,7 @@ async function seed() {
       name: 'Poland',
     },
     {
-      name: 'Ukrain',
+      name: 'Ukraine',
     },
     {
       name: 'Iceland',
