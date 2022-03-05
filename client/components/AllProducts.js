@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchProducts } from "../store/products";
-import { NavLink } from "react-router-dom";
-import { fetchIngredients } from "../store/ingredients";
-import { fetchRegions } from "../store/regions";
-import { addItem } from "../store/orders";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchProducts } from '../store/products';
+import { NavLink } from 'react-router-dom';
+import { fetchIngredients } from '../store/ingredients';
+import { fetchRegions } from '../store/regions';
+import { addItem } from '../store/orders';
 
 function AllProducts(props) {
   const dispatch = useDispatch();
@@ -13,6 +13,7 @@ function AllProducts(props) {
   });
   let [regionFilter, setRegionFilter] = useState(0);
   let [ingredientFilter, setIngredientFilter] = useState(0);
+  let [productQuantities, setProductQuantities] = useState({});
   const ingredients = useSelector((state) => {
     return state.ingredients;
   });
@@ -21,7 +22,7 @@ function AllProducts(props) {
   });
 
   const userId = useSelector((state) => {
-    return state.userId;
+    return state.user.id;
   });
 
   useEffect(() => {
@@ -30,7 +31,23 @@ function AllProducts(props) {
     dispatch(fetchRegions());
   }, []);
 
-  //define addToCart function here
+  function addToCart(evt) {
+    let currentItem = products.filter(
+      (product) => product.id == evt.target.id
+    )[0];
+    let price = (
+      Number(currentItem.price) * Number(productQuantities[evt.target.id])
+    ).toFixed(2);
+
+    dispatch(
+      addItem({
+        productId: evt.target.id,
+        price: price,
+        quantity: Number(productQuantities[evt.target.id]),
+        userId: userId,
+      })
+    );
+  }
 
   return (
     <main id="all-products">
@@ -48,7 +65,7 @@ function AllProducts(props) {
                 }
               }}
             />
-            {"All"}
+            {'All'}
           </label>
           {regions.map((region) => {
             return (
@@ -80,7 +97,7 @@ function AllProducts(props) {
                 }
               }}
             />
-            {"All"}
+            {'All'}
           </label>
           {ingredients.map((ingredient) => {
             return (
@@ -122,8 +139,8 @@ function AllProducts(props) {
               <div className="product" key={product.id}>
                 <NavLink to={`/products/${product.id}`}>
                   <img
-                    style={{ width: "100px" }}
-                    className={"img"}
+                    style={{ width: '100px' }}
+                    className={'img'}
                     src={product.imageUrl}
                   />
                 </NavLink>
@@ -134,22 +151,16 @@ function AllProducts(props) {
                   type="number"
                   min="0"
                   max={product.quantity}
+                  onChange={(evt) =>
+                    setProductQuantities({
+                      ...productQuantities,
+                      [product.id]: evt.target.value,
+                    })
+                  }
                 ></input>
                 <p>
                   {/* product.id on button to add that specific item to cart on click */}
-                  <button
-                    id={product.id}
-                    onClick={(evt) =>
-                      dispatch(
-                        addItem({
-                          productId: product.id,
-                          price: product.price,
-                          quantity: bottleQty.value,
-                          userId: userId,
-                        })
-                      )
-                    }
-                  >
+                  <button id={product.id} onClick={addToCart}>
                     Add to Cart
                   </button>
                 </p>
