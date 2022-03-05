@@ -11,9 +11,11 @@ const setProducts = (products) => ({
 const addedProduct = (product) => ({ type: ADD_PRODUCT, product });
 
 //thunk creators
-export const fetchProducts = (location) => {
+export const fetchProducts = (location, filters) => {
   return async (dispatch) => {
-    const { data } = await axios.get(`/api/products${location.search}`);
+    const { data } = await axios.get(`/api/products${location.search}`, {
+      headers: filters,
+    });
     return dispatch(setProducts(data));
   };
 };

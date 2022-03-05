@@ -13,10 +13,8 @@ function AllProducts(props) {
   const products = useSelector((state) => {
     return state.products;
   });
-  const tenProducts = [];
-  for (let i = 0; i < 10; i++) {
-    tenProducts.push(products[i]);
-  }
+  const [tenProducts, setTenProducts] = useState([]);
+
   let [regionFilter, setRegionFilter] = useState(0);
   let [ingredientFilter, setIngredientFilter] = useState(0);
   let [productQuantities, setProductQuantities] = useState({});
@@ -41,10 +39,20 @@ function AllProducts(props) {
   }, []);
 
   useEffect(() => {
-    axios
-      .get('/api/products')
-      .then((response) => setPages(Math.ceil(response.data.length / 10)));
-  });
+    if (products.length < 10) {
+      let productsArr = [];
+      for (let i = 0; i < products.length; i++) {
+        productsArr.push(products[i]);
+      }
+      setTenProducts(productsArr);
+    } else {
+      let productsArr = [];
+      for (let i = 0; i < 10; i++) {
+        productsArr.push(products[i]);
+      }
+      setTenProducts(productsArr);
+    }
+  }, [products]);
 
   let pagesArr = [];
   for (let i = 1; i <= pages; i++) {
@@ -56,6 +64,21 @@ function AllProducts(props) {
     dispatch(fetchIngredients());
     dispatch(fetchRegions());
   }, [props.location.search]);
+
+  useEffect(() => {
+    async function filtering() {
+      props.history.push('/products?page=1');
+      dispatch(
+        fetchProducts(props.location, { regionFilter, ingredientFilter })
+      );
+      await axios
+        .get('/api/products', {
+          headers: { regionFilter, ingredientFilter },
+        })
+        .then((response) => setPages(Math.ceil(response.data.length / 10)));
+    }
+    filtering();
+  }, [regionFilter, ingredientFilter]);
 
   function addToCart(evt) {
     dispatch(
@@ -300,19 +323,6 @@ function AllProducts(props) {
           </div>
         </main>
         <div id="pagination-buttons">
-          {props.location.search.split('=')[1] - 1 === 0 ? null : (
-            <button
-              onClick={() =>
-                props.history.push(
-                  `/products?page=${
-                    Number(props.location.search.split('=')[1]) - 1
-                  }`
-                )
-              }
-            >
-              Previous
-            </button>
-          )}
           {pagesArr.map((page, i) => {
             return (
               <button
@@ -328,60 +338,106 @@ function AllProducts(props) {
               </button>
             );
           })}
-          {products.length > tenProducts.length ? (
-            <button
-              onClick={() =>
-                props.history.push(
-                  `/products?page=${
-                    Number(props.location.search.split('=')[1]) + 1
-                  }`
-                )
-              }
-            >
-              Next
-            </button>
-          ) : null}
         </div>
       </div>
     );
   } else {
     return (
-      <div id="no-vodka-left">
-        <p>No vodka here</p>
-        <img
-          id="weirdge"
-          src="https://cdn.discordapp.com/emojis/808088165985550337.webp?size=96&quality=lossless"
-        />
-        <div id="pagination-buttons">
-          {props.location.search.split('=')[1] - 1 === 0 ? null : (
-            <button
-              onClick={() =>
-                props.history.push(
-                  `/products?page=${
-                    Number(props.location.search.split('=')[1]) - 1
-                  }`
-                )
-              }
-            >
-              Previous
-            </button>
-          )}
-          {pagesArr.map((page, i) => {
-            return (
-              <button
-                key={i}
-                className={
-                  Number(props.location.search.split('=')[1]) + 1 == i + 1
-                    ? 'current-page'
-                    : ''
-                }
-                onClick={() => props.history.push(`/products?page=${i + 1}`)}
-              >
-                {i + 1}
-              </button>
-            );
-          })}
-        </div>
+      <div id="all-products-page">
+        <main id="all-products">
+          <div id="filtering">
+            <h2>Filter by:</h2>
+            <h3>Region:</h3>
+            <div>
+              <label>
+                <input
+                  type="radio"
+                  name="region-filter"
+                  onChange={(evt) => {
+                    if (evt.target.checked) {
+                      setRegionFilter(0);
+                    }
+                  }}
+                />
+                {'All'}
+              </label>
+              {regions.map((region) => {
+                return (
+                  <label
+                    key={region.id}
+                    className={
+                      regionFilter == region.id ? 'selected-filter' : ''
+                    }
+                  >
+                    <input
+                      type="radio"
+                      name="region-filter"
+                      value={region.id}
+                      onChange={(evt) => {
+                        if (evt.target.checked) {
+                          setRegionFilter(Number(evt.target.value));
+                        }
+                      }}
+                    />
+                    {region.name}
+                  </label>
+                );
+              })}
+            </div>
+            <h3>Main Ingredient:</h3>
+            <div>
+              <label>
+                <input
+                  type="radio"
+                  name="ingredient-filter"
+                  onChange={(evt) => {
+                    if (evt.target.checked) {
+                      setIngredientFilter(0);
+                    }
+                  }}
+                />
+                {'All'}
+              </label>
+              {ingredients.map((ingredient) => {
+                return (
+                  <label
+                    key={ingredient.id}
+                    className={
+                      ingredientFilter == ingredient.id ? 'selected-filter' : ''
+                    }
+                  >
+                    <input
+                      type="radio"
+                      name="ingredient-filter"
+                      value={ingredient.id}
+                      onChange={(evt) => {
+                        if (evt.target.checked) {
+                          setIngredientFilter(Number(evt.target.value));
+                        }
+                      }}
+                    />
+                    {ingredient.name}
+                  </label>
+                );
+              })}
+            </div>
+            <p>Search</p>
+            <input
+              type="text"
+              onChange={(evt) => setSearch(evt.target.value)}
+            ></input>
+          </div>
+          <div id="products">
+            <div id="no-vodka-left">
+              <p>No vodka here</p>
+              <img
+                id="weirdge"
+                src="https://cdn.discordapp.com/emojis/808088165985550337.webp?size=96&quality=lossless"
+              />
+            </div>
+          </div>
+        </main>
+        <div id="pagination-buttons"></div>
       </div>
     );
   }
