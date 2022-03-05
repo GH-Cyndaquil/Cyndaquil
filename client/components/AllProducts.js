@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { fetchProducts } from '../store/products';
 import { NavLink } from 'react-router-dom';
 import { fetchIngredients } from '../store/ingredients';
+import orders from './admin';
 import { fetchRegions } from '../store/regions';
 import { addItem } from '../store/orders';
 
@@ -48,11 +49,6 @@ function AllProducts(props) {
       })
     );
   }
-
-  console.log(
-    '%c ',
-    'background-image: url("https://i.gyazo.com/17b5a56f3e5cb9a0c696125c4ef69f11.png"); background-size: cover; background-position: center; padding: 50px 70px;'
-  );
 
   return (
     <main id="all-products">

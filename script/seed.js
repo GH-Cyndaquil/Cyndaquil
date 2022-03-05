@@ -1,326 +1,359 @@
-"use strict";
+'use strict';
 
-const { db } = require("../server/db");
+const { db } = require('../server/db');
 const {
   models: { User, Product, Ingredient, Region, Order },
-} = require("../server/db");
+} = require('../server/db');
 
 async function seed() {
   await db.sync({ force: true });
-  console.log("db synced!");
+  console.log('db synced!');
 
   // Creating Users
-  const users = await Promise.all([
-    User.create({
-      username: "Peter",
-      email: "petecummings@hotmail.com",
-      password: "12345",
-      firstName: "Peter",
-      lastName: "Cummings",
-      address: "19596 141st pl se",
-      state: "WA",
-      city: "Monroe",
-      postalCode: "98272",
+  let users = [
+    {
+      username: 'Peter',
+      email: 'petecummings@hotmail.com',
+      password: '12345',
+      firstName: 'Peter',
+      lastName: 'Cummings',
+      address: '19596 141st pl se',
+      state: 'WA',
+      city: 'Monroe',
+      postalCode: '98272',
       isAdmin: true,
-    }),
-    User.create({
-      username: "Dale",
-      email: "daleluce87@gmail.com",
-      password: "12345",
-      firstName: "Dale",
-      lastName: "Luce",
-      address: "1234 121st pl se",
-      state: "IN",
-      city: "Indianapolis",
-      postalCode: "98765",
+    },
+    {
+      username: 'Dale',
+      email: 'daleluce87@gmail.com',
+      password: '12345',
+      firstName: 'Dale',
+      lastName: 'Luce',
+      address: '1234 121st pl se',
+      state: 'IN',
+      city: 'Indianapolis',
+      postalCode: '98765',
       isAdmin: true,
-    }),
-    User.create({
-      username: "Matt",
-      email: "mattyard11@gmail.com",
-      password: "12345",
-      firstName: "Matt",
-      lastName: "Yard",
-      address: "1234 121st st ne",
-      state: "MA",
-      city: "Boston",
-      postalCode: "98765",
+    },
+    {
+      username: 'Matt',
+      email: 'mattyard11@gmail.com',
+      password: '12345',
+      firstName: 'Matt',
+      lastName: 'Yard',
+      address: '1234 121st st ne',
+      state: 'MA',
+      city: 'Boston',
+      postalCode: '98765',
       isAdmin: true,
-    }),
-    User.create({
-      username: "Austin",
-      email: "unversed1241@yahoo.com",
-      password: "12345",
-      firstName: "Austin",
-      lastName: "Gautney",
-      address: "1234 121st pl se",
-      state: "WA",
-      city: "Puyallup",
-      postalCode: "98765",
+    },
+    {
+      username: 'Austin',
+      email: 'unversed1241@yahoo.com',
+      password: '12345',
+      firstName: 'Austin',
+      lastName: 'Gautney',
+      address: '1234 121st pl se',
+      state: 'WA',
+      city: 'Puyallup',
+      postalCode: '98765',
       isAdmin: true,
-    }),
-    User.create({
-      username: "Sean",
-      email: "seandoe@gmail.com",
-      password: "12345",
-      firstName: "Sean",
-      lastName: "Doe",
-      address: "1234 121st st se",
-      state: "WA",
-      city: "Monroe",
-      postalCode: "98765",
+    },
+    {
+      username: 'Sean',
+      email: 'seandoe@gmail.com',
+      password: '12345',
+      firstName: 'Sean',
+      lastName: 'Doe',
+      address: '1234 121st st se',
+      state: 'WA',
+      city: 'Monroe',
+      postalCode: '98765',
       isAdmin: false,
-    }),
-  ]);
+    },
+  ];
+
+  async function seedUsers() {
+    for (let i = 0; i < users.length; i++) {
+      await User.create(users[i]);
+    }
+  }
+  await seedUsers();
 
   console.log(`seeded ${users.length} users`);
 
   // Creating Products
-  const products = await Promise.all([
-    Product.create({
-      name: "Absolut",
+  let products = [
+    {
+      name: 'Absolut',
       price: 18.99,
       quantity: 100,
-      description: "Absolut Perfection",
-      imageUrl: "/images/absolut.jpeg",
-    }),
-    Product.create({
-      name: "Belvedere",
+      description: 'Absolut Perfection',
+      imageUrl: '/images/absolut.jpeg',
+    },
+    {
+      name: 'Belvedere',
       price: 25.99,
       quantity: 100,
-      description: "Know the difference",
-      imageUrl: "/images/belvedere.jpeg",
-    }),
-    Product.create({
-      name: "Blue Ice",
+      description: 'Know the difference',
+      imageUrl: '/images/belvedere.jpeg',
+    },
+    {
+      name: 'Blue Ice',
       price: 17.99,
       quantity: 85,
-      description: "hand crafted American potato vodka",
-      imageUrl: "/images/blue ice vodka.jpeg",
-    }),
-    Product.create({
-      name: "Chopin",
+      description: 'hand crafted American potato vodka',
+      imageUrl: '/images/blue ice vodka.jpeg',
+    },
+    {
+      name: 'Chopin',
       price: 25.99,
       quantity: 125,
-      description: "Life is fast, sip slowly",
-      imageUrl: "/images/chopin.jpeg",
-    }),
-    Product.create({
-      name: "Ciroc",
+      description: 'Life is fast, sip slowly',
+      imageUrl: '/images/chopin.jpeg',
+    },
+    {
+      name: 'Ciroc',
       price: 27.99,
       quantity: 90,
-      description: " a new standard for vodka",
-      imageUrl: "/images/ciroc.jpeg",
-    }),
-    Product.create({
-      name: "Crystal Head",
+      description: ' a new standard for vodka',
+      imageUrl: '/images/ciroc.jpeg',
+    },
+    {
+      name: 'Crystal Head',
       price: 29.99,
       quantity: 55,
-      description: "a resoundingly Pure Spirit",
-      imageUrl: "/images/crystal head.jpeg",
-    }),
-    Product.create({
-      name: "Effen",
+      description: 'a resoundingly Pure Spirit',
+      imageUrl: '/images/crystal head.jpeg',
+    },
+    {
+      name: 'Effen',
       price: 27.99,
       quantity: 82,
-      description: "be proudly different",
-      imageUrl: "/images/effen.jpeg",
-    }),
-    Product.create({
-      name: "Grey Goose",
+      description: 'be proudly different',
+      imageUrl: '/images/effen.jpeg',
+    },
+    {
+      name: 'Grey Goose',
       price: 28.99,
       quantity: 100,
-      description: "fly beyond",
-      imageUrl: "/images/goose.jpeg",
-    }),
-    Product.create({
-      name: "Hanson Organic",
+      description: 'fly beyond',
+      imageUrl: '/images/goose.jpeg',
+    },
+    {
+      name: 'Hanson Organic',
       price: 26.99,
       quantity: 132,
-      description: "family owner artisan distillers",
-      imageUrl: "/images/hanson vodka.jpeg",
-    }),
-    Product.create({
-      name: "Ketel One",
+      description: 'family owner artisan distillers',
+      imageUrl: '/images/hanson vodka.jpeg',
+    },
+    {
+      name: 'Ketel One',
       price: 28.99,
       quantity: 121,
-      description: "drink marvelously",
-      imageUrl: "/images/ketel one.jpeg",
-    }),
-    Product.create({
-      name: "Khor",
+      description: 'drink marvelously',
+      imageUrl: '/images/ketel one.jpeg',
+    },
+    {
+      name: 'Khor',
       price: 22.99,
       quantity: 45,
-      description: "ultimate perfection",
-      imageUrl: "/images/khor.jpeg",
-    }),
-    Product.create({
-      name: "Krakus",
+      description: 'ultimate perfection',
+      imageUrl: '/images/khor.jpeg',
+    },
+    {
+      name: 'Krakus',
       price: 27.99,
       quantity: 64,
-      description: "exclusive",
-      imageUrl: "/images/krakus.jpeg",
-    }),
-    Product.create({
-      name: "Mont Blanc",
+      description: 'exclusive',
+      imageUrl: '/images/krakus.jpeg',
+    },
+    {
+      name: 'Mont Blanc',
       price: 22.99,
       quantity: 85,
-      description: "Luxury has a new name",
-      imageUrl: "/images/mont blanc.jpeg",
-    }),
-    Product.create({
-      name: "Ocean Organic",
+      description: 'Luxury has a new name',
+      imageUrl: '/images/mont blanc.jpeg',
+    },
+    {
+      name: 'Ocean Organic',
       price: 34.99,
       quantity: 130,
-      description: "Go beyond the bottle",
-      imageUrl: "/images/ocean vodka.jpeg",
-    }),
-    Product.create({
-      name: "Reyka",
+      description: 'Go beyond the bottle',
+      imageUrl: '/images/ocean vodka.jpeg',
+    },
+    {
+      name: 'Reyka',
       price: 23.99,
       quantity: 75,
-      description: "“Made with glacial spring water",
-      imageUrl: "/images/reyka.jpeg",
-    }),
-    Product.create({
-      name: "Skyy",
+      description: '“Made with glacial spring water',
+      imageUrl: '/images/reyka.jpeg',
+    },
+    {
+      name: 'Skyy',
       price: 19.99,
       quantity: 89,
-      description: "a fresher tasting vodka",
-      imageUrl: "/images/skyy.jpeg",
-    }),
-    Product.create({
-      name: "Svedka",
+      description: 'a fresher tasting vodka',
+      imageUrl: '/images/skyy.jpeg',
+    },
+    {
+      name: 'Svedka',
       price: 17.99,
       quantity: 90,
-      description: "bring your own spirit",
-      imageUrl: "/images/svedka.jpeg",
-    }),
-    Product.create({
+      description: 'bring your own spirit',
+      imageUrl: '/images/svedka.jpeg',
+    },
+    {
       name: "Tito's",
       price: 20.99,
       quantity: 145,
-      description: "handmade",
-      imageUrl: "/images/titos.jpeg",
-    }),
-    Product.create({
-      name: "Snow Leopard",
+      description: 'handmade',
+      imageUrl: '/images/titos.jpeg',
+    },
+    {
+      name: 'Snow Leopard',
       price: 29.99,
       quantity: 72,
-      description: "a spirit with a soul",
-      imageUrl: "/images/snow leopard.jpeg",
-    }),
-    Product.create({
-      name: "Crater Lake",
+      description: 'a spirit with a soul',
+      imageUrl: '/images/snow leopard.jpeg',
+    },
+    {
+      name: 'Crater Lake',
       price: 19.99,
       quantity: 63,
-      description: "the spirit of adventure",
-      imageUrl: "/images/crater lake.jpeg",
-    }),
-  ]);
+      description: 'the spirit of adventure',
+      imageUrl: '/images/crater lake.jpeg',
+    },
+  ];
+  async function createProducts() {
+    for (let i = 0; i < products.length; i++) {
+      await Product.create(products[i]);
+    }
+  }
+  await createProducts();
   console.log(`seeded ${products.length} products`);
 
   //Creating Regions
-  const regions = await Promise.all([
-    Region.create({
-      name: "United States",
-    }),
-    Region.create({
-      name: "France",
-    }),
-    Region.create({
-      name: "Sweden",
-    }),
-    Region.create({
-      name: "Poland",
-    }),
-    Region.create({
-      name: "Ukrain",
-    }),
-    Region.create({
-      name: "Iceland",
-    }),
-    Region.create({
-      name: "Netherlands",
-    }),
-  ]);
+  let regions = [
+    {
+      name: 'United States',
+    },
+    {
+      name: 'France',
+    },
+    {
+      name: 'Sweden',
+    },
+    {
+      name: 'Poland',
+    },
+    {
+      name: 'Ukrain',
+    },
+    {
+      name: 'Iceland',
+    },
+    {
+      name: 'Netherlands',
+    },
+  ];
+  async function setRegions() {
+    for (let i = 0; i < regions.length; i++) {
+      await Region.create(regions[i]);
+    }
+  }
+  await setRegions();
   console.log(`seeded ${regions.length} regions`);
 
   // Creating Ingredients
-  const ingredients = await Promise.all([
-    Ingredient.create({
-      name: "Wheat",
-    }),
-    Ingredient.create({
-      name: "Potato",
-    }),
-    Ingredient.create({
-      name: "Grape",
-    }),
-    Ingredient.create({
-      name: "Sugar Cane",
-    }),
-    Ingredient.create({
-      name: "Wheat and Barley",
-    }),
-    Ingredient.create({
-      name: "Corn",
-    }),
-    Ingredient.create({
-      name: "Rye",
-    }),
-    Ingredient.create({
-      name: "Spelt Grain",
-    }),
-  ]);
+  let ingredients = [
+    {
+      name: 'Wheat',
+    },
+    {
+      name: 'Potato',
+    },
+    {
+      name: 'Grape',
+    },
+    {
+      name: 'Sugar Cane',
+    },
+    {
+      name: 'Wheat and Barley',
+    },
+    {
+      name: 'Corn',
+    },
+    {
+      name: 'Rye',
+    },
+    {
+      name: 'Spelt Grain',
+    },
+  ];
+  async function createIngredients() {
+    for (let i = 0; i < ingredients.length; i++) {
+      await Ingredient.create(ingredients[i]);
+    }
+  }
+  await createIngredients();
   console.log(`seeded ${ingredients.length} ingredients`);
 
   //Creating Orders
-  const orders = await Promise.all([
-    Order.create({
+  let orders = [
+    {
       orderDate: new Date(),
-      shipAddress: "1234 21st pl se",
-      shipState: "WA",
-      shipCity: "Bellevue",
-      shipPostalCode: "98004",
+      shipAddress: '1234 21st pl se',
+      shipState: 'WA',
+      shipCity: 'Bellevue',
+      shipPostalCode: '98004',
       fulfilled: true,
-    }),
-    Order.create({
+    },
+    {
       orderDate: new Date(),
-      shipAddress: "1235 21st pl se",
-      shipState: "WA",
-      shipCity: "Seattle",
-      shipPostalCode: "98002",
+      shipAddress: '1235 21st pl se',
+      shipState: 'WA',
+      shipCity: 'Seattle',
+      shipPostalCode: '98002',
       fulfilled: true,
-    }),
-    Order.create({
+    },
+    {
       orderDate: new Date(),
-      shipAddress: "1236 21st pl se",
-      shipState: "CA",
-      shipCity: "A false town",
-      shipPostalCode: "90210",
+      shipAddress: '1236 21st pl se',
+      shipState: 'CA',
+      shipCity: 'A false town',
+      shipPostalCode: '90210',
       fulfilled: false,
-    }),
-    Order.create({
+    },
+    {
       orderDate: new Date(),
-      shipAddress: "1223 22nd st ne",
-      shipState: "CA",
-      shipCity: "Los Angeles",
-      shipPostalCode: "90210",
+      shipAddress: '1223 22nd st ne',
+      shipState: 'CA',
+      shipCity: 'Los Angeles',
+      shipPostalCode: '90210',
       fulfilled: true,
-    }),
-    Order.create({
+    },
+    {
       orderDate: new Date(),
-      shipAddress: "1236 25th pl se",
-      shipState: "WA",
-      shipCity: "Redmond",
-      shipPostalCode: "98052",
+      shipAddress: '1236 25th pl se',
+      shipState: 'WA',
+      shipCity: 'Redmond',
+      shipPostalCode: '98052',
       fulfilled: true,
-    }),
-  ]);
+    },
+  ];
+  async function createOrders() {
+    for (let i = 0; i < orders.length; i++) {
+      await Order.create(orders[i]);
+    }
+  }
+  await createOrders();
   console.log(`seeded ${orders.length} orders`);
 
   //add region and ingredients to product
+  products = await Product.findAll({ order: [['id', 'ASC']] });
+  orders = await Order.findAll({ order: [['id', 'ASC']] });
   await products[0].setRegion(5);
   await products[0].setIngredient(1);
   await products[1].setRegion(3);
@@ -413,16 +446,16 @@ async function seed() {
  The `seed` function is concerned only with modifying the database.
 */
 async function runSeed() {
-  console.log("seeding...");
+  console.log('seeding...');
   try {
     await seed();
   } catch (err) {
     console.error(err);
     process.exitCode = 1;
   } finally {
-    console.log("closing db connection");
+    console.log('closing db connection');
     await db.close();
-    console.log("db connection closed");
+    console.log('db connection closed');
   }
 }
 
