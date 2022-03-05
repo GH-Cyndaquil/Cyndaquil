@@ -6,6 +6,7 @@ import { fetchIngredients } from '../store/ingredients';
 import orders from './admin';
 import { fetchRegions } from '../store/regions';
 import { addItem } from '../store/orders';
+import axios from 'axios';
 
 function AllProducts(props) {
   const dispatch = useDispatch();
@@ -19,7 +20,7 @@ function AllProducts(props) {
   let [regionFilter, setRegionFilter] = useState(0);
   let [ingredientFilter, setIngredientFilter] = useState(0);
   let [productQuantities, setProductQuantities] = useState({});
-  let pages = [];
+  let [pages, setPages] = useState(1);
   const [search, setSearch] = useState('');
   const ingredients = useSelector((state) => {
     return state.ingredients;
@@ -40,12 +41,20 @@ function AllProducts(props) {
   }, []);
 
   useEffect(() => {
+    axios
+      .get('/api/products')
+      .then((response) => setPages(Math.ceil(response.data.length / 10)));
+  });
+
+  let pagesArr = [];
+  for (let i = 1; i <= pages; i++) {
+    pagesArr.push(i);
+  }
+
+  useEffect(() => {
     dispatch(fetchProducts(props.location));
     dispatch(fetchIngredients());
     dispatch(fetchRegions());
-    for (let i = 0; i < products.length; i++) {
-      pages.push('');
-    }
   }, [props.location.search]);
 
   function addToCart(evt) {
@@ -304,7 +313,7 @@ function AllProducts(props) {
               Previous
             </button>
           )}
-          {pages.map((page, i) => {
+          {pagesArr.map((page, i) => {
             return (
               <button
                 className={
@@ -357,7 +366,7 @@ function AllProducts(props) {
               Previous
             </button>
           )}
-          {pages.map((page, i) => {
+          {pagesArr.map((page, i) => {
             return (
               <button
                 key={i}

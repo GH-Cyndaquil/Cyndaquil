@@ -18,12 +18,17 @@ const requireToken = async (req, res, next) => {
 //mounted on /api/products
 router.get('/', async (req, res, next) => {
   try {
-    const products = await Product.findAndCountAll({
-      order: [['id', 'ASC']],
-      offset: req.query.page * 10 - 10,
-      limit: 11,
-    });
-    res.send(products.rows);
+    if (req.query.page) {
+      const products = await Product.findAndCountAll({
+        order: [['id', 'ASC']],
+        offset: req.query.page * 10 - 10,
+        limit: 11,
+      });
+      res.send(products.rows);
+      return;
+    }
+    const products = await Product.findAll({ order: [['id', 'ASC']] });
+    res.send(products);
   } catch (error) {
     next(error);
   }
