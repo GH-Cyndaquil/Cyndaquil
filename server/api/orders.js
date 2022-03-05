@@ -1,9 +1,9 @@
-const router = require("express").Router();
-const Order = require("../db/models/Order");
-const Product = require("../db/models/Product");
-const OrderDetails = require("../db/models/OrderDetails");
+const router = require('express').Router();
+const Order = require('../db/models/Order');
+const Product = require('../db/models/Product');
+const OrderDetails = require('../db/models/OrderDetails');
 
-router.get("/", async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
     const orders = await Order.findAll({
       include: Product,
@@ -14,7 +14,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.get("/:id", async (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
   try {
     const orders = await Order.findOne({
       where: {
@@ -28,8 +28,10 @@ router.get("/:id", async (req, res, next) => {
   }
 });
 
-router.post("/", async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   try {
+    const { productId, price, quantity, userId } = req.body;
+
     const [item, wasCreated] = await Order.findOrCreate({
       where: {
         userId: req.body.userId,
@@ -40,12 +42,29 @@ router.post("/", async (req, res, next) => {
       },
     });
 
-    await item.addProduct(req.body.productId, {
-      through: {
-        price: req.body.price,
-        quantityOrdered: req.body.quantity,
+    const ifOrderExists = await OrderDetails.findOne({
+      where: {
+        productId: productId,
+        orderId: item.dataValues.id,
       },
     });
+
+    if (!ifOrderExists) {
+      await item.addProduct(req.body.productId, {
+        through: {
+          price: req.body.price,
+          quantityOrdered: req.body.quantity,
+        },
+      });
+    } else {
+      let newPrice = Number(ifOrderExists.dataValues.price) + Number(price);
+      let newQuantityOrdered =
+        Number(ifOrderExists.dataValues.quantityOrdered) + Number(quantity);
+      await ifOrderExists.update({
+        price: newPrice,
+        quantityOrdered: newQuantityOrdered,
+      });
+    }
 
     const newCart = await Order.findOne({
       where: {

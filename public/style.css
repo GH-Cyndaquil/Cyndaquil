@@ -47,10 +47,26 @@ form div {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
+  min-width: 100%;
+}
+
+#all-products-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-width: 100%;
 }
 
 #filtering {
-  margin: 1em;
+  margin-left: 1em;
+  padding-right: 100px;
+  width: 200px;
+  flex-shrink: 0;
+}
+
+.selected-filter {
+  font-weight: bold;
 }
 
 #products {
@@ -58,7 +74,7 @@ form div {
   flex-wrap: wrap;
   flex-direction: row;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: flex-start;
   gap: 20px;
 }
 
@@ -67,9 +83,6 @@ form div {
   flex-direction: row;
   flex-grow: 1;
   justify-content: center;
-  border-style: solid;
-  border-radius: 5px;
-  border-color: #964b00;
   padding: 50px;
 }
 .img {
@@ -138,15 +151,19 @@ form div {
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-style: solid;
-  border-radius: 5px;
-  border-color: #964b00;
+  box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.2);
   padding-bottom: 50px;
   padding-right: 50px;
   padding-left: 50px;
   margin: 50px;
   height: 500px;
   width: 250px;
+  border-radius: 4px;
+  transition: box-shadow 0.2s;
+}
+
+.product:hover {
+  box-shadow: 1px 1px 30px 0px rgba(0, 0, 0, 0.2);
 }
 
 nav {
@@ -179,6 +196,58 @@ nav {
   align-items: center;
 }
 
+.title {
+  font-size: 30px;
+  text-decoration: none;
+  color: rgb(255, 94, 94);
+  text-shadow: 0.05em 0 black, 0 0.05em black, -0.05em 0 black, 0 -0.05em black,
+    -0.05em -0.05em black, -0.05em 0.05em black, 0.05em -0.05em black,
+    0.05em 0.05em black;
+}
+
+.product-links {
+  color: rgba(0, 0, 0, 0.7);
+  align-items: center;
+}
+
+#pagination-buttons {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100px;
+  margin: 25px;
+}
+
+#pagination-buttons > button {
+  border: 0;
+  height: 30px;
+  margin: 3px;
+  cursor: url(https://cur.cursors-4u.net/nature/nat-9/nat803.cur), auto !important;
+  transition: box-shadow 0.2s;
+}
+
+#pagination-buttons > button:hover {
+  box-shadow: 1px 1px 10px 0px gray;
+}
+
+.current-page {
+  background-color: red;
+}
+
+#no-vodka-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+#weirdge {
+  height: 200px;
+  width: 200px;
+}
+
 .nav-button {
   font-size: 30px;
   text-decoration: none;
@@ -187,15 +256,16 @@ nav {
     -0.05em -0.05em black, -0.05em 0.05em black, 0.05em -0.05em black,
     0.05em 0.05em black;
   align-items: center;
+  transition: box-shadow 0.2s;
+  border-radius: 4px;
 }
 
 .nav-button:hover {
-  border-style: solid;
-  border-radius: 5px;
-  border-color: black;
+  box-shadow: 1px 1px 20px 0px gray;
 }
 
 #footer {
+  height: 100px;
   bottom: 0%;
   display: flex;
   flex-direction: column;
@@ -212,12 +282,11 @@ nav {
   width: 30px;
   height: 30px;
   margin: 10px;
+  transition: box-shadow 0.2s;
 }
 
 .footer-link-img:hover {
-  border-style: solid;
-  border-radius: 5px;
-  border-color: white;
+  box-shadow: 1px 1px 20px 10px rgba(255, 255, 255, 0.8);
 }
 
 .login-form {
@@ -265,7 +334,7 @@ nav {
 }
 
 .signup-background {
-  background-image: url("./images/login-background.jpeg");
+  background-image: url('./images/login-background.jpeg');
   width: 60%;
   height: 100vh;
   background-size: cover;
