@@ -65,6 +65,10 @@ form div {
   flex-shrink: 0;
 }
 
+.selected-filter {
+  font-weight: bold;
+}
+
 #products {
   display: flex;
   flex-wrap: wrap;

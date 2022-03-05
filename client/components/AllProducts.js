@@ -79,7 +79,12 @@ function AllProducts(props) {
               </label>
               {regions.map((region) => {
                 return (
-                  <label key={region.id}>
+                  <label
+                    key={region.id}
+                    className={
+                      regionFilter == region.id ? 'selected-filter' : ''
+                    }
+                  >
                     <input
                       type="radio"
                       name="region-filter"
@@ -111,7 +116,12 @@ function AllProducts(props) {
               </label>
               {ingredients.map((ingredient) => {
                 return (
-                  <label key={ingredient.id}>
+                  <label
+                    key={ingredient.id}
+                    className={
+                      ingredientFilter == ingredient.id ? 'selected-filter' : ''
+                    }
+                  >
                     <input
                       type="radio"
                       name="ingredient-filter"
@@ -216,7 +226,7 @@ function AllProducts(props) {
             return (
               <button
                 className={
-                  Number(props.location.search.split('=')[1]) == i + 1
+                  Number(props.location.search.split('=')[1]) === i + 1
                     ? 'current-page'
                     : ''
                 }
