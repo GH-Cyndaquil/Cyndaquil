@@ -63,6 +63,11 @@ function AllProducts(props) {
   }
 
   useEffect(() => {
+    if (props.location.search.split('=')[1] == 1) {
+      setIngredientFilter(0);
+      setRegionFilter(0);
+      setSearch('');
+    }
     dispatch(fetchProducts(props.location));
     dispatch(fetchIngredients());
     dispatch(fetchRegions());
@@ -153,7 +158,7 @@ function AllProducts(props) {
             </div>
             <p>
               <label
-                for="search"
+                htmlFor="search"
                 style={{ fontWeight: 'bold', fontSize: '20px' }}
               >
                 Search
@@ -163,6 +168,7 @@ function AllProducts(props) {
                 name="search"
                 id="search"
                 placeholder="What are you craving?"
+                value={search}
                 onChange={(evt) => setSearch(evt.target.value)}
               ></input>
             </p>
@@ -252,7 +258,7 @@ function AllProducts(props) {
             </div>
             <p>
               <label
-                for="search"
+                htmlFor="search"
                 style={{ fontWeight: 'bold', fontSize: '20px' }}
               >
                 Search
@@ -262,6 +268,7 @@ function AllProducts(props) {
                 name="search"
                 id="search"
                 placeholder="What are you craving?"
+                value={search}
                 onChange={(evt) => setSearch(evt.target.value)}
               ></input>
             </p>
