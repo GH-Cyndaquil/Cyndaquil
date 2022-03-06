@@ -77,7 +77,9 @@ const SingleUser = () => {
                         : ""}
                     </p>
                   </div>
-                  <button>View Order</button>
+                  <Link to={`/orders/${order.id}`}>
+                    <button>View Order</button>
+                  </Link>
                 </div>
               </div>
             );
