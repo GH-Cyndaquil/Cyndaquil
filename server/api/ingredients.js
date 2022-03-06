@@ -6,7 +6,7 @@ const {
 //mounted on /api/ingredients
 router.get('/', async (req, res, next) => {
   try {
-    const ingredients = await Ingredient.findAll();
+    const ingredients = await Ingredient.findAll({ order: [['id', 'ASC']] });
     res.status(200).send(ingredients);
   } catch (err) {
     next(err);

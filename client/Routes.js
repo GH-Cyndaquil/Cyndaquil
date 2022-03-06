@@ -13,6 +13,7 @@ import ViewCart from "./components/ViewCart";
 import SingleProduct from "./components/SingleProduct";
 import SingleUser from "./components/SingleUser";
 import EditUser from "./components/EditUser";
+import CheckoutUser from "./components/CheckoutUser";
 /**
  * COMPONENT
  */
@@ -36,6 +37,8 @@ class Routes extends Component {
             <Route path="/admin" component={AdminPage} />
             <Route path="/adminrights" component={AdminUser} />
             <Route path="/addproduct" component={AddProduct} />
+            <Route path="/checkoutuser" component={CheckoutUser} />
+            <Route path="/viewcart" component={ViewCart} />
           </Switch>
         ) : (
           <Switch>
@@ -45,6 +48,7 @@ class Routes extends Component {
             <Route exact path="/products" component={AllProducts} />
             <Route path="/products/:id" component={SingleProduct} />
             <Route path="/viewcart" component={ViewCart} />
+            <Route path="/checkoutuser" component={CheckoutUser} />
           </Switch>
         )}
       </div>

@@ -2,6 +2,27 @@ body {
   font-family: sans-serif;
   padding: 0;
   margin: 0;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+#app {
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  width: 100%;
+}
+
+#app > div {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  height: 100%;
+  padding: 0;
+  margin: 0;
+  width: 100%;
 }
 
 a {
@@ -26,10 +47,26 @@ form div {
   display: flex;
   flex-direction: row;
   justify-content: flex-start;
+  min-width: 100%;
+}
+
+#all-products-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-width: 100%;
 }
 
 #filtering {
-  margin: 1em;
+  margin-left: 1em;
+  padding-right: 100px;
+  width: 200px;
+  flex-shrink: 0;
+}
+
+.selected-filter {
+  font-weight: bold;
 }
 
 #products {
@@ -37,7 +74,7 @@ form div {
   flex-wrap: wrap;
   flex-direction: row;
   align-items: center;
-  justify-content: space-evenly;
+  justify-content: flex-start;
   gap: 20px;
 }
 
@@ -46,9 +83,6 @@ form div {
   flex-direction: row;
   flex-grow: 1;
   justify-content: center;
-  border-style: solid;
-  border-radius: 5px;
-  border-color: #964b00;
   padding: 50px;
 }
 .img {
@@ -117,22 +151,144 @@ form div {
   display: flex;
   flex-direction: column;
   align-items: center;
-  border-style: solid;
-  border-radius: 5px;
-  border-color: #964b00;
+  box-shadow: 1px 1px 10px 0px rgba(0, 0, 0, 0.2);
   padding-bottom: 50px;
   padding-right: 50px;
   padding-left: 50px;
   margin: 50px;
   height: 500px;
   width: 250px;
+  border-radius: 4px;
+  transition: box-shadow 0.2s;
+}
+
+.product:hover {
+  box-shadow: 1px 1px 30px 0px rgba(0, 0, 0, 0.2);
 }
 
 nav {
   height: 60px;
   display: flex;
   flex-direction: row;
+  justify-content: space-between;
   align-items: center;
+}
+
+#hello-user {
+  font-size: 15px;
+}
+
+#navbar {
+  background-image: url('https://static.wixstatic.com/media/84465c_8a62d497e52f417ebfe985eefda9778c~mv2.jpg/v1/fill/w_740,h_493,al_c,q_90/84465c_8a62d497e52f417ebfe985eefda9778c~mv2.webp');
+  background-size: cover;
+  top: 0%;
+  left: 0;
+  position: sticky;
+  z-index: 1;
+}
+
+#shopping-cart {
+  font-size: 35px;
+}
+
+#nav-user-control {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+}
+
+.title {
+  font-size: 30px;
+  text-decoration: none;
+  color: rgb(255, 94, 94);
+  text-shadow: 0.05em 0 black, 0 0.05em black, -0.05em 0 black, 0 -0.05em black,
+    -0.05em -0.05em black, -0.05em 0.05em black, 0.05em -0.05em black,
+    0.05em 0.05em black;
+}
+
+.product-links {
+  color: rgba(0, 0, 0, 0.7);
+  align-items: center;
+}
+
+#pagination-buttons {
+  flex-grow: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: space-evenly;
+  width: 100px;
+  margin: 25px;
+}
+
+#pagination-buttons > button {
+  border: 0;
+  height: 30px;
+  margin: 3px;
+  cursor: url(https://cur.cursors-4u.net/nature/nat-9/nat803.cur), auto !important;
+  transition: box-shadow 0.2s;
+}
+
+#pagination-buttons > button:hover {
+  box-shadow: 1px 1px 10px 0px gray;
+}
+
+.current-page {
+  background-color: red;
+}
+
+#no-vodka-left {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+#weirdge {
+  height: 200px;
+  width: 200px;
+}
+
+.nav-button {
+  font-size: 30px;
+  text-decoration: none;
+  color: rgb(255, 94, 94);
+  text-shadow: 0.05em 0 black, 0 0.05em black, -0.05em 0 black, 0 -0.05em black,
+    -0.05em -0.05em black, -0.05em 0.05em black, 0.05em -0.05em black,
+    0.05em 0.05em black;
+  align-items: center;
+  transition: box-shadow 0.2s;
+  border-radius: 4px;
+}
+
+.nav-button:hover {
+  box-shadow: 1px 1px 20px 0px gray;
+}
+
+#footer {
+  height: 100px;
+  bottom: 0%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgb(49, 47, 47);
+  color: white;
+  text-shadow: 0.05em 0 black, 0 0.05em black, -0.05em 0 black, 0 -0.05em black,
+    -0.05em -0.05em black, -0.05em 0.05em black, 0.05em -0.05em black,
+    0.05em 0.05em black;
+}
+
+.footer-link-img {
+  width: 30px;
+  height: 30px;
+  margin: 10px;
+  transition: box-shadow 0.2s;
+}
+
+.footer-link-img:hover {
+  box-shadow: 1px 1px 20px 10px rgba(255, 255, 255, 0.8);
 }
 
 .login-form {
@@ -173,14 +329,14 @@ nav {
 }
 
 .login-background {
-  background-image: url("./images/login-background.jpeg");
+  background-image: url('./images/login-background.jpeg');
   width: 60%;
   height: 100vh;
   background-size: cover;
 }
 
 .signup-background {
-  background-image: url("./images/login-background.jpeg");
+  background-image: url('./images/login-background.jpeg');
   width: 60%;
   height: 100vh;
   background-size: cover;

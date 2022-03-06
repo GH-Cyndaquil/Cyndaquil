@@ -1,19 +1,21 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 // import axios from "axios";
-import { fetchCart } from '../store/orders';
+import { fetchCart } from "../store/orders";
+import { Link } from "react-router-dom";
 
-function ViewCart() {
+const ViewCart = (props) => {
   const dispatch = useDispatch();
 
-  const userId = useSelector((state) => state.user.id);
+  const userId = useSelector((state) => {
+    return state.user.id;
+  });
 
   const curCart = useSelector((state) => {
     return state.orders.products;
   });
 
-  //  let [regionFilter, setRegionFilter] = useState("");
-  //  let [ingredientFilter, setIngredientFilter] = useState("");
+  console.log("user------", curCart);
 
   useEffect(() => {
     dispatch(fetchCart(2));
@@ -21,34 +23,63 @@ function ViewCart() {
 
   if (curCart) {
     return (
-      //need to check length of cart, if it's empty display one thing if not display the other
+      <>
+        <main id="cart">
+          <div>
+            <table>
+              <caption>Your Cart</caption>
+              <tbody>
+                <tr>
+                  <th></th>
+                  <th>Qty.</th>
+                  <th>Price</th>
+                  <th>Subtotal</th>
+                </tr>
+                {curCart.map((product) => (
+                  <tr key={product.id}>
+                    <td>
+                      <img src={product.imageUrl}></img>
+                    </td>
 
-      <main id="cart">
-        <h1>Your Cart</h1>
+                    <td>{product["order-details"].quantityOrdered}</td>
+                    <td>{product["order-details"].price}</td>
+                    <td>
+                      {product["order-details"].price *
+                        product["order-details"].quantityOrdered}
+                    </td>
+                    <td>
+                      <i
+                        className="fa fa-trash-o"
+                        style={{ fontSize: "24px" }}
+                      ></i>
+                    </td>
+                  </tr>
+                ))}
 
-        {curCart.map((product) => (
-          <div key={product.id}>
-            <img src={product.imageUrl}></img>
-            <h2>Qty.</h2>
-            <h3>{product['order-details'].quantityOrdered}</h3>
-            <h2>Price</h2>
-            <h3>{product['order-details'].price}</h3>
-            <h2>Subtotal</h2>
-            <h3>
-              {product['order-details'].price *
-                product['order-details'].quantityOrdered}
-            </h3>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td>Total:</td>
+                  {/* need to figure out how to do a total here */}
+                  <td>43.70</td>
+                  <td>
+                    <Link to="/checkoutuser">
+                      <button>Checkout</button>
+                    </Link>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
           </div>
-        ))}
-        {console.log('this is the console log-------', curCart)}
-      </main>
+        </main>
+      </>
     );
   } else {
     return (
       <main id="cart">
-        <h1>Your Cart is empty</h1>
+        <h1>Your Cart is Empty!</h1>
       </main>
     );
   }
-}
+};
 export default ViewCart;
