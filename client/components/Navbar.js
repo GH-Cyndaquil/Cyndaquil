@@ -1,7 +1,7 @@
-import React from "react";
-import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import { logout } from "../store";
+import React from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { logout } from '../store';
 
 const Navbar = (props) => {
   const userId = useSelector((state) => state.user.id);
@@ -38,7 +38,7 @@ const Navbar = (props) => {
             <Link to="/viewcart" className="nav-button">
               <i
                 className="fa fa-shopping-cart"
-                style={{ fontSize: "24px" }}
+                style={{ fontSize: '24px' }}
               ></i>
               {/* <h5>{number of items in cart}</h5> */}
             </Link>
@@ -54,7 +54,7 @@ const Navbar = (props) => {
             <Link to="/viewcart" className="nav-button">
               <i
                 className="fa fa-shopping-cart"
-                style={{ fontSize: "24px" }}
+                style={{ fontSize: '24px' }}
               ></i>
               {/* <h5>{number of items in cart}</h5> */}
             </Link>
