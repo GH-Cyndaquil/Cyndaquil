@@ -70,6 +70,12 @@ function AllProducts(props) {
   }, [props.location.search]);
 
   useEffect(() => {
+    if (search !== '') {
+      props.history.push('/products');
+    }
+  }, [search]);
+
+  useEffect(() => {
     async function filtering() {
       props.history.push('/products?page=1');
       dispatch(
@@ -145,11 +151,21 @@ function AllProducts(props) {
                 setIngredientFilter={setIngredientFilter}
               />
             </div>
-            <p>Search</p>
-            <input
-              type="text"
-              onChange={(evt) => setSearch(evt.target.value)}
-            ></input>
+            <p>
+              <label
+                for="search"
+                style={{ fontWeight: 'bold', fontSize: '20px' }}
+              >
+                Search
+              </label>
+              <input
+                type="text"
+                name="search"
+                id="search"
+                placeholder="What are you craving?"
+                onChange={(evt) => setSearch(evt.target.value)}
+              ></input>
+            </p>
           </div>
           <div id="products">
             <RenderProducts
@@ -157,6 +173,7 @@ function AllProducts(props) {
               regionFilter={regionFilter}
               ingredientFilter={ingredientFilter}
               tenProducts={tenProducts}
+              products={products}
               setProductQuantities={setProductQuantities}
               addToCart={addToCart}
               productQuantities={productQuantities}
@@ -165,21 +182,25 @@ function AllProducts(props) {
           </div>
         </main>
         <div id="pagination-buttons">
-          {pagesArr.map((page, i) => {
-            return (
-              <button
-                className={
-                  Number(props.location.search.split('=')[1]) === i + 1
-                    ? 'current-page'
-                    : ''
-                }
-                key={i}
-                onClick={() => props.history.push(`/products?page=${i + 1}`)}
-              >
-                {i + 1}
-              </button>
-            );
-          })}
+          {search === ''
+            ? pagesArr.map((page, i) => {
+                return (
+                  <button
+                    className={
+                      Number(props.location.search.split('=')[1]) === i + 1
+                        ? 'current-page'
+                        : ''
+                    }
+                    key={i}
+                    onClick={() =>
+                      props.history.push(`/products?page=${i + 1}`)
+                    }
+                  >
+                    {i + 1}
+                  </button>
+                );
+              })
+            : null}
         </div>
       </div>
     );
@@ -229,11 +250,21 @@ function AllProducts(props) {
                 setIngredientFilter={setIngredientFilter}
               />
             </div>
-            <p>Search</p>
-            <input
-              type="text"
-              onChange={(evt) => setSearch(evt.target.value)}
-            ></input>
+            <p>
+              <label
+                for="search"
+                style={{ fontWeight: 'bold', fontSize: '20px' }}
+              >
+                Search
+              </label>
+              <input
+                type="text"
+                name="search"
+                id="search"
+                placeholder="What are you craving?"
+                onChange={(evt) => setSearch(evt.target.value)}
+              ></input>
+            </p>
           </div>
           <div id="products">
             <div id="no-vodka-left">

@@ -64,7 +64,10 @@ function RenderProducts(props) {
             </div>
           );
         })
-    : props.tenProducts
+    : props.products
+        .filter((product) =>
+          product.name.toLowerCase().includes(props.search.toLowerCase())
+        )
         .filter((product) => {
           if (props.regionFilter === 0) {
             return product;
@@ -79,9 +82,6 @@ function RenderProducts(props) {
             return product;
           }
         })
-        .filter((product) =>
-          product.name.toLowerCase().includes(props.search.toLowerCase())
-        )
         .map((product) => {
           return (
             <div className="product" key={product.id}>
