@@ -432,4 +432,24 @@ hr {
   border: none;
   border-radius: 20px;
   padding: 10px;
+/*cart */
+th,
+td {
+  width: 20vw;
+  text-align: center;
+  border-bottom: 2px solid rgb(151, 148, 148);
+}
+#cartTable {
+  width: 50vw;
+  margin-top: 75px;
+  margin-left: auto;
+  margin-right: auto;
+  border-bottom: 1px;
+  margin-bottom: 75px;
+}
+
+caption {
+  font-size: 24pt;
+  margin: 50px;
+  border-bottom: 2px solid rgb(151, 148, 148);
 }
