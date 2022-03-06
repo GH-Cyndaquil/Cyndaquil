@@ -18,17 +18,32 @@ const requireToken = async (req, res, next) => {
 //mounted on /api/products
 router.get('/', async (req, res, next) => {
   try {
+    let filterObj = {};
+    let { regionfilter, ingredientfilter } = req.headers;
+    if (Number(regionfilter) > 0) {
+      filterObj.regionId = Number(regionfilter);
+    }
+    if (Number(ingredientfilter) > 0) {
+      filterObj.ingredientId = Number(ingredientfilter);
+    }
+
     if (req.query.page) {
       const products = await Product.findAndCountAll({
         order: [['id', 'ASC']],
+        where: filterObj,
         offset: req.query.page * 10 - 10,
-        limit: 11,
+        limit: 20,
       });
+
       res.send(products.rows);
       return;
+    } else {
+      const products = await Product.findAll({
+        order: [['id', 'ASC']],
+        where: filterObj,
+      });
+      res.send(products);
     }
-    const products = await Product.findAll({ order: [['id', 'ASC']] });
-    res.send(products);
   } catch (error) {
     next(error);
   }
