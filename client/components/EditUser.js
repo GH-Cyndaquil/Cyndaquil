@@ -29,7 +29,8 @@ const EditUser = (props) => {
   return (
     <div>
       <div>
-        <form onSubmit={handleSubmit}>
+        <form onSubmit={handleSubmit} className="login-form">
+          <h1>Edit Account Info</h1>
           <div className="form-element">
             <label htmlFor="firstName">
               <small>First Name</small>
