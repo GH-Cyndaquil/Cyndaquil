@@ -82,7 +82,9 @@ function AllProducts(props) {
 
   useEffect(() => {
     async function filtering() {
-      props.history.push('/products?page=1');
+      if (!(props.location.search === '' && search !== '')) {
+        props.history.push('/products?page=1');
+      }
       dispatch(
         fetchProducts(props.location, { regionFilter, ingredientFilter })
       );
@@ -122,7 +124,6 @@ function AllProducts(props) {
                 <input
                   type="radio"
                   name="region-filter"
-                  checked
                   onChange={(evt) => {
                     if (evt.target.checked) {
                       setRegionFilter(0);
@@ -143,7 +144,6 @@ function AllProducts(props) {
                 <input
                   type="radio"
                   name="ingredient-filter"
-                  checked
                   onChange={(evt) => {
                     if (evt.target.checked) {
                       setIngredientFilter(0);
@@ -224,7 +224,6 @@ function AllProducts(props) {
                 <input
                   type="radio"
                   name="region-filter"
-                  checked
                   onChange={(evt) => {
                     if (evt.target.checked) {
                       setRegionFilter(0);
@@ -245,7 +244,6 @@ function AllProducts(props) {
                 <input
                   type="radio"
                   name="ingredient-filter"
-                  checked
                   onChange={(evt) => {
                     if (evt.target.checked) {
                       setIngredientFilter(0);
