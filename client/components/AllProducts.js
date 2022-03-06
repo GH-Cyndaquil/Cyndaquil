@@ -124,6 +124,7 @@ function AllProducts(props) {
                 <input
                   type="radio"
                   name="region-filter"
+                  defaultChecked
                   onChange={(evt) => {
                     if (evt.target.checked) {
                       setRegionFilter(0);
@@ -144,6 +145,7 @@ function AllProducts(props) {
                 <input
                   type="radio"
                   name="ingredient-filter"
+                  defaultChecked
                   onChange={(evt) => {
                     if (evt.target.checked) {
                       setIngredientFilter(0);
@@ -224,6 +226,7 @@ function AllProducts(props) {
                 <input
                   type="radio"
                   name="region-filter"
+                  defaultChecked
                   onChange={(evt) => {
                     if (evt.target.checked) {
                       setRegionFilter(0);
@@ -244,6 +247,7 @@ function AllProducts(props) {
                 <input
                   type="radio"
                   name="ingredient-filter"
+                  defaultChecked
                   onChange={(evt) => {
                     if (evt.target.checked) {
                       setIngredientFilter(0);
