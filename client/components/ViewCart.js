@@ -1,27 +1,32 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-// import axios from "axios";
-import { fetchCart } from "../store/orders";
-import { Link } from "react-router-dom";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCart } from '../store/orders';
+import { Link } from 'react-router-dom';
 
 const ViewCart = (props) => {
   const dispatch = useDispatch();
-
   const userId = useSelector((state) => {
     return state.user.id;
   });
 
   useEffect(() => {
-    dispatch(fetchCart(2));
-  }, []);
+    if (userId !== undefined) {
+      dispatch(fetchCart(userId));
+    }
+  }, [userId]);
 
   const curCart = useSelector((state) => {
-    return state.orders.products;
+    return state.orders;
   });
 
-  console.log("user------", curCart);
+  function numberWithCommas(price) {
+    if (price.toString().split('.')[1].length === 1) {
+      price = price.toString() + 0;
+    }
+    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
 
-  if (curCart) {
+  if (curCart.id !== undefined) {
     return (
       <>
         <main id="cart">
@@ -36,22 +41,27 @@ const ViewCart = (props) => {
                   <th>Subtotal</th>
                   <th></th>
                 </tr>
-                {curCart.map((product) => (
+                {curCart.products.map((product, i) => (
                   <tr key={product.id}>
                     <td>
                       <img src={product.imageUrl}></img>
                     </td>
 
-                    <td>{product["order-details"].quantityOrdered}</td>
-                    <td>{product["order-details"].price}</td>
+                    <td>{curCart['order-details'][i].quantityOrdered}</td>
                     <td>
-                      {product["order-details"].price *
-                        product["order-details"].quantityOrdered}
+                      ${numberWithCommas(curCart['order-details'][i].price)}
+                    </td>
+                    <td>
+                      $
+                      {numberWithCommas(
+                        curCart['order-details'][i].price *
+                          curCart['order-details'][i].quantityOrdered
+                      )}
                     </td>
                     <td>
                       <i
                         className="fa fa-trash-o"
-                        style={{ fontSize: "24px" }}
+                        style={{ fontSize: '24px' }}
                       ></i>
                     </td>
                   </tr>
