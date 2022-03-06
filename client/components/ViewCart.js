@@ -11,21 +11,21 @@ const ViewCart = (props) => {
     return state.user.id;
   });
 
+  useEffect(() => {
+    dispatch(fetchCart(2));
+  }, []);
+
   const curCart = useSelector((state) => {
     return state.orders.products;
   });
 
   console.log("user------", curCart);
 
-  useEffect(() => {
-    dispatch(fetchCart(2));
-  }, []);
-
   if (curCart) {
     return (
       <>
         <main id="cart">
-          <div>
+          <div id="cartTable">
             <table>
               <caption>Your Cart</caption>
               <tbody>
@@ -34,6 +34,7 @@ const ViewCart = (props) => {
                   <th>Qty.</th>
                   <th>Price</th>
                   <th>Subtotal</th>
+                  <th></th>
                 </tr>
                 {curCart.map((product) => (
                   <tr key={product.id}>
