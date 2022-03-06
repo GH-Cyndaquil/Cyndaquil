@@ -1,8 +1,8 @@
-import axios from 'axios';
+import axios from "axios";
 const initState = {};
 
-const GOT_CART = 'GOT_CART';
-const ADD_ITEM = 'ADD_ITEM';
+const GOT_CART = "GOT_CART";
+const ADD_ITEM = "ADD_ITEM";
 
 const addedItem = (item) => ({
   type: ADD_ITEM,
@@ -20,7 +20,7 @@ export const addItem = (item) => {
       const { data } = await axios.post(`/api/orders/`, item);
       dispatch(gotCart(data));
     } catch (error) {
-      console.error('AddItem Failed');
+      console.error("AddItem Failed");
     }
   };
 };
@@ -28,10 +28,11 @@ export const addItem = (item) => {
 export const fetchCart = (id) => {
   return async (dispatch) => {
     try {
+      console.log("fetched");
       const { data } = await axios.get(`/api/orders/${id}`);
       dispatch(gotCart(data));
     } catch (error) {
-      console.error('fetchCart failed');
+      console.error("fetchCart failed");
     }
   };
 };
