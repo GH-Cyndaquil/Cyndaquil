@@ -179,7 +179,7 @@ nav {
 }
 
 #navbar {
-  background-image: url('https://static.wixstatic.com/media/84465c_8a62d497e52f417ebfe985eefda9778c~mv2.jpg/v1/fill/w_740,h_493,al_c,q_90/84465c_8a62d497e52f417ebfe985eefda9778c~mv2.webp');
+  background-image: url("https://static.wixstatic.com/media/84465c_8a62d497e52f417ebfe985eefda9778c~mv2.jpg/v1/fill/w_740,h_493,al_c,q_90/84465c_8a62d497e52f417ebfe985eefda9778c~mv2.webp");
   background-size: cover;
   top: 0%;
   left: 0;
@@ -278,6 +278,7 @@ nav {
   text-shadow: 0.05em 0 black, 0 0.05em black, -0.05em 0 black, 0 -0.05em black,
     -0.05em -0.05em black, -0.05em 0.05em black, 0.05em -0.05em black,
     0.05em 0.05em black;
+  width: 100%;
 }
 
 .footer-link-img {
@@ -329,14 +330,14 @@ nav {
 }
 
 .login-background {
-  background-image: url('./images/login-background.jpeg');
+  background-image: url("./images/login-background.jpeg");
   width: 60%;
   height: 100vh;
   background-size: cover;
 }
 
 .signup-background {
-  background-image: url('./images/login-background.jpeg');
+  background-image: url("./images/login-background.jpeg");
   width: 60%;
   height: 100vh;
   background-size: cover;
@@ -348,4 +349,87 @@ hr {
 
 .error {
   color: rgb(209, 36, 36);
+}
+
+#single-user {
+  height: 100vh;
+  margin-left: 30px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+#user-info {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+}
+
+.user-info-element {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.user-info-element > h3 {
+  margin: 0;
+}
+
+.order-tile {
+  display: flex;
+  flex-direction: column;
+  border-radius: 20px;
+  width: 500px;
+  border: 1px solid black;
+  padding-bottom: 20px;
+  box-shadow: 3px 3px 10px rgb(61, 61, 61);
+}
+
+.order-details-header {
+  display: flex;
+  flex-direction: row;
+  gap: 50px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid black;
+  border-radius: 20px 20px 0 0;
+  height: 50px;
+  padding-left: 20px;
+  align-items: center;
+  justify-content: center;
+}
+
+.order-details-element {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  align-items: center;
+}
+
+.order-details-element p {
+  margin: 0;
+}
+
+.order-content > img {
+  height: 100px;
+  width: 100px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.order-content {
+  display: flex;
+  flex-direction: row;
+  gap: 30px;
+  align-items: center;
+  padding-left: 20px;
+}
+
+.order-content button {
+  background-color: rgb(107, 196, 85);
+  height: 40px;
+  color: white;
+  border: none;
+  border-radius: 20px;
+  padding: 10px;
 }
