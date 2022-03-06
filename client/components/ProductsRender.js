@@ -80,7 +80,7 @@ function RenderProducts(props) {
           }
         })
         .filter((product) =>
-          product.name.toLowerCase().includes(search.toLowerCase())
+          product.name.toLowerCase().includes(props.search.toLowerCase())
         )
         .map((product) => {
           return (
