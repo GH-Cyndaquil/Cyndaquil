@@ -1,14 +1,17 @@
-import axios from 'axios';
+import axios from "axios";
 //Action creators
-const SET_PRODUCTS = 'SET_PRODUCTS';
-const ADD_PRODUCT = 'ADD_PRODUCT';
+const SET_PRODUCTS = "SET_PRODUCTS";
+const ADD_PRODUCT = "ADD_PRODUCT";
 
 //action types
 const setProducts = (products) => ({
   type: SET_PRODUCTS,
   products,
 });
-const addedProduct = (product) => ({ type: ADD_PRODUCT, product });
+const addedProduct = (product) => ({
+  type: ADD_PRODUCT,
+  product,
+});
 
 //thunk creators
 export const fetchProducts = (location, filters) => {
@@ -22,11 +25,12 @@ export const fetchProducts = (location, filters) => {
 
 export const addProduct = (product) => async (dispatch) => {
   try {
-    const { data } = await axios.post('/api/products', product);
+    const { data } = await axios.post("/api/adminproduct", product);
     dispatch(addedProduct(data));
   } catch (error) {
     console.log(error);
   }
+  s;
 };
 
 const initState = [];

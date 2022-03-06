@@ -27,7 +27,7 @@ class AddProduct extends React.Component {
         price: price,
         imageUrl: imageUrl,
         quantity: quantity,
-        description: desscription,
+        description: description,
       });
     } catch (error) {
       console.error(error);
