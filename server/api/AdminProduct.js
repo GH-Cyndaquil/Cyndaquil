@@ -1,6 +1,7 @@
 const router = require("express").Router();
 const Product = require("../db/models/Product");
 const User = require("../db/models/User");
+module.exports = router;
 
 const adminsOnly = (req, res, next) => {
   if (!req.User) {
@@ -17,8 +18,15 @@ const adminsOnly = (req, res, next) => {
 
 router.post("/", adminsOnly, async (req, res, next) => {
   try {
-    const newCreatedProduct = await Product.create(req.body);
-    res.json(newCreatedProduct);
+    const { name, description, price, quantity, imageUrl } = req.body;
+    const newProduct = await Product.create({
+      name,
+      description,
+      price,
+      quantity,
+      imageUrl,
+    });
+    res.status(201).json(newProduct);
   } catch (error) {
     next(error);
   }
@@ -26,10 +34,10 @@ router.post("/", adminsOnly, async (req, res, next) => {
 
 router.get("/", adminsOnly, async (req, res, next) => {
   try {
-    const product = await Product.findAll({
-      include: Product.name,
+    const products = await Product.findAll({
+      attributes: ["id", "name"],
     });
-    res.json(product);
+    res.json(products);
   } catch (err) {
     next(err);
   }
@@ -46,12 +54,18 @@ router.delete("/:ProductId", adminsOnly, async (req, res, next) => {
   }
 });
 
-router.put("/:userId", adminsOnly, async (req, res, next) => {
+router.put("/:id", adminsOnly, async (req, res, next) => {
   try {
-    const id = req.params.userId;
-    const productUpdate = await Product.findByPk(id);
-    await productUpdate.update(req.body);
-    res.status(201).send(productUpdate);
+    const { name, price, description, imageUrl, quantity } = req.body;
+    const user = await Product.findByPk(req.params.id);
+    await user.update({
+      name,
+      price,
+      description,
+      imageUrl,
+      quantity,
+    });
+    res.send(user);
   } catch (error) {
     next(error);
   }
