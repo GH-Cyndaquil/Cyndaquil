@@ -40,7 +40,7 @@ nav a {
 
 .homestyle {
   background-color: rgb(61, 61, 61);
-  background-image: url("./gifs/pouringMartini.gif"), url(".images/");
+  background-image: url('./gifs/pouringMartini.gif'), url('.images/');
   background-size: cover;
   font-size: 2rem;
   border: 2px solid black;
@@ -167,7 +167,7 @@ form div {
   width: 500px;
   text-align: center;
   justify-content: space-between;
-  background-image: url("./gifs/shoutPour.gif");
+  background-image: url('./gifs/shoutPour.gif');
   background-size: cover;
   font-size: 2rem;
   border: 2px solid black;
@@ -230,7 +230,7 @@ nav {
 }
 
 #navbar {
-  background-image: url("https://static.wixstatic.com/media/84465c_8a62d497e52f417ebfe985eefda9778c~mv2.jpg/v1/fill/w_740,h_493,al_c,q_90/84465c_8a62d497e52f417ebfe985eefda9778c~mv2.webp");
+  background-image: url('https://static.wixstatic.com/media/84465c_8a62d497e52f417ebfe985eefda9778c~mv2.jpg/v1/fill/w_740,h_493,al_c,q_90/84465c_8a62d497e52f417ebfe985eefda9778c~mv2.webp');
   background-size: cover;
   top: 0%;
   left: 0;
@@ -240,6 +240,10 @@ nav {
 
 #shopping-cart {
   font-size: 35px;
+}
+
+#cart-item-quantity {
+  width: 50px;
 }
 
 #nav-user-control {
@@ -405,14 +409,14 @@ nav {
 }
 
 .login-background {
-  background-image: url("./images/login-background.jpeg");
+  background-image: url('./images/login-background.jpeg');
   width: 60%;
   height: 100vh;
   background-size: cover;
 }
 
 .signup-background {
-  background-image: url("./images/login-background.jpeg");
+  background-image: url('./images/login-background.jpeg');
   width: 60%;
   height: 100vh;
   background-size: cover;
@@ -599,7 +603,7 @@ button:active {
     inset 0 1px 0 #e298d8;
   transform: scale(0.99);
 #home-background {
-  background-image: url("./gifs/swirlingRicky.gif");
+  background-image: url('./gifs/swirlingRicky.gif');
   width: 60%;
   height: 100vh;
   background-size: cover;
