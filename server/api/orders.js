@@ -3,11 +3,15 @@ const Order = require('../db/models/Order');
 const Product = require('../db/models/Product');
 const OrderDetails = require('../db/models/OrderDetails');
 
-router.get('/', async (req, res, next) => {
+//for specific order
+router.get('/:id', async (req, res, next) => {
   try {
     if (req.params.id !== undefined) {
     }
-    const orders = await Order.findAll({
+    const orders = await Order.findOne({
+      where: {
+        id: req.params.id,
+      },
       include: Product,
     });
     res.json(orders);
@@ -17,7 +21,7 @@ router.get('/', async (req, res, next) => {
 });
 
 //for order history
-router.get('/:id', async (req, res, next) => {
+router.get('/history/:id', async (req, res, next) => {
   try {
     if (req.params.id !== undefined) {
       const orders = await Order.findAll({
