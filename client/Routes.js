@@ -1,20 +1,21 @@
-import React, { Component, Fragment } from 'react';
-import { connect } from 'react-redux';
-import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
-import Signup from './components/Signup';
-import Login from './components/Login';
-import Home from './components/Home';
-import { me } from './store';
-import AdminPage from './components/admin/AdminPage';
-import AdminUser from './components/admin/AdminUser';
-import AddProduct from './components/admin/AddProduct';
-import AllProducts from './components/AllProducts';
-import ViewCart from './components/ViewCart';
-import SingleProduct from './components/SingleProduct';
-import SingleUser from './components/SingleUser';
-import EditUser from './components/EditUser';
-import CheckoutUser from './components/CheckoutUser';
-import SingleOrder from './components/SingleOrder';
+import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
+import { withRouter, Route, Switch, Redirect } from "react-router-dom";
+import Signup from "./components/Signup";
+import Login from "./components/Login";
+import Home from "./components/Home";
+import { me } from "./store";
+import AdminPage from "./components/admin/AdminPage";
+import AdminUser from "./components/admin/AdminUser";
+import AddProduct from "./components/admin/AddProduct";
+import AdminProduct from "./components/admin/AdminProduct";
+import AllProducts from "./components/AllProducts";
+import ViewCart from "./components/ViewCart";
+import SingleProduct from "./components/SingleProduct";
+import SingleUser from "./components/SingleUser";
+import EditUser from "./components/EditUser";
+import CheckoutUser from "./components/CheckoutUser";
+import SingleOrder from "./components/SingleOrder";
 /**
  * COMPONENT
  */
@@ -36,8 +37,9 @@ class Routes extends Component {
             <Route exact path="/users/:id" component={SingleUser} />
             <Route path="/users/:id/edit" component={EditUser} />
             <Route path="/admin" component={AdminPage} />
-            <Route path="/adminrights" component={AdminUser} />
+            <Route path="/adminuser" component={AdminUser} />
             <Route path="/addproduct" component={AddProduct} />
+            <Route path="/adminproduct" component={AdminProduct} />
             <Route path="/checkoutuser" component={CheckoutUser} />
             <Route path="/viewcart" component={ViewCart} />
             <Route path="/orders/:id" component={SingleOrder} />

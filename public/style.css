@@ -128,13 +128,47 @@ form div {
   margin: 0 auto;
   width: 50%;
   background-color: rgba(127, 245, 245, 0.338);
+  border: 2px solid black;
+  border-radius: 4px;
+  padding: 3px;
+  margin-bottom: 1em;
+  margin-top: 1em;
+  text-align: center;
 }
-.adminblock {
-  width: 100%;
+
+.adminHeader {
+  color: azure;
   display: flexbox;
   text-align: center;
+  font-size: 30px;
+  height: 100%;
+  width: 100%;
+}
+
+.adminBackground {
+  background-color: rgb(61, 61, 61);
+  padding: 1em;
+}
+.adminblock {
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  height: 400px;
+  width: 500px;
+  text-align: center;
   justify-content: space-between;
+  background-image: url("./gifs/shoutPour.gif");
+  background-size: cover;
   font-size: 2rem;
+  border: 2px solid black;
+  border-radius: 4px;
+  padding: 3px;
+  box-shadow: 0 2px 2px rgba(0, 0, 0, 0.025), 0 5px 2px rgba(0, 0, 0, 0.025),
+    0 15px 15px rgba(0, 0, 0, 0.035), 0 30px 30px rgba(0, 0, 0, 0.045),
+    0 45px 45px rgba(0, 0, 0, 0.055);
+  opacity: 0.95;
+  margin-bottom: 1em;
+  margin-top: 1em;
 }
 
 .productHeader {
@@ -186,7 +220,7 @@ nav {
 }
 
 #navbar {
-  background-image: url('https://static.wixstatic.com/media/84465c_8a62d497e52f417ebfe985eefda9778c~mv2.jpg/v1/fill/w_740,h_493,al_c,q_90/84465c_8a62d497e52f417ebfe985eefda9778c~mv2.webp');
+  background-image: url("https://static.wixstatic.com/media/84465c_8a62d497e52f417ebfe985eefda9778c~mv2.jpg/v1/fill/w_740,h_493,al_c,q_90/84465c_8a62d497e52f417ebfe985eefda9778c~mv2.webp");
   background-size: cover;
   top: 0%;
   left: 0;
@@ -361,14 +395,14 @@ nav {
 }
 
 .login-background {
-  background-image: url('./images/login-background.jpeg');
+  background-image: url("./images/login-background.jpeg");
   width: 60%;
   height: 100vh;
   background-size: cover;
 }
 
 .signup-background {
-  background-image: url('./images/login-background.jpeg');
+  background-image: url("./images/login-background.jpeg");
   width: 60%;
   height: 100vh;
   background-size: cover;

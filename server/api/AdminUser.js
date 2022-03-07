@@ -1,5 +1,27 @@
+/*
 const router = require("express").Router();
 const User = require("../db/models/User");
+module.exports = router;
+*/
+
+const router = require("express").Router();
+const {
+  models: { User },
+} = require("../db");
+module.exports = router;
+
+const adminsOnly = (req, res, next) => {
+  if (!req.User) {
+    const err = new Error("Not logged in");
+    err.status = 401;
+    return next(err);
+  } else if (!req.User.isAdmin) {
+    const err = new Error("Off Limits");
+    err.status = 401;
+    return next(err);
+  }
+  next();
+};
 
 router.get("/", adminsOnly, async (req, res, next) => {
   try {
@@ -12,23 +34,32 @@ router.get("/", adminsOnly, async (req, res, next) => {
   }
 });
 
-router.delete("/:userId", adminsOnly, async (req, res, next) => {
+router.put("/:id", adminsOnly, async (req, res, next) => {
   try {
-    const id = req.params.userId;
-    const user = await User.findByPk(id);
-    await user.destroy();
-    res.status(204).send();
-  } catch (error) {
-    next(error);
-  }
-});
-
-router.put("/:userId", adminsOnly, async (req, res, next) => {
-  try {
-    const id = req.params.userId;
-    const userUpdate = await User.findByPk(id);
-    await userUpdate.update(req.body);
-    res.status(201).send(userUpdate);
+    const {
+      firstName,
+      lastName,
+      email,
+      username,
+      address,
+      city,
+      state,
+      postalCode,
+      isAdmin,
+    } = req.body;
+    const user = await User.findByPk(req.params.id);
+    await user.update({
+      firstName,
+      lastName,
+      email,
+      username,
+      address,
+      city,
+      state,
+      postalCode,
+      isAdmin,
+    });
+    res.send(user);
   } catch (error) {
     next(error);
   }
