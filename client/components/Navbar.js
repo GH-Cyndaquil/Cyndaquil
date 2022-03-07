@@ -1,34 +1,50 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { logout } from '../store';
-import { fetchCart } from '../store/orders';
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { logout } from "../store";
+import { fetchCart } from "../store/orders";
 
 const Navbar = (props) => {
   const userId = useSelector((state) => state.user.id);
   const isLoggedIn = useSelector((state) => !!state.user.id);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  const cartCount = useSelector((state) => state.orders.products);
-  const cart = useSelector((state) => state.orders);
+  let cart = useSelector((state) => state.orders);
 
   useEffect(() => {
     dispatch(fetchCart(userId));
   }, [userId]);
 
   function cartCounter() {
-    return cart['order-details'].reduce((accum, num) => {
-      accum += num.quantityOrdered;
-      return accum;
-    }, 0);
+    if (cart.products !== undefined) {
+      return cart.products.reduce((accum, num) => {
+        accum += num["order-details"].quantityOrdered;
+        return accum;
+      }, 0);
+    } else {
+      return 0;
+    }
   }
 
+  function localStorageCount() {
+    if (localStorage.cart) {
+      let cart = Object.values(JSON.parse(localStorage.getItem("cart")));
+      let items = 0;
+      for (let i = 0; i < cart.length; i++) {
+        items += Number(cart[i].quantityOrdered);
+      }
+      return items;
+    } else {
+      return 0;
+    }
+  }
+  console.log("cart", cart);
   return (
     <div id="navbar">
       <nav>
         <h1 className="title">NYET</h1>
         <div>
-          <Link to="/home" className="nav-button">
+          <Link to="/" className="nav-button">
             Home
           </Link>
           <Link to="/products?page=1" className="nav-button">
@@ -54,7 +70,7 @@ const Navbar = (props) => {
                 <i
                   id="shopping-cart"
                   className="fa fa-shopping-cart"
-                  style={{ fontSize: '50px' }}
+                  style={{ fontSize: "50px" }}
                 ></i>
                 {cart.id !== undefined ? (
                   <div id="cart-count">{cartCounter()}</div>
@@ -78,9 +94,9 @@ const Navbar = (props) => {
                 <i
                   id="shopping-cart"
                   className="fa fa-shopping-cart"
-                  style={{ fontSize: '50px' }}
+                  style={{ fontSize: "50px" }}
                 ></i>
-                <div id="cart-count">{1}</div>
+                <div id="cart-count">{localStorageCount()}</div>
               </div>
               {/* <h5>{number of items in cart}</h5> */}
             </Link>
