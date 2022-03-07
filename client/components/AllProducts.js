@@ -4,7 +4,7 @@ import { fetchProducts } from '../store/products';
 import { fetchIngredients } from '../store/ingredients';
 import orders from './admin';
 import { fetchRegions } from '../store/regions';
-import { addItem } from '../store/orders';
+import { addItem, gotCart } from '../store/orders';
 import axios from 'axios';
 import RegionMap from './RegionFilters';
 import IngredientsMap from './IngredientsFilters';
@@ -113,30 +113,44 @@ function AllProducts(props) {
           let cart = JSON.parse(localStorage.getItem('cart'));
           let cartItem = cart[`${evt.target.id}`];
           if (cartItem) {
-            cartItem.quantity =
-              Number(cartItem.quantity) +
+            cartItem.quantityOrdered =
+              Number(cartItem.quantityOrdered) +
               Number(productQuantities[evt.target.id].quantity);
             cartItem.price = (
-              cartItem.quantity * Number(productQuantities[evt.target.id].price)
+              cartItem.quantityOrdered *
+              Number(productQuantities[evt.target.id].price)
             ).toFixed(2);
+            cartItem.imageUrl = productQuantities[evt.target.id].imageUrl;
           } else {
             cart[`${evt.target.id}`] = {
-              productId: evt.target.id,
+              id: +evt.target.id,
               price: Number(productQuantities[evt.target.id].price).toFixed(2),
-              quantity: Number(productQuantities[evt.target.id].quantity),
-              userId: userId,
+              quantityOrdered: Number(
+                productQuantities[evt.target.id].quantity
+              ),
+              imageUrl: productQuantities[evt.target.id].imageUrl,
             };
           }
+          let products = [];
+          for (let key in cart) {
+            products.push(cart[key]);
+          }
           localStorage.setItem('cart', JSON.stringify(cart));
+          dispatch(gotCart({ products: products }));
         } else {
           let cart = {};
           cart[`${evt.target.id}`] = {
-            productId: evt.target.id,
+            id: +evt.target.id,
             price: Number(productQuantities[evt.target.id].price).toFixed(2),
-            quantity: Number(productQuantities[evt.target.id].quantity),
-            userId: userId,
+            quantityOrdered: Number(productQuantities[evt.target.id].quantity),
+            imageUrl: productQuantities[evt.target.id].imageUrl,
           };
+          let products = [];
+          for (let key in cart) {
+            products.push(cart[key]);
+          }
           localStorage.setItem('cart', JSON.stringify(cart));
+          dispatch(gotCart({ products: products }));
         }
       }
     }

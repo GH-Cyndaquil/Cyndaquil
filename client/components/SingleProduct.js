@@ -6,7 +6,7 @@ import {
 } from '../store/selectedProduct';
 import { fetchIngredients } from '../store/ingredients';
 import { fetchRegions } from '../store/regions';
-import { addItem, fetchCart } from '../store/orders';
+import { addItem, fetchCart, gotCart } from '../store/orders';
 
 function SingleProduct(props) {
   const dispatch = useDispatch();
@@ -67,27 +67,40 @@ function SingleProduct(props) {
           let cart = JSON.parse(localStorage.getItem('cart'));
           let cartItem = cart[`${currentProduct.id}`];
           if (cartItem) {
-            cartItem.quantity =
-              Number(cartItem.quantity) + Number(currentQuantity);
-            cartItem.price = (cartItem.quantity * currentProduct.price).toFixed(
-              2
-            );
+            cartItem.quantityOrdered =
+              Number(cartItem.quantityOrdered) + Number(currentQuantity);
+            cartItem.price = (
+              cartItem.quantityOrdered * currentProduct.price
+            ).toFixed(2);
+            cartItem.imageUrl = currentProduct.imageUrl;
           } else {
             cart[`${currentProduct.id}`] = {
-              productId: currentProduct.id,
+              id: +currentProduct.id,
               price: quantityPrice,
-              quantity: currentQuantity,
+              quantityOrdered: currentQuantity,
+              imageUrl: currentProduct.imageUrl,
             };
           }
+          let products = [];
+          for (let key in cart) {
+            products.push(cart[key]);
+          }
           localStorage.setItem('cart', JSON.stringify(cart));
+          dispatch(gotCart({ products: products }));
         } else {
           let cart = {};
           cart[`${currentProduct.id}`] = {
-            productId: currentProduct.id,
+            id: +currentProduct.id,
             price: quantityPrice,
-            quantity: currentQuantity,
+            quantityOrdered: currentQuantity,
+            imageUrl: currentProduct.imageUrl,
           };
+          let products = [];
+          for (let key in cart) {
+            products.push(cart[key]);
+          }
           localStorage.setItem('cart', JSON.stringify(cart));
+          dispatch(gotCart({ products: products }));
         }
       }
     }

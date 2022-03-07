@@ -9,17 +9,11 @@ const Navbar = (props) => {
   const isLoggedIn = useSelector((state) => !!state.user.id);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  const cartCount = useSelector((state) => state.orders.products);
   let cart = useSelector((state) => state.orders);
-  const localStorageCart = localStorage.getItem('cart');
 
   useEffect(() => {
     dispatch(fetchCart(userId));
   }, [userId]);
-
-  useEffect(() => {
-    cart = localStorageCart;
-  }, [localStorageCart]);
 
   function cartCounter() {
     return cart['order-details'].reduce((accum, num) => {
@@ -33,7 +27,7 @@ const Navbar = (props) => {
       let cart = Object.values(JSON.parse(localStorage.getItem('cart')));
       let items = 0;
       for (let i = 0; i < cart.length; i++) {
-        items += cart[i].quantity;
+        items += Number(cart[i].quantityOrdered);
       }
       return items;
     } else {
