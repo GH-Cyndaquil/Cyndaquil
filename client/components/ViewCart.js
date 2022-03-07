@@ -1,11 +1,12 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCart, gotCart, removeItem } from '../store/orders';
+import { fetchCart, gotCart, removeItem, updateItem } from '../store/orders';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 
 const ViewCart = (props) => {
   const dispatch = useDispatch();
+  let [productQuantities, setProductQuantities] = useState({});
   const userId = useSelector((state) => {
     return state.user.id;
   });
@@ -75,7 +76,20 @@ const ViewCart = (props) => {
     }
   }
 
-  function updateItem(evt, product) {}
+  function updateItemCount(evt, product) {
+    if (userId) {
+      dispatch(
+        updateItem({
+          ...product,
+          userId,
+          quantity: Number(productQuantities[evt.target.id].quantity),
+        })
+      );
+    } else {
+      let cart = JSON.parse(localStorage.getItem('cart'));
+      let cartItem = cart[`${evt.target.id}`];
+    }
+  }
 
   if (curCart.id !== undefined || Object.keys(curCart).length > 0) {
     return (
@@ -105,9 +119,26 @@ const ViewCart = (props) => {
                             type="number"
                             id="cart-item-quantity"
                             min={1}
-                            defaultValue={product.quantity}
+                            defaultValue={
+                              product['order-details'].quantityOrdered
+                            }
+                            onChange={(evt) =>
+                              setProductQuantities({
+                                ...productQuantities,
+                                [product.id]: {
+                                  quantity: evt.target.value,
+                                  price: evt.target.value * product.price,
+                                  imageUrl: product.imageUrl,
+                                },
+                              })
+                            }
                           ></input>
-                          <button>Update</button>
+                          <button
+                            id={product.id}
+                            onClick={(evt) => updateItemCount(evt, product)}
+                          >
+                            Update
+                          </button>
                         </td>
                         <td>${numberWithCommas(curCart.products[i].price)}</td>
                         <td>
@@ -136,10 +167,26 @@ const ViewCart = (props) => {
                           <input
                             type="number"
                             min={1}
-                            defaultValue={product.quantity}
+                            defaultValue={
+                              product['order-details'].quantityOrdered
+                            }
+                            onChange={(evt) =>
+                              setProductQuantities({
+                                ...productQuantities,
+                                [product.id]: {
+                                  quantity: evt.target.value,
+                                  price: evt.target.value * product.price,
+                                  imageUrl: product.imageUrl,
+                                },
+                              })
+                            }
                           ></input>
                           {curCart.products[i].quantity}
-                          <button>Update</button>
+                          <button
+                            onClick={(evt) => updateItemCount(evt, product)}
+                          >
+                            Update
+                          </button>
                         </td>
                         <td>${numberWithCommas(curCart.products[i].price)}</td>
                         <td>

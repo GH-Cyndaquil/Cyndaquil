@@ -60,6 +60,21 @@ export const removeItem = (item) => {
   };
 };
 
+export const updateItem = (item) => {
+  console.log(item);
+  return async (dispatch) => {
+    try {
+      let { data } = await axios.put(
+        `/api/orders/${item['order-details'].orderId}`,
+        item
+      );
+      dispatch(fetchCart(item.userId));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
 export default (state = initState, action) => {
   switch (action.type) {
     case GOT_CART:
