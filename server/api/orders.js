@@ -50,8 +50,17 @@ router.get("/cart/:id", async (req, res, next) => {
       });
       if (wasCreated) {
         order.setUser(req.params.id);
+        const newOrder = await Order.findOne({
+          where: {
+            userId: req.params.id,
+            fulfilled: false,
+          },
+          include: Product,
+        });
+        res.json(newOrder);
+      } else {
+        res.json(order);
       }
-      res.json(order);
     }
   } catch (err) {
     next(err);
