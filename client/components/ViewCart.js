@@ -9,7 +9,7 @@ const ViewCart = (props) => {
   const userId = useSelector((state) => {
     return state.user.id;
   });
-  console.log('userId', userId);
+
   let curCart = useSelector((state) => {
     return state.orders;
   });
