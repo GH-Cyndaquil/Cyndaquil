@@ -17,6 +17,7 @@ import EditUser from "./components/EditUser";
 import CheckoutUser from "./components/CheckoutUser";
 import SingleOrder from "./components/SingleOrder";
 import CheckoutGuest from "./components/CheckoutGuest";
+import AllUsers from "./components/admin/AdminAllUsers";
 
 /**
  * COMPONENT
@@ -40,6 +41,7 @@ class Routes extends Component {
             <Route path="/users/:id/edit" component={EditUser} />
             <Route path="/admin" component={AdminPage} />
             <Route path="/adminuser" component={AdminUser} />
+            <Route path="/adminalluser" component={AllUsers} />
             <Route path="/addproduct" component={AddProduct} />
             <Route path="/adminproduct" component={AdminProduct} />
             <Route path="/checkoutuser" component={CheckoutUser} />
