@@ -30,6 +30,17 @@ const ViewCart = (props) => {
       .toString()
       .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
+
+  function getTotal() {
+    let total = 0;
+    for (let i = 0; i < curCart.products.length; i++) {
+      total +=
+        +curCart.products[i].price *
+        curCart['order-details'][i].quantityOrdered;
+    }
+    return numberWithCommas(total);
+  }
+
   console.log(curCart);
 
   if (curCart.id !== undefined) {
@@ -74,9 +85,9 @@ const ViewCart = (props) => {
                 <tr>
                   <td></td>
                   <td></td>
-                  <td>Total:</td>
+                  <td>Total</td>
                   {/* need to figure out how to do a total here */}
-                  <td>43.70</td>
+                  <td>${getTotal()}</td>
                   <td>
                     <Link to="/checkoutuser">
                       <button>Checkout</button>
