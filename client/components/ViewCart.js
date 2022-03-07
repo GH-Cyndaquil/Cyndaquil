@@ -88,6 +88,17 @@ const ViewCart = (props) => {
     } else {
       let cart = JSON.parse(localStorage.getItem('cart'));
       let cartItem = cart[`${evt.target.id}`];
+      console.log(cartItem);
+      cartItem.quantityOrdered = Number(
+        productQuantities[evt.target.id].quantity
+      );
+      cartItem.price = productQuantities[evt.target.id].price.toString();
+      let products = [];
+      for (let key in cart) {
+        products.push(cart[key]);
+      }
+      localStorage.setItem('cart', JSON.stringify(cart));
+      dispatch(gotCart({ products: products }));
     }
   }
 
@@ -166,10 +177,9 @@ const ViewCart = (props) => {
                         <td>
                           <input
                             type="number"
+                            id="cart-item-quantity"
                             min={1}
-                            defaultValue={
-                              product['order-details'].quantityOrdered
-                            }
+                            defaultValue={product.quantityOrdered}
                             onChange={(evt) =>
                               setProductQuantities({
                                 ...productQuantities,
@@ -183,6 +193,7 @@ const ViewCart = (props) => {
                           ></input>
                           {curCart.products[i].quantity}
                           <button
+                            id={product.id}
                             onClick={(evt) => updateItemCount(evt, product)}
                           >
                             Update
