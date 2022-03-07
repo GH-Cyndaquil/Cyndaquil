@@ -1,22 +1,33 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { updateUser } from "../../store/user";
+import axios from "axios";
 
 const AdminUser = (props) => {
-  const user = useSelector((state) => state.user);
+  const [user, setUser] = useState({});
+  console.log(user);
   const dispatch = useDispatch();
   const [newUser, setNewUser] = useState({
-    firstName: user.firstName,
-    lastName: user.lastName,
-    username: user.username,
-    email: user.email,
-    address: user.address || "",
-    city: user.city || "",
-    state: user.state || "",
-    postalCode: user.postalCode || "",
-    isAdmin: user.isAdmin || "",
+    firstName: "",
+    lastName: "",
+    username: "",
+    email: "",
+    address: "",
+    city: "",
+    state: "",
+    postalCode: "",
+    isAdmin: "",
   });
 
+  useEffect(() => {
+    const fetchUser = async () => {
+      const { data } = await axios.get(
+        `/api/AdminUser/${props.match.params.id}`
+      );
+      setNewUser(data);
+    };
+    fetchUser();
+  }, []);
   const handleChange = (e) => {
     setNewUser({ ...newUser, [e.target.name]: e.target.value });
   };
