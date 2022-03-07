@@ -3,11 +3,15 @@ const Order = require('../db/models/Order');
 const Product = require('../db/models/Product');
 const OrderDetails = require('../db/models/OrderDetails');
 
-router.get('/', async (req, res, next) => {
+//for specific order
+router.get('/:id', async (req, res, next) => {
   try {
     if (req.params.id !== undefined) {
     }
-    const orders = await Order.findAll({
+    const orders = await Order.findOne({
+      where: {
+        id: req.params.id,
+      },
       include: Product,
     });
     res.json(orders);
@@ -16,24 +20,34 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.get('/:id', async (req, res, next) => {
+//for order history
+router.get('/history/:id', async (req, res, next) => {
+  try {
+    if (req.params.id !== undefined) {
+      const orders = await Order.findAll({
+        where: {
+          userId: req.params.id,
+          fulfilled: true,
+        },
+        include: Product,
+      });
+      res.json(orders);
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.get('/cart/:id', async (req, res, next) => {
   try {
     if (req.params.id !== undefined) {
       const orders = await Order.findOne({
         where: {
-          id: req.params.id,
+          userId: req.params.id,
+          fulfilled: false,
         },
-        include: OrderDetails,
+        include: Product,
       });
-      let products = [];
-      for (let i = 0; i < orders['order-details'].length; i++) {
-        products.push(
-          await Product.findByPk(
-            orders['order-details'][i].dataValues.productId
-          )
-        );
-      }
-      orders.dataValues['products'] = products;
       res.json(orders);
     }
   } catch (err) {
@@ -81,17 +95,10 @@ router.post('/', async (req, res, next) => {
 
     const newCart = await Order.findOne({
       where: {
-        id: userId,
+        userId: userId,
       },
-      include: OrderDetails,
+      include: Product,
     });
-    let products = [];
-    for (let i = 0; i < newCart['order-details'].length; i++) {
-      products.push(
-        await Product.findByPk(newCart['order-details'][i].dataValues.productId)
-      );
-    }
-    newCart.dataValues['products'] = products;
 
     res.send(newCart);
   } catch (error) {

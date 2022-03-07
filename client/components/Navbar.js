@@ -16,8 +16,8 @@ const Navbar = (props) => {
   }, [userId]);
 
   function cartCounter() {
-    return cart['order-details'].reduce((accum, num) => {
-      accum += num.quantityOrdered;
+    return cart.products.reduce((accum, num) => {
+      accum += num['order-details'].quantityOrdered;
       return accum;
     }, 0);
   }
