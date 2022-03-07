@@ -1,9 +1,12 @@
-const router = require('express').Router();
-const Order = require('../db/models/Order');
-const Product = require('../db/models/Product');
-const OrderDetails = require('../db/models/OrderDetails');
+const router = require("express").Router();
+const Order = require("../db/models/Order");
+const Product = require("../db/models/Product");
+const OrderDetails = require("../db/models/OrderDetails");
+const {
+  default: StripeContainer,
+} = require("../../client/components/CheckoutUser");
 
-router.get('/', async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
     const orders = await Order.findAll({
       include: Product,
@@ -14,7 +17,7 @@ router.get('/', async (req, res, next) => {
   }
 });
 
-router.get('/:id', async (req, res, next) => {
+router.get("/:id", async (req, res, next) => {
   try {
     const orders = await Order.findOne({
       where: {
@@ -28,7 +31,7 @@ router.get('/:id', async (req, res, next) => {
   }
 });
 
-router.post('/', async (req, res, next) => {
+router.post("/", async (req, res, next) => {
   try {
     const { productId, price, quantity, userId } = req.body;
 
@@ -65,6 +68,31 @@ router.post('/', async (req, res, next) => {
         quantityOrdered: newQuantityOrdered,
       });
     }
+
+    // what is cors
+    router.post("/payment", async (req, res, next) => {
+      let { amount, id } = req.body;
+      try {
+        const payment = await stripe.paymentItents.create({
+          amount,
+          currency: "USD",
+          description: "NYET Vodka",
+          payment_method: id,
+          confirm: true,
+        });
+        console.log("payment", payment);
+        res.json({
+          message: "Payment successful",
+          success: true,
+        });
+      } catch (error) {
+        console.log("error", error),
+          res.json({
+            message: "Payment failed",
+            success: false,
+          });
+      }
+    });
 
     const newCart = await Order.findOne({
       where: {

@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 // import axios from "axios";
 import { fetchCart } from "../store/orders";
 import { Link } from "react-router-dom";
+import { deleteItem } from "../store/orders";
 
 const ViewCart = (props) => {
   const dispatch = useDispatch();
@@ -52,6 +53,7 @@ const ViewCart = (props) => {
                       <i
                         className="fa fa-trash-o"
                         style={{ fontSize: "24px" }}
+                        onClick={() => deleteItem(product.id)}
                       ></i>
                     </td>
                   </tr>
@@ -64,7 +66,10 @@ const ViewCart = (props) => {
                   {/* need to figure out how to do a total here */}
                   <td>43.70</td>
                   <td>
-                    <Link to="/checkoutuser">
+                    {/* <Link to="/checkoutuser">
+                      <button>Checkout</button>
+                    </Link> */}
+                    <Link to="/checkout">
                       <button>Checkout</button>
                     </Link>
                   </td>
