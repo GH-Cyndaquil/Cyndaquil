@@ -1,14 +1,14 @@
-import axios from "axios";
-import history from "../history";
+import axios from 'axios';
+import history from '../history';
 
-const TOKEN = "token";
+const TOKEN = 'token';
 
 /**
  * ACTION TYPES
  */
-const SET_USER = "SET_USER";
-const GOT_ALL_USERS = "GOT_ALL_USERS";
-const UPDATE_USER = "UPDATE_USER";
+const SET_USER = 'SET_USER';
+const GOT_ALL_USERS = 'GOT_ALL_USERS';
+const UPDATE_USER = 'UPDATE_USER';
 
 /**
  * ACTION CREATORS
@@ -35,12 +35,11 @@ export const updateUser = (id, newUser) => {
 export const me = () => async (dispatch) => {
   const token = window.localStorage.getItem(TOKEN);
   if (token) {
-    const { data } = await axios.get("/auth/me", {
+    const { data } = await axios.get('/auth/me', {
       headers: {
         authorization: token,
       },
     });
-    history.push("/");
     return dispatch(setUser(data));
   }
 };
@@ -57,7 +56,7 @@ export const authenticate = (userObj, method) => async (dispatch) => {
 
 export const logout = () => {
   window.localStorage.removeItem(TOKEN);
-  history.push("/login");
+  history.push('/login');
   return {
     type: SET_USER,
     user: {},
@@ -66,7 +65,7 @@ export const logout = () => {
 // get all user thunk
 export const getAllUsers = () => async (dispatch) => {
   try {
-    const res = await axios.get("/api/users");
+    const res = await axios.get('/api/users');
     dispatch(gotAllUsers(res.data || defaultUser));
   } catch (err) {
     console.error(err);
