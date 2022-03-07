@@ -16,10 +16,14 @@ const Navbar = (props) => {
   }, [userId]);
 
   function cartCounter() {
-    return cart.products.reduce((accum, num) => {
-      accum += num['order-details'].quantityOrdered;
-      return accum;
-    }, 0);
+    if (cart.products !== undefined) {
+      return cart.products.reduce((accum, num) => {
+        accum += num['order-details'].quantityOrdered;
+        return accum;
+      }, 0);
+    } else {
+      return 0;
+    }
   }
 
   function localStorageCount() {
@@ -40,7 +44,7 @@ const Navbar = (props) => {
       <nav>
         <h1 className="title">NYET</h1>
         <div>
-          <Link to="/home" className="nav-button">
+          <Link to="/" className="nav-button">
             Home
           </Link>
           <Link to="/products?page=1" className="nav-button">

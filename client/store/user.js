@@ -40,6 +40,7 @@ export const me = () => async (dispatch) => {
         authorization: token,
       },
     });
+    history.push("/");
     return dispatch(setUser(data));
   }
 };

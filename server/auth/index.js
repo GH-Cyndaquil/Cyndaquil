@@ -31,6 +31,7 @@ router.get("/me", async (req, res, next) => {
     const orders = await Order.findAll({
       where: {
         userId: user.id,
+        fulfilled: true,
       },
       include: Product,
     });

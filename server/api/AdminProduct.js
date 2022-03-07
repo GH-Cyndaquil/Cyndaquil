@@ -4,11 +4,12 @@ const User = require("../db/models/User");
 module.exports = router;
 
 const adminsOnly = (req, res, next) => {
-  if (!req.User) {
+  console.log("not a string", req.body.user);
+  if (!req.body.user) {
     const err = new Error("Not logged in");
     err.status = 401;
     return next(err);
-  } else if (!req.User.isAdmin) {
+  } else if (!req.body.user.isAdmin) {
     const err = new Error("Off Limits");
     err.status = 401;
     return next(err);
@@ -18,6 +19,7 @@ const adminsOnly = (req, res, next) => {
 
 router.post("/", adminsOnly, async (req, res, next) => {
   try {
+    console.log("test");
     const { name, description, price, quantity, imageUrl } = req.body;
     const newProduct = await Product.create({
       name,

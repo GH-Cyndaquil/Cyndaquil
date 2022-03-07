@@ -1,15 +1,16 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchCart, gotCart } from "../store/orders";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCart, gotCart, removeItem, updateItem } from '../store/orders';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const ViewCart = (props) => {
   const dispatch = useDispatch();
+  let [productQuantities, setProductQuantities] = useState({});
   const userId = useSelector((state) => {
     return state.user.id;
   });
-  console.log("userId", userId);
+
   let curCart = useSelector((state) => {
     return state.orders;
   });
@@ -17,7 +18,7 @@ const ViewCart = (props) => {
   useEffect(() => {
     if (localStorage.cart) {
       let products = [];
-      let cart = JSON.parse(localStorage.getItem("cart"));
+      let cart = JSON.parse(localStorage.getItem('cart'));
       for (let key in cart) {
         products.push(cart[key]);
       }
@@ -32,15 +33,15 @@ const ViewCart = (props) => {
   }, [userId]);
 
   function numberWithCommas(price) {
-    if (price.toString().split(".")[1] !== undefined) {
-      if (price.toString().split(".")[1].length === 1) {
+    if (price.toString().split('.')[1] !== undefined) {
+      if (price.toString().split('.')[1].length === 1) {
         price = price.toString() + 0;
       }
     }
     return Number(price)
       .toFixed(2)
       .toString()
-      .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
 
   function getTotal() {
@@ -48,8 +49,8 @@ const ViewCart = (props) => {
     if (curCart.id) {
       for (let i = 0; i < curCart.products.length; i++) {
         total +=
-          +curCart.products[i]["order-details"].price *
-          curCart.products[i]["order-details"].quantityOrdered;
+          +curCart.products[i]['order-details'].price *
+          curCart.products[i]['order-details'].quantityOrdered;
       }
     } else {
       for (let i = 0; i < curCart.products.length; i++) {
@@ -58,6 +59,47 @@ const ViewCart = (props) => {
       }
     }
     return numberWithCommas(total);
+  }
+
+  function deleteItem(evt, product) {
+    if (userId) {
+      dispatch(removeItem({ ...product, userId }));
+    } else {
+      let cart = JSON.parse(localStorage.getItem('cart'));
+      delete cart[`${product.id}`];
+      let products = [];
+      for (let key in cart) {
+        products.push(cart[key]);
+      }
+      localStorage.setItem('cart', JSON.stringify(cart));
+      dispatch(gotCart({ products: products }));
+    }
+  }
+
+  function updateItemCount(evt, product) {
+    if (userId) {
+      dispatch(
+        updateItem({
+          ...product,
+          userId,
+          quantity: Number(productQuantities[evt.target.id].quantity),
+        })
+      );
+    } else {
+      let cart = JSON.parse(localStorage.getItem('cart'));
+      let cartItem = cart[`${evt.target.id}`];
+      console.log(cartItem);
+      cartItem.quantityOrdered = Number(
+        productQuantities[evt.target.id].quantity
+      );
+      cartItem.price = productQuantities[evt.target.id].price.toString();
+      let products = [];
+      for (let key in cart) {
+        products.push(cart[key]);
+      }
+      localStorage.setItem('cart', JSON.stringify(cart));
+      dispatch(gotCart({ products: products }));
+    }
   }
 
   if (curCart.id !== undefined || Object.keys(curCart).length > 0) {
@@ -82,19 +124,46 @@ const ViewCart = (props) => {
                           <img className="img" src={product.imageUrl}></img>
                         </td>
 
-                        <td>{product["order-details"].quantityOrdered}</td>
+                        <td>
+                          {' '}
+                          <input
+                            type="number"
+                            id="cart-item-quantity"
+                            min={1}
+                            defaultValue={
+                              product['order-details'].quantityOrdered
+                            }
+                            onChange={(evt) =>
+                              setProductQuantities({
+                                ...productQuantities,
+                                [product.id]: {
+                                  quantity: evt.target.value,
+                                  price: evt.target.value * product.price,
+                                  imageUrl: product.imageUrl,
+                                },
+                              })
+                            }
+                          ></input>
+                          <button
+                            id={product.id}
+                            onClick={(evt) => updateItemCount(evt, product)}
+                          >
+                            Update
+                          </button>
+                        </td>
                         <td>${numberWithCommas(curCart.products[i].price)}</td>
                         <td>
                           $
                           {numberWithCommas(
-                            product["order-details"].price *
-                              product["order-details"].quantityOrdered
+                            product['order-details'].price *
+                              product['order-details'].quantityOrdered
                           )}
                         </td>
                         <td>
                           <i
                             className="fa fa-trash-o"
-                            style={{ fontSize: "24px" }}
+                            style={{ fontSize: '24px' }}
+                            onClick={(evt) => deleteItem(evt, product)}
                           ></i>
                         </td>
                       </tr>
@@ -105,7 +174,31 @@ const ViewCart = (props) => {
                           <img src={product.imageUrl}></img>
                         </td>
 
-                        <td>{curCart.products[i].quantity}</td>
+                        <td>
+                          <input
+                            type="number"
+                            id="cart-item-quantity"
+                            min={1}
+                            defaultValue={product.quantityOrdered}
+                            onChange={(evt) =>
+                              setProductQuantities({
+                                ...productQuantities,
+                                [product.id]: {
+                                  quantity: evt.target.value,
+                                  price: evt.target.value * product.price,
+                                  imageUrl: product.imageUrl,
+                                },
+                              })
+                            }
+                          ></input>
+                          {curCart.products[i].quantity}
+                          <button
+                            id={product.id}
+                            onClick={(evt) => updateItemCount(evt, product)}
+                          >
+                            Update
+                          </button>
+                        </td>
                         <td>${numberWithCommas(curCart.products[i].price)}</td>
                         <td>
                           $
@@ -117,7 +210,8 @@ const ViewCart = (props) => {
                         <td>
                           <i
                             className="fa fa-trash-o"
-                            style={{ fontSize: "24px" }}
+                            style={{ fontSize: '24px' }}
+                            onClick={(evt) => deleteItem(evt, product)}
                           ></i>
                         </td>
                       </tr>

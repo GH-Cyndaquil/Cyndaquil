@@ -11,6 +11,7 @@ const setProducts = (products) => ({
 });
 
 const _createProduct = (product) => {
+  console.log(product, CREATE_PRODUCT);
   return {
     type: CREATE_PRODUCT,
     product,
@@ -35,9 +36,11 @@ export const fetchProducts = (location, filters) => {
 export const createProduct = (product, history) => {
   return async (dispatch) => {
     try {
+      console.log(history);
       const { data: created } = await axios.post("/api/adminproduct", product);
+      console.log(created);
       dispatch(_createProduct(created));
-      history.push("/Product");
+      history.push(`/products/${created.id}`);
     } catch (err) {
       console.error(err);
     }
