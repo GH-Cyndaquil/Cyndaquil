@@ -19,7 +19,6 @@ const adminsOnly = (req, res, next) => {
 
 router.post("/", adminsOnly, async (req, res, next) => {
   try {
-    console.log("test");
     const { name, description, price, quantity, imageUrl } = req.body;
     const newProduct = await Product.create({
       name,
