@@ -5,6 +5,8 @@ const OrderDetails = require('../db/models/OrderDetails');
 
 router.get('/', async (req, res, next) => {
   try {
+    if (req.params.id !== undefined) {
+    }
     const orders = await Order.findAll({
       include: Product,
     });
@@ -16,13 +18,24 @@ router.get('/', async (req, res, next) => {
 
 router.get('/:id', async (req, res, next) => {
   try {
-    const orders = await Order.findOne({
-      where: {
-        id: req.params.id,
-      },
-      include: Product,
-    });
-    res.json(orders);
+    if (req.params.id !== undefined) {
+      const orders = await Order.findOne({
+        where: {
+          id: req.params.id,
+        },
+        include: OrderDetails,
+      });
+      let products = [];
+      for (let i = 0; i < orders['order-details'].length; i++) {
+        products.push(
+          await Product.findByPk(
+            orders['order-details'][i].dataValues.productId
+          )
+        );
+      }
+      orders.dataValues['products'] = products;
+      res.json(orders);
+    }
   } catch (err) {
     next(err);
   }
@@ -68,13 +81,17 @@ router.post('/', async (req, res, next) => {
 
     const newCart = await Order.findOne({
       where: {
-        userId: req.body.userId,
-        fulfilled: false,
+        id: userId,
       },
-      include: {
-        model: Product,
-      },
+      include: OrderDetails,
     });
+    let products = [];
+    for (let i = 0; i < newCart['order-details'].length; i++) {
+      products.push(
+        await Product.findByPk(newCart['order-details'][i].dataValues.productId)
+      );
+    }
+    newCart.dataValues['products'] = products;
 
     res.send(newCart);
   } catch (error) {

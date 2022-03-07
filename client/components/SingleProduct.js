@@ -6,7 +6,7 @@ import {
 } from '../store/selectedProduct';
 import { fetchIngredients } from '../store/ingredients';
 import { fetchRegions } from '../store/regions';
-import { addItem } from '../store/orders';
+import { addItem, fetchCart } from '../store/orders';
 
 function SingleProduct(props) {
   const dispatch = useDispatch();
@@ -26,6 +26,7 @@ function SingleProduct(props) {
   });
 
   useEffect(() => {
+    // dispatch(fetchCart(userId));
     dispatch(fetchIngredients());
     dispatch(fetchSelectedProduct(props.match.params.id));
     dispatch(fetchRegions());

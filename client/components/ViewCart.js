@@ -1,27 +1,49 @@
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-// import axios from "axios";
-import { fetchCart } from "../store/orders";
-import { Link } from "react-router-dom";
+import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCart } from '../store/orders';
+import { Link } from 'react-router-dom';
 
 const ViewCart = (props) => {
   const dispatch = useDispatch();
-
   const userId = useSelector((state) => {
     return state.user.id;
   });
 
   useEffect(() => {
-    dispatch(fetchCart(2));
-  }, []);
+    if (userId !== undefined) {
+      dispatch(fetchCart(userId));
+    }
+  }, [userId]);
 
   const curCart = useSelector((state) => {
-    return state.orders.products;
+    return state.orders;
   });
 
-  console.log("user------", curCart);
+  function numberWithCommas(price) {
+    if (price.toString().split('.')[1] !== undefined) {
+      if (price.toString().split('.')[1].length === 1) {
+        price = price.toString() + 0;
+      }
+    }
+    return Number(price)
+      .toFixed(2)
+      .toString()
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+  }
 
-  if (curCart) {
+  function getTotal() {
+    let total = 0;
+    for (let i = 0; i < curCart.products.length; i++) {
+      total +=
+        +curCart.products[i].price *
+        curCart['order-details'][i].quantityOrdered;
+    }
+    return numberWithCommas(total);
+  }
+
+  console.log(curCart);
+
+  if (curCart.id !== undefined) {
     return (
       <>
         <main id="cart">
@@ -36,22 +58,25 @@ const ViewCart = (props) => {
                   <th>Subtotal</th>
                   <th></th>
                 </tr>
-                {curCart.map((product) => (
+                {curCart.products.map((product, i) => (
                   <tr key={product.id}>
                     <td>
                       <img src={product.imageUrl}></img>
                     </td>
 
-                    <td>{product["order-details"].quantityOrdered}</td>
-                    <td>{product["order-details"].price}</td>
+                    <td>{curCart['order-details'][i].quantityOrdered}</td>
+                    <td>${numberWithCommas(curCart.products[i].price)}</td>
                     <td>
-                      {product["order-details"].price *
-                        product["order-details"].quantityOrdered}
+                      $
+                      {numberWithCommas(
+                        curCart.products[i].price *
+                          curCart['order-details'][i].quantityOrdered
+                      )}
                     </td>
                     <td>
                       <i
                         className="fa fa-trash-o"
-                        style={{ fontSize: "24px" }}
+                        style={{ fontSize: '24px' }}
                       ></i>
                     </td>
                   </tr>
@@ -60,9 +85,9 @@ const ViewCart = (props) => {
                 <tr>
                   <td></td>
                   <td></td>
-                  <td>Total:</td>
+                  <td>Total</td>
                   {/* need to figure out how to do a total here */}
-                  <td>43.70</td>
+                  <td>${getTotal()}</td>
                   <td>
                     <Link to="/checkoutuser">
                       <button>Checkout</button>
