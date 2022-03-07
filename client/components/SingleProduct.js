@@ -62,31 +62,33 @@ function SingleProduct(props) {
         })
       );
     } else {
-      if (localStorage.cart) {
-        let cart = JSON.parse(localStorage.getItem('cart'));
-        let cartItem = cart[`${currentProduct.id}`];
-        if (cartItem) {
-          cartItem.quantity =
-            Number(cartItem.quantity) + Number(currentQuantity);
-          cartItem.price = (cartItem.quantity * currentProduct.price).toFixed(
-            2
-          );
+      if (currentProduct.quantity > 0) {
+        if (localStorage.cart) {
+          let cart = JSON.parse(localStorage.getItem('cart'));
+          let cartItem = cart[`${currentProduct.id}`];
+          if (cartItem) {
+            cartItem.quantity =
+              Number(cartItem.quantity) + Number(currentQuantity);
+            cartItem.price = (cartItem.quantity * currentProduct.price).toFixed(
+              2
+            );
+          } else {
+            cart[`${currentProduct.id}`] = {
+              productId: currentProduct.id,
+              price: quantityPrice,
+              quantity: currentQuantity,
+            };
+          }
+          localStorage.setItem('cart', JSON.stringify(cart));
         } else {
+          let cart = {};
           cart[`${currentProduct.id}`] = {
             productId: currentProduct.id,
             price: quantityPrice,
             quantity: currentQuantity,
           };
+          localStorage.setItem('cart', JSON.stringify(cart));
         }
-        localStorage.setItem('cart', JSON.stringify(cart));
-      } else {
-        let cart = {};
-        cart[`${currentProduct.id}`] = {
-          productId: currentProduct.id,
-          price: quantityPrice,
-          quantity: currentQuantity,
-        };
-        localStorage.setItem('cart', JSON.stringify(cart));
       }
     }
   }

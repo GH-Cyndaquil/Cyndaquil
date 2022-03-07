@@ -108,34 +108,36 @@ function AllProducts(props) {
         })
       );
     } else {
-      if (localStorage.cart) {
-        let cart = JSON.parse(localStorage.getItem('cart'));
-        let cartItem = cart[`${evt.target.id}`];
-        if (cartItem) {
-          cartItem.quantity =
-            Number(cartItem.quantity) +
-            Number(productQuantities[evt.target.id].quantity);
-          cartItem.price = (
-            cartItem.quantity * Number(productQuantities[evt.target.id].price)
-          ).toFixed(2);
+      if (productQuantities[evt.target.id].price > 0) {
+        if (localStorage.cart) {
+          let cart = JSON.parse(localStorage.getItem('cart'));
+          let cartItem = cart[`${evt.target.id}`];
+          if (cartItem) {
+            cartItem.quantity =
+              Number(cartItem.quantity) +
+              Number(productQuantities[evt.target.id].quantity);
+            cartItem.price = (
+              cartItem.quantity * Number(productQuantities[evt.target.id].price)
+            ).toFixed(2);
+          } else {
+            cart[`${evt.target.id}`] = {
+              productId: evt.target.id,
+              price: Number(productQuantities[evt.target.id].price).toFixed(2),
+              quantity: Number(productQuantities[evt.target.id].quantity),
+              userId: userId,
+            };
+          }
+          localStorage.setItem('cart', JSON.stringify(cart));
         } else {
+          let cart = {};
           cart[`${evt.target.id}`] = {
             productId: evt.target.id,
             price: Number(productQuantities[evt.target.id].price).toFixed(2),
             quantity: Number(productQuantities[evt.target.id].quantity),
             userId: userId,
           };
+          localStorage.setItem('cart', JSON.stringify(cart));
         }
-        localStorage.setItem('cart', JSON.stringify(cart));
-      } else {
-        let cart = {};
-        cart[`${evt.target.id}`] = {
-          productId: evt.target.id,
-          price: Number(productQuantities[evt.target.id].price).toFixed(2),
-          quantity: Number(productQuantities[evt.target.id].quantity),
-          userId: userId,
-        };
-        localStorage.setItem('cart', JSON.stringify(cart));
       }
     }
   }
