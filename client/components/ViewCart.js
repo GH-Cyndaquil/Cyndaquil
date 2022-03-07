@@ -25,8 +25,12 @@ const ViewCart = (props) => {
         price = price.toString() + 0;
       }
     }
-    return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+    return Number(price)
+      .toFixed(2)
+      .toString()
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
+  console.log(curCart);
 
   if (curCart.id !== undefined) {
     return (
@@ -50,13 +54,11 @@ const ViewCart = (props) => {
                     </td>
 
                     <td>{curCart['order-details'][i].quantityOrdered}</td>
-                    <td>
-                      ${numberWithCommas(curCart['order-details'][i].price)}
-                    </td>
+                    <td>${numberWithCommas(curCart.products[i].price)}</td>
                     <td>
                       $
                       {numberWithCommas(
-                        curCart['order-details'][i].price *
+                        curCart.products[i].price *
                           curCart['order-details'][i].quantityOrdered
                       )}
                     </td>
