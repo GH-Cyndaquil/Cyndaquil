@@ -2,12 +2,14 @@ import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchCart, gotCart, removeItem } from '../store/orders';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const ViewCart = (props) => {
   const dispatch = useDispatch();
   const userId = useSelector((state) => {
     return state.user.id;
   });
+  console.log('userId', userId);
   let curCart = useSelector((state) => {
     return state.orders;
   });
@@ -162,10 +164,17 @@ const ViewCart = (props) => {
                   <td></td>
                   <td>Total</td>
                   <td>${getTotal()}</td>
+
                   <td>
-                    <Link to="/checkoutuser">
-                      <button>Checkout</button>
-                    </Link>
+                    {userId ? (
+                      <Link to="/checkoutuser">
+                        <button>Checkout</button>
+                      </Link>
+                    ) : (
+                      <Link to="/checkoutguest">
+                        <button>Checkout</button>
+                      </Link>
+                    )}
                   </td>
                 </tr>
               </tbody>

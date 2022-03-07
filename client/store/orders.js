@@ -3,6 +3,7 @@ const initState = {};
 
 const GOT_CART = 'GOT_CART';
 const ADD_ITEM = 'ADD_ITEM';
+const DELETE_ITEM = 'DELETE_ITEM';
 
 const addedItem = (item) => ({
   type: ADD_ITEM,
@@ -11,6 +12,11 @@ const addedItem = (item) => ({
 
 export const gotCart = (cart) => ({
   type: GOT_CART,
+  cart,
+});
+
+const deletedItem = (cart) => ({
+  type: DELETE_ITEM,
   cart,
 });
 
@@ -60,6 +66,9 @@ export default (state = initState, action) => {
       return action.cart;
     case ADD_ITEM:
       return action.item;
+    case DELETE_ITEM:
+      return state.filter((product) => product.id !== action.product.id);
+
     default:
       return state;
   }

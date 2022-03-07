@@ -43,6 +43,7 @@ class Routes extends Component {
             <Route path="/checkoutuser" component={CheckoutUser} />
             <Route path="/viewcart" component={ViewCart} />
             <Route path="/orders/:id" component={SingleOrder} />
+            <Route path="/checkoutguest" component={CheckoutGuest} />
           </Switch>
         ) : (
           <Switch>
@@ -53,6 +54,7 @@ class Routes extends Component {
             <Route path="/products/:id" component={SingleProduct} />
             <Route path="/viewcart" component={ViewCart} />
             <Route path="/checkoutuser" component={CheckoutUser} />
+            <Route path="/checkoutguest" component={CheckoutGuest} />
           </Switch>
         )}
       </div>

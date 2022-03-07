@@ -11,42 +11,82 @@ const SingleOrder = (props) => {
     };
     fetchOrder();
   }, []);
-  console.log("order", order);
-  return (
-    <div>
-      <h1>Order #{order.id}</h1>
+  function numberWithCommas(price) {
+    if (price.toString().split(".")[1] !== undefined) {
+      if (price.toString().split(".")[1].length === 1) {
+        price = price.toString() + 0;
+      }
+    }
+    return Number(price)
+      .toFixed(2)
+      .toString()
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
+  console.log("single order", order);
+  if (order.id && Object.keys(order).length > 0) {
+    return (
       <div>
-        {order.id ? (
-          <div>
-            {order.products.map((product) => {
-              return (
-                <div key={product.id}>
-                  <h3>
-                    {product.name} | ${product["order-details"].price}
-                  </h3>
-                  <p>Quantity: {product["order-details"].quantityOrdered}</p>
-                </div>
-              );
-            })}
-            <h3>
-              Total: $
-              {order.products
-                .reduce((prev, curr) => {
+        <h1>Order #{order.id}</h1>
+        <div>
+          {order.id ? (
+            <table>
+              <tbody>
+                <tr>
+                  <th></th>
+                  <th>Product</th>
+                  <th>Price</th>
+                  <th>Quantity</th>
+                  <th>Subtotal</th>
+                </tr>
+                {order.products.map((product) => {
                   return (
-                    prev +
-                    Number(curr["order-details"].price) *
-                      curr["order-details"].quantityOrdered
+                    <tr>
+                      <td>
+                        <img className="img" src={product.imageUrl} />
+                      </td>
+                      <td>{product.name}</td>
+                      <td>${product["order-details"].price}</td>
+                      <td>{product["order-details"].quantityOrdered}</td>
+                      <td>
+                        $
+                        {numberWithCommas(
+                          product["order-details"].price *
+                            product["order-details"].quantityOrdered
+                        )}
+                      </td>
+                    </tr>
                   );
-                }, 0)
-                .toFixed(2)}
-            </h3>
-          </div>
-        ) : (
-          <h3>Loading...</h3>
-        )}
+                })}
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <th>Total</th>
+                  <td>
+                    $
+                    {numberWithCommas(
+                      order.products
+                        .reduce((prev, curr) => {
+                          return (
+                            prev +
+                            Number(curr["order-details"].price) *
+                              curr["order-details"].quantityOrdered
+                          );
+                        }, 0)
+                        .toFixed(2)
+                    )}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          ) : (
+            <h3>Loading...</h3>
+          )}
+        </div>
       </div>
-    </div>
-  );
+    );
+  } else return <div>Loading...</div>;
 };
 
 export default SingleOrder;

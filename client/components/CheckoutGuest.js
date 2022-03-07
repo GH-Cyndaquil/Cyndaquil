@@ -1,45 +1,12 @@
-import React, { useState } from "react";
+import React from "react";
 import { useSelector } from "react-redux";
 
-export const CheckoutUser = (props) => {
-  const user = useSelector((state) => {
-    return state.user;
-  });
-
-  const [checked, setChecked] = useState(true);
-
-  function changeChecked() {
-    setChecked(!checked);
-  }
-
-  //   console.log(user);
-
+export const CheckoutGuest = () => {
   return (
     <div>
-      <div id="savedAddress">
-        <h3>
-          {user.firstName} {user.lastName} <br></br>
-          {user.address}, {user.city}, {user.state} <br></br>
-          {user.postalCode}
-        </h3>
-        <label htmlFor="addressBox">Use Saved Address</label>
-        <input
-          type="checkbox"
-          name="addressBox"
-          defaultChecked={true}
-          onChange={changeChecked}
-          value={checked}
-        ></input>
-      </div>
-      <div
-        className="checkoutCentered"
-        style={{ display: checked === false ? "block" : "none" }}
-      >
-        <h2>New Shipping Address</h2>
-        <form
-
-        //   style={{ display: "block" }}
-        >
+      <div className="checkoutCentered">
+        <h2>Shipping Address</h2>
+        <form style={{ display: "block" }}>
           <label htmlFor="address">Street Address:</label>
           <input size="50" type="text" id="address" name="address"></input>
 
@@ -51,7 +18,7 @@ export const CheckoutUser = (props) => {
 
           <label htmlFor="zip">Zipcode:</label>
           <input size="50" type="text" id="zip" name="zip"></input>
-          {/* <input type="submit" value="submit"></input> */}
+          <input type="submit" value="submit"></input>
           <br></br>
         </form>
       </div>
@@ -82,4 +49,4 @@ export const CheckoutUser = (props) => {
   );
 };
 
-export default CheckoutUser;
+export default CheckoutGuest;

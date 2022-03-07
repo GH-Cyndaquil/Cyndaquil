@@ -96,6 +96,31 @@ router.post('/', async (req, res, next) => {
       });
     }
 
+    // what is cors
+    router.post("/payment", async (req, res, next) => {
+      let { amount, id } = req.body;
+      try {
+        const payment = await stripe.paymentItents.create({
+          amount,
+          currency: "USD",
+          description: "NYET Vodka",
+          payment_method: id,
+          confirm: true,
+        });
+        console.log("payment", payment);
+        res.json({
+          message: "Payment successful",
+          success: true,
+        });
+      } catch (error) {
+        console.log("error", error),
+          res.json({
+            message: "Payment failed",
+            success: false,
+          });
+      }
+    });
+
     const newCart = await Order.findOne({
       where: {
         userId: userId,
