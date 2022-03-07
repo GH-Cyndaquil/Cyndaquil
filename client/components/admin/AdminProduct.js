@@ -37,17 +37,19 @@ export class EditProduct extends React.Component {
 
   render() {
     return (
-      <div className="single-product-div">
-        <h1> Edit Product: </h1>
-        <EditProductsForm
-          handleChange={this.handleChange}
-          handleSubmit={this.handleSubmit}
-          title={this.state.name}
-          description={this.state.description}
-          price={this.state.price}
-          imageUrl={this.state.imageUrl}
-          quantity={this.state.quantity}
-        />
+      <div className="adminBackground">
+        <div className="single-product-div">
+          <h1> Edit Product: </h1>
+          <EditProductsForm
+            handleChange={this.handleChange}
+            handleSubmit={this.handleSubmit}
+            title={this.state.name}
+            description={this.state.description}
+            price={this.state.price}
+            imageUrl={this.state.imageUrl}
+            quantity={this.state.quantity}
+          />
+        </div>
       </div>
     );
   }

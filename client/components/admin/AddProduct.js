@@ -46,18 +46,20 @@ class CreateProduct extends React.Component {
 
   render() {
     return (
-      <div className="single-product-div">
-        <div>
-          <h1 className="productHeader">ADD PRODUCT</h1>
-          <AddForm
-            handleSubmit={this.handleSubmit}
-            handleChange={this.handleChange}
-            name={this.state.name}
-            price={this.state.price}
-            imageUrl={this.state.imageUrl}
-            quantity={this.state.quantity}
-            description={this.state.description}
-          />
+      <div className="adminBackground">
+        <div className="single-product-div">
+          <div>
+            <h1 className="productHeader">ADD PRODUCT</h1>
+            <AddForm
+              handleSubmit={this.handleSubmit}
+              handleChange={this.handleChange}
+              name={this.state.name}
+              price={this.state.price}
+              imageUrl={this.state.imageUrl}
+              quantity={this.state.quantity}
+              description={this.state.description}
+            />
+          </div>
         </div>
       </div>
     );
