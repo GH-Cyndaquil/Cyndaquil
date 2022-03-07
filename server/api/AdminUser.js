@@ -11,11 +11,11 @@ const {
 module.exports = router;
 
 const adminsOnly = (req, res, next) => {
-  if (!req.User) {
+  if (!req.user) {
     const err = new Error("Not logged in");
     err.status = 401;
     return next(err);
-  } else if (!req.User.isAdmin) {
+  } else if (!req.user.isAdmin) {
     const err = new Error("Off Limits");
     err.status = 401;
     return next(err);

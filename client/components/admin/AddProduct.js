@@ -1,6 +1,6 @@
 import React from "react";
 import { connect } from "react-redux";
-import createProduct from "../../store/products";
+import { createProduct } from "../../store/products";
 import AddForm from "./AddProductForm";
 
 class CreateProduct extends React.Component {
@@ -20,7 +20,7 @@ class CreateProduct extends React.Component {
   handleSubmit(event) {
     try {
       event.preventDefault();
-      this.props.addProduct(this.state);
+      this.props.addProduct({ ...this.state, user: this.props.user });
       const { name, price, imageUrl, quantity, description } = this.state;
       this.setState({
         name: name,
@@ -66,13 +66,15 @@ class CreateProduct extends React.Component {
   }
 }
 
-const mapStateToProps = () => {
-  return {};
+const mapStateToProps = (state) => {
+  return {
+    user: state.user,
+  };
 };
 
-const mapDispatchToProps = (dispatch) => {
+const mapDispatchToProps = (dispatch, { history }) => {
   return {
-    addProduct: (product) => dispatch(createProduct(product)),
+    addProduct: (product) => dispatch(createProduct(product, history)),
   };
 };
 

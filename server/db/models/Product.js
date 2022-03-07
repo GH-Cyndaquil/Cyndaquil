@@ -30,8 +30,14 @@ const Product = db.define("product", {
   imageUrl: {
     type: Sequelize.TEXT,
     allowNull: false,
-    defaultValue: "../../public/images/default bottle.jpeg",
+    defaultValue: "/images/default bottle.jpeg",
   },
+});
+
+Product.beforeCreate((instance) => {
+  if (instance.imageUrl === "") {
+    instance.imageUrl = "/images/default bottle.jpeg";
+  }
 });
 
 module.exports = Product;
