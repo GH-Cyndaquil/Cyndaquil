@@ -2,13 +2,16 @@ const router = require("express").Router();
 const Order = require("../db/models/Order");
 const Product = require("../db/models/Product");
 const OrderDetails = require("../db/models/OrderDetails");
-const {
-  default: StripeContainer,
-} = require("../../client/components/CheckoutUser");
 
-router.get("/", async (req, res, next) => {
+//for specific order
+router.get("/:id", async (req, res, next) => {
   try {
-    const orders = await Order.findAll({
+    if (req.params.id !== undefined) {
+    }
+    const orders = await Order.findOne({
+      where: {
+        id: req.params.id,
+      },
       include: Product,
     });
     res.json(orders);
@@ -17,15 +20,36 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.get("/:id", async (req, res, next) => {
+//for order history
+router.get("/history/:id", async (req, res, next) => {
   try {
-    const orders = await Order.findOne({
-      where: {
-        id: req.params.id,
-      },
-      include: Product,
-    });
-    res.json(orders);
+    if (req.params.id !== undefined) {
+      const orders = await Order.findAll({
+        where: {
+          userId: req.params.id,
+          fulfilled: true,
+        },
+        include: Product,
+      });
+      res.json(orders);
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.get("/cart/:id", async (req, res, next) => {
+  try {
+    if (req.params.id !== undefined) {
+      const orders = await Order.findOne({
+        where: {
+          userId: req.params.id,
+          fulfilled: false,
+        },
+        include: Product,
+      });
+      res.json(orders);
+    }
   } catch (err) {
     next(err);
   }
@@ -96,12 +120,9 @@ router.post("/", async (req, res, next) => {
 
     const newCart = await Order.findOne({
       where: {
-        userId: req.body.userId,
-        fulfilled: false,
+        userId: userId,
       },
-      include: {
-        model: Product,
-      },
+      include: Product,
     });
 
     res.send(newCart);

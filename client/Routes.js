@@ -8,12 +8,15 @@ import { me } from "./store";
 import AdminPage from "./components/admin/AdminPage";
 import AdminUser from "./components/admin/AdminUser";
 import AddProduct from "./components/admin/AddProduct";
+import AdminProduct from "./components/admin/AdminProduct";
 import AllProducts from "./components/AllProducts";
 import ViewCart from "./components/ViewCart";
 import SingleProduct from "./components/SingleProduct";
 import SingleUser from "./components/SingleUser";
 import EditUser from "./components/EditUser";
 import CheckoutUser from "./components/CheckoutUser";
+import SingleOrder from "./components/SingleOrder";
+import CheckoutGuest from "./components/CheckoutGuest";
 /**
  * COMPONENT
  */
@@ -35,10 +38,13 @@ class Routes extends Component {
             <Route exact path="/users/:id" component={SingleUser} />
             <Route path="/users/:id/edit" component={EditUser} />
             <Route path="/admin" component={AdminPage} />
-            <Route path="/adminrights" component={AdminUser} />
+            <Route path="/adminuser" component={AdminUser} />
             <Route path="/addproduct" component={AddProduct} />
+            <Route path="/adminproduct" component={AdminProduct} />
             <Route path="/checkoutuser" component={CheckoutUser} />
             <Route path="/viewcart" component={ViewCart} />
+            <Route path="/orders/:id" component={SingleOrder} />
+            <Route path="/checkoutguest" component={CheckoutGuest} />
           </Switch>
         ) : (
           <Switch>
@@ -49,6 +55,7 @@ class Routes extends Component {
             <Route path="/products/:id" component={SingleProduct} />
             <Route path="/viewcart" component={ViewCart} />
             <Route path="/checkoutuser" component={CheckoutUser} />
+            <Route path="/checkoutguest" component={CheckoutGuest} />
           </Switch>
         )}
       </div>

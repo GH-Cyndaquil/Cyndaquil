@@ -1,28 +1,66 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-// import axios from "axios";
-import { fetchCart } from "../store/orders";
+import { fetchCart, gotCart } from "../store/orders";
 import { Link } from "react-router-dom";
-import { deleteItem } from "../store/orders";
+import axios from "axios";
 
 const ViewCart = (props) => {
   const dispatch = useDispatch();
-
   const userId = useSelector((state) => {
     return state.user.id;
   });
-
-  useEffect(() => {
-    dispatch(fetchCart(2));
-  }, []);
-
-  const curCart = useSelector((state) => {
-    return state.orders.products;
+  console.log("userId", userId);
+  let curCart = useSelector((state) => {
+    return state.orders;
   });
 
-  console.log("user------", curCart);
+  useEffect(() => {
+    if (localStorage.cart) {
+      let products = [];
+      let cart = JSON.parse(localStorage.getItem("cart"));
+      for (let key in cart) {
+        products.push(cart[key]);
+      }
+      dispatch(gotCart({ products: products }));
+    }
+  }, []);
 
-  if (curCart) {
+  useEffect(() => {
+    if (userId !== undefined) {
+      dispatch(fetchCart(userId));
+    }
+  }, [userId]);
+
+  function numberWithCommas(price) {
+    if (price.toString().split(".")[1] !== undefined) {
+      if (price.toString().split(".")[1].length === 1) {
+        price = price.toString() + 0;
+      }
+    }
+    return Number(price)
+      .toFixed(2)
+      .toString()
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  }
+
+  function getTotal() {
+    let total = 0;
+    if (curCart.id) {
+      for (let i = 0; i < curCart.products.length; i++) {
+        total +=
+          +curCart.products[i]["order-details"].price *
+          curCart.products[i]["order-details"].quantityOrdered;
+      }
+    } else {
+      for (let i = 0; i < curCart.products.length; i++) {
+        total +=
+          +curCart.products[i].price * curCart.products[i].quantityOrdered;
+      }
+    }
+    return numberWithCommas(total);
+  }
+
+  if (curCart.id !== undefined || Object.keys(curCart).length > 0) {
     return (
       <>
         <main id="cart">
@@ -37,41 +75,70 @@ const ViewCart = (props) => {
                   <th>Subtotal</th>
                   <th></th>
                 </tr>
-                {curCart.map((product) => (
-                  <tr key={product.id}>
-                    <td>
-                      <img src={product.imageUrl}></img>
-                    </td>
+                {curCart.shipState !== undefined
+                  ? curCart.products.map((product, i) => (
+                      <tr key={product.id}>
+                        <td>
+                          <img className="img" src={product.imageUrl}></img>
+                        </td>
 
-                    <td>{product["order-details"].quantityOrdered}</td>
-                    <td>{product["order-details"].price}</td>
-                    <td>
-                      {product["order-details"].price *
-                        product["order-details"].quantityOrdered}
-                    </td>
-                    <td>
-                      <i
-                        className="fa fa-trash-o"
-                        style={{ fontSize: "24px" }}
-                        onClick={() => deleteItem(product.id)}
-                      ></i>
-                    </td>
-                  </tr>
-                ))}
+                        <td>{product["order-details"].quantityOrdered}</td>
+                        <td>${numberWithCommas(curCart.products[i].price)}</td>
+                        <td>
+                          $
+                          {numberWithCommas(
+                            product["order-details"].price *
+                              product["order-details"].quantityOrdered
+                          )}
+                        </td>
+                        <td>
+                          <i
+                            className="fa fa-trash-o"
+                            style={{ fontSize: "24px" }}
+                          ></i>
+                        </td>
+                      </tr>
+                    ))
+                  : curCart.products.map((product, i) => (
+                      <tr key={product.id}>
+                        <td>
+                          <img src={product.imageUrl}></img>
+                        </td>
+
+                        <td>{curCart.products[i].quantity}</td>
+                        <td>${numberWithCommas(curCart.products[i].price)}</td>
+                        <td>
+                          $
+                          {numberWithCommas(
+                            +curCart.products[i].price *
+                              +curCart.products[i].quantityOrdered
+                          )}
+                        </td>
+                        <td>
+                          <i
+                            className="fa fa-trash-o"
+                            style={{ fontSize: "24px" }}
+                          ></i>
+                        </td>
+                      </tr>
+                    ))}
 
                 <tr>
                   <td></td>
                   <td></td>
-                  <td>Total:</td>
-                  {/* need to figure out how to do a total here */}
-                  <td>43.70</td>
+                  <td>Total</td>
+                  <td>${getTotal()}</td>
+
                   <td>
-                    {/* <Link to="/checkoutuser">
-                      <button>Checkout</button>
-                    </Link> */}
-                    <Link to="/checkout">
-                      <button>Checkout</button>
-                    </Link>
+                    {userId ? (
+                      <Link to="/checkoutuser">
+                        <button>Checkout</button>
+                      </Link>
+                    ) : (
+                      <Link to="/checkoutguest">
+                        <button>Checkout</button>
+                      </Link>
+                    )}
                   </td>
                 </tr>
               </tbody>

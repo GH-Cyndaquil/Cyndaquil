@@ -10,7 +10,7 @@ const addedItem = (item) => ({
   item,
 });
 
-const gotCart = (cart) => ({
+export const gotCart = (cart) => ({
   type: GOT_CART,
   cart,
 });
@@ -24,7 +24,7 @@ export const addItem = (item) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.post(`/api/orders/`, item);
-      dispatch(gotCart(data));
+      dispatch(fetchCart(item.userId));
     } catch (error) {
       console.error("AddItem Failed");
     }
@@ -34,9 +34,10 @@ export const addItem = (item) => {
 export const fetchCart = (id) => {
   return async (dispatch) => {
     try {
-      console.log("fetched");
-      const { data } = await axios.get(`/api/orders/${id}`);
-      dispatch(gotCart(data));
+      if (id !== undefined) {
+        const { data } = await axios.get(`/api/orders/cart/${id}`);
+        dispatch(gotCart(data));
+      }
     } catch (error) {
       console.error("fetchCart failed");
     }
