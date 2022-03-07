@@ -25,7 +25,7 @@ router.get('/:id', async (req, res, next) => {
           userId: req.params.id,
           fulfilled: true,
         },
-        include: [{ model: OrderDetails, include: { model: Product } }],
+        include: Product,
       });
       res.json(orders);
     }
@@ -42,17 +42,8 @@ router.get('/cart/:id', async (req, res, next) => {
           userId: req.params.id,
           fulfilled: false,
         },
-        include: OrderDetails,
+        include: Product,
       });
-      let products = [];
-      for (let i = 0; i < orders['order-details'].length; i++) {
-        products.push(
-          await Product.findByPk(
-            orders['order-details'][i].dataValues.productId
-          )
-        );
-      }
-      orders.dataValues['products'] = products;
       res.json(orders);
     }
   } catch (err) {
@@ -102,15 +93,8 @@ router.post('/', async (req, res, next) => {
       where: {
         userId: userId,
       },
-      include: OrderDetails,
+      include: Product,
     });
-    let products = [];
-    for (let i = 0; i < newCart['order-details'].length; i++) {
-      products.push(
-        await Product.findByPk(newCart['order-details'][i].dataValues.productId)
-      );
-    }
-    newCart.dataValues['products'] = products;
 
     res.send(newCart);
   } catch (error) {

@@ -46,8 +46,8 @@ const ViewCart = (props) => {
     if (curCart.id) {
       for (let i = 0; i < curCart.products.length; i++) {
         total +=
-          +curCart.products[i].price *
-          curCart['order-details'][i].quantityOrdered;
+          +curCart.products[i]['order-details'].price *
+          curCart.products[i]['order-details'].quantityOrdered;
       }
     } else {
       for (let i = 0; i < curCart.products.length; i++) {
@@ -80,13 +80,13 @@ const ViewCart = (props) => {
                           <img className="img" src={product.imageUrl}></img>
                         </td>
 
-                        <td>{curCart['order-details'][i].quantityOrdered}</td>
+                        <td>{product['order-details'].quantityOrdered}</td>
                         <td>${numberWithCommas(curCart.products[i].price)}</td>
                         <td>
                           $
                           {numberWithCommas(
-                            curCart.products[i].price *
-                              curCart['order-details'][i].quantityOrdered
+                            product['order-details'].price *
+                              product['order-details'].quantityOrdered
                           )}
                         </td>
                         <td>
