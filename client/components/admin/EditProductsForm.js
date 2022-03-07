@@ -1,8 +1,9 @@
-import React from "react";
+import React from 'react';
 
 const EditProductForm = (props) => {
   return (
     <div>
+      <h2>Edit Item</h2>
       <form onSubmit={props.handleSubmit}>
         <label htmlFor="name"> Name: </label>
         <input
