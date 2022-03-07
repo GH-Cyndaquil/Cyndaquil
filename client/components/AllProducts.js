@@ -63,6 +63,11 @@ function AllProducts(props) {
   }
 
   useEffect(() => {
+    if (props.location.search.split('=')[1] == 1) {
+      setIngredientFilter(0);
+      setRegionFilter(0);
+      setSearch('');
+    }
     dispatch(fetchProducts(props.location));
     dispatch(fetchIngredients());
     dispatch(fetchRegions());
@@ -70,8 +75,16 @@ function AllProducts(props) {
   }, [props.location.search]);
 
   useEffect(() => {
+    if (search !== '') {
+      props.history.push('/products');
+    }
+  }, [search]);
+
+  useEffect(() => {
     async function filtering() {
-      props.history.push('/products?page=1');
+      if (!(props.location.search === '' && search !== '')) {
+        props.history.push('/products?page=1');
+      }
       dispatch(
         fetchProducts(props.location, { regionFilter, ingredientFilter })
       );
@@ -111,6 +124,7 @@ function AllProducts(props) {
                 <input
                   type="radio"
                   name="region-filter"
+                  defaultChecked
                   onChange={(evt) => {
                     if (evt.target.checked) {
                       setRegionFilter(0);
@@ -131,6 +145,7 @@ function AllProducts(props) {
                 <input
                   type="radio"
                   name="ingredient-filter"
+                  defaultChecked
                   onChange={(evt) => {
                     if (evt.target.checked) {
                       setIngredientFilter(0);
@@ -145,11 +160,22 @@ function AllProducts(props) {
                 setIngredientFilter={setIngredientFilter}
               />
             </div>
-            <p>Search</p>
-            <input
-              type="text"
-              onChange={(evt) => setSearch(evt.target.value)}
-            ></input>
+            <p>
+              <label
+                htmlFor="search"
+                style={{ fontWeight: 'bold', fontSize: '20px' }}
+              >
+                Search
+              </label>
+              <input
+                type="text"
+                name="search"
+                id="search"
+                placeholder="What are you craving?"
+                value={search}
+                onChange={(evt) => setSearch(evt.target.value)}
+              ></input>
+            </p>
           </div>
           <div id="products">
             <RenderProducts
@@ -157,6 +183,7 @@ function AllProducts(props) {
               regionFilter={regionFilter}
               ingredientFilter={ingredientFilter}
               tenProducts={tenProducts}
+              products={products}
               setProductQuantities={setProductQuantities}
               addToCart={addToCart}
               productQuantities={productQuantities}
@@ -165,21 +192,25 @@ function AllProducts(props) {
           </div>
         </main>
         <div id="pagination-buttons">
-          {pagesArr.map((page, i) => {
-            return (
-              <button
-                className={
-                  Number(props.location.search.split('=')[1]) === i + 1
-                    ? 'current-page'
-                    : ''
-                }
-                key={i}
-                onClick={() => props.history.push(`/products?page=${i + 1}`)}
-              >
-                {i + 1}
-              </button>
-            );
-          })}
+          {search === ''
+            ? pagesArr.map((page, i) => {
+                return (
+                  <button
+                    className={
+                      Number(props.location.search.split('=')[1]) === i + 1
+                        ? 'current-page'
+                        : ''
+                    }
+                    key={i}
+                    onClick={() =>
+                      props.history.push(`/products?page=${i + 1}`)
+                    }
+                  >
+                    {i + 1}
+                  </button>
+                );
+              })
+            : null}
         </div>
       </div>
     );
@@ -195,6 +226,7 @@ function AllProducts(props) {
                 <input
                   type="radio"
                   name="region-filter"
+                  defaultChecked
                   onChange={(evt) => {
                     if (evt.target.checked) {
                       setRegionFilter(0);
@@ -215,6 +247,7 @@ function AllProducts(props) {
                 <input
                   type="radio"
                   name="ingredient-filter"
+                  defaultChecked
                   onChange={(evt) => {
                     if (evt.target.checked) {
                       setIngredientFilter(0);
@@ -229,11 +262,22 @@ function AllProducts(props) {
                 setIngredientFilter={setIngredientFilter}
               />
             </div>
-            <p>Search</p>
-            <input
-              type="text"
-              onChange={(evt) => setSearch(evt.target.value)}
-            ></input>
+            <p>
+              <label
+                htmlFor="search"
+                style={{ fontWeight: 'bold', fontSize: '20px' }}
+              >
+                Search
+              </label>
+              <input
+                type="text"
+                name="search"
+                id="search"
+                placeholder="What are you craving?"
+                value={search}
+                onChange={(evt) => setSearch(evt.target.value)}
+              ></input>
+            </p>
           </div>
           <div id="products">
             <div id="no-vodka-left">
