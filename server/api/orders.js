@@ -41,14 +41,17 @@ router.get("/history/:id", async (req, res, next) => {
 router.get("/cart/:id", async (req, res, next) => {
   try {
     if (req.params.id !== undefined) {
-      const orders = await Order.findOne({
+      const [order, wasCreated] = await Order.findOrCreate({
         where: {
           userId: req.params.id,
           fulfilled: false,
         },
         include: Product,
       });
-      res.json(orders);
+      if (wasCreated) {
+        order.setUser(req.params.id);
+      }
+      res.json(order);
     }
   } catch (err) {
     next(err);
@@ -93,31 +96,6 @@ router.post("/", async (req, res, next) => {
       });
     }
 
-    // what is cors
-    router.post("/payment", async (req, res, next) => {
-      let { amount, id } = req.body;
-      try {
-        const payment = await stripe.paymentItents.create({
-          amount,
-          currency: "USD",
-          description: "NYET Vodka",
-          payment_method: id,
-          confirm: true,
-        });
-        console.log("payment", payment);
-        res.json({
-          message: "Payment successful",
-          success: true,
-        });
-      } catch (error) {
-        console.log("error", error),
-          res.json({
-            message: "Payment failed",
-            success: false,
-          });
-      }
-    });
-
     const newCart = await Order.findOne({
       where: {
         userId: userId,
@@ -126,6 +104,20 @@ router.post("/", async (req, res, next) => {
     });
 
     res.send(newCart);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.put("/confirm", async (req, res, next) => {
+  try {
+    const completeOrder = await Order.findOne({
+      where: {
+        id: req.body.orderId,
+      },
+    });
+    await completeOrder.update({ fulfilled: true });
+    res.send();
   } catch (error) {
     next(error);
   }
