@@ -38,6 +38,22 @@ export const fetchCart = (id) => {
   };
 };
 
+export const removeItem = (item) => {
+  return async (dispatch) => {
+    try {
+      let { data } = await axios.delete(
+        `/api/orders/${item['order-details'].orderId}`,
+        {
+          headers: item,
+        }
+      );
+      dispatch(gotCart(data));
+    } catch (err) {
+      console.log(err);
+    }
+  };
+};
+
 export default (state = initState, action) => {
   switch (action.type) {
     case GOT_CART:

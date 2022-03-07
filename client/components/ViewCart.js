@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCart, gotCart } from '../store/orders';
+import { fetchCart, gotCart, removeItem } from '../store/orders';
 import { Link } from 'react-router-dom';
 
 const ViewCart = (props) => {
@@ -58,6 +58,10 @@ const ViewCart = (props) => {
     return numberWithCommas(total);
   }
 
+  function deleteItem(evt, product) {
+    dispatch(removeItem({ ...product, userId }));
+  }
+
   if (curCart.id !== undefined || Object.keys(curCart).length > 0) {
     return (
       <>
@@ -93,6 +97,7 @@ const ViewCart = (props) => {
                           <i
                             className="fa fa-trash-o"
                             style={{ fontSize: '24px' }}
+                            onClick={(evt) => deleteItem(evt, product)}
                           ></i>
                         </td>
                       </tr>

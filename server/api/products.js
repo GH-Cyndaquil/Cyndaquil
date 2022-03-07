@@ -1,7 +1,7 @@
-const router = require("express").Router();
+const router = require('express').Router();
 const {
   models: { Product, User },
-} = require("../db");
+} = require('../db');
 module.exports = router;
 //auth middleware
 const requireToken = async (req, res, next) => {
@@ -16,7 +16,7 @@ const requireToken = async (req, res, next) => {
 };
 
 //mounted on /api/products
-router.get("/", async (req, res, next) => {
+router.get('/', async (req, res, next) => {
   try {
     let filterObj = {};
     let { regionfilter, ingredientfilter } = req.headers;
@@ -29,7 +29,7 @@ router.get("/", async (req, res, next) => {
 
     if (req.query.page) {
       const products = await Product.findAndCountAll({
-        order: [["id", "ASC"]],
+        order: [['id', 'ASC']],
         where: filterObj,
         offset: req.query.page * 10 - 10,
         limit: 20,
@@ -39,7 +39,7 @@ router.get("/", async (req, res, next) => {
       return;
     } else {
       const products = await Product.findAll({
-        order: [["id", "ASC"]],
+        order: [['id', 'ASC']],
         where: filterObj,
       });
       res.send(products);
@@ -49,7 +49,7 @@ router.get("/", async (req, res, next) => {
   }
 });
 
-router.get("/:productId", async (req, res, next) => {
+router.get('/:productId', async (req, res, next) => {
   try {
     const product = await Product.findOne({
       where: { id: req.params.productId },
@@ -61,13 +61,13 @@ router.get("/:productId", async (req, res, next) => {
   }
 });
 
-router.post("/", requireToken, async (req, res, next) => {
+router.post('/', requireToken, async (req, res, next) => {
   try {
     if (req.isAdmin) {
       await Product.create(req.body);
       res.send();
     } else {
-      const error = new Error("Only Admins can create products");
+      const error = new Error('Only Admins can create products');
       error.status = 401;
       throw error;
     }
