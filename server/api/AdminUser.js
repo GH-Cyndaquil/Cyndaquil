@@ -1,9 +1,3 @@
-/*
-const router = require("express").Router();
-const User = require("../db/models/User");
-module.exports = router;
-*/
-
 const router = require("express").Router();
 const {
   models: { User },
@@ -11,11 +5,11 @@ const {
 module.exports = router;
 
 const adminsOnly = (req, res, next) => {
-  if (!req.user) {
+  if (!req.body.user) {
     const err = new Error("Not logged in");
     err.status = 401;
     return next(err);
-  } else if (!req.user.isAdmin) {
+  } else if (!req.body.user.isAdmin) {
     const err = new Error("Off Limits");
     err.status = 401;
     return next(err);
