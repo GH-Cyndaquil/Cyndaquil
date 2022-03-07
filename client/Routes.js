@@ -16,6 +16,7 @@ import SingleUser from "./components/SingleUser";
 import EditUser from "./components/EditUser";
 import CheckoutUser from "./components/CheckoutUser";
 import SingleOrder from "./components/SingleOrder";
+import AllUsers from "./components/admin/AdminAllUsers";
 /**
  * COMPONENT
  */
@@ -37,9 +38,11 @@ class Routes extends Component {
             <Route exact path="/users/:id" component={SingleUser} />
             <Route path="/users/:id/edit" component={EditUser} />
             <Route path="/admin" component={AdminPage} />
-            <Route path="/adminuser" component={AdminUser} />
+            <Route path="/adminallusers" component={AllUsers} />
+
             <Route path="/addproduct" component={AddProduct} />
             <Route path="/adminproduct" component={AdminProduct} />
+            <Route path="/user/:id" component={AdminUser} />
             <Route path="/checkoutuser" component={CheckoutUser} />
             <Route path="/viewcart" component={ViewCart} />
             <Route path="/orders/:id" component={SingleOrder} />
