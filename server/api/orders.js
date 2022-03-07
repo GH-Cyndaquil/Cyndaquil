@@ -1,10 +1,10 @@
-const router = require('express').Router();
-const Order = require('../db/models/Order');
-const Product = require('../db/models/Product');
-const OrderDetails = require('../db/models/OrderDetails');
+const router = require("express").Router();
+const Order = require("../db/models/Order");
+const Product = require("../db/models/Product");
+const OrderDetails = require("../db/models/OrderDetails");
 
 //for specific order
-router.get('/:id', async (req, res, next) => {
+router.get("/:id", async (req, res, next) => {
   try {
     if (req.params.id !== undefined) {
     }
@@ -21,7 +21,7 @@ router.get('/:id', async (req, res, next) => {
 });
 
 //for order history
-router.get('/history/:id', async (req, res, next) => {
+router.get("/history/:id", async (req, res, next) => {
   try {
     if (req.params.id !== undefined) {
       const orders = await Order.findAll({
@@ -38,10 +38,10 @@ router.get('/history/:id', async (req, res, next) => {
   }
 });
 
-router.get('/cart/:id', async (req, res, next) => {
+router.get("/cart/:id", async (req, res, next) => {
   try {
     if (req.params.id !== undefined) {
-      const orders = await Order.findOne({
+      const [orders, wasCreated] = await Order.findOrCreate({
         where: {
           userId: req.params.id,
           fulfilled: false,
@@ -55,7 +55,7 @@ router.get('/cart/:id', async (req, res, next) => {
   }
 });
 
-router.post('/', async (req, res, next) => {
+router.post("/", async (req, res, next) => {
   try {
     const { productId, price, quantity, userId } = req.body;
 
