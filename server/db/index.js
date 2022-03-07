@@ -25,6 +25,9 @@ Product.belongsToMany(Order, { through: OrderDetails });
 Order.hasMany(OrderDetails);
 OrderDetails.belongsTo(Order);
 
+Product.hasMany(OrderDetails);
+OrderDetails.belongsTo(Product);
+
 module.exports = {
   db,
   models: {

@@ -16,12 +16,31 @@ router.get('/', async (req, res, next) => {
   }
 });
 
+//for order history
 router.get('/:id', async (req, res, next) => {
+  try {
+    if (req.params.id !== undefined) {
+      const orders = await Order.findAll({
+        where: {
+          userId: req.params.id,
+          fulfilled: true,
+        },
+        include: [{ model: OrderDetails, include: { model: Product } }],
+      });
+      res.json(orders);
+    }
+  } catch (err) {
+    next(err);
+  }
+});
+
+router.get('/cart/:id', async (req, res, next) => {
   try {
     if (req.params.id !== undefined) {
       const orders = await Order.findOne({
         where: {
-          id: req.params.id,
+          userId: req.params.id,
+          fulfilled: false,
         },
         include: OrderDetails,
       });
