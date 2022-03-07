@@ -8,7 +8,7 @@ export const AdminPage = () => {
         <div className="adminblock">
           <h1 className="adminHeader">Administrative Tools</h1>
           <button>
-            <Link to="/adminallusers">Edit Users</Link>
+            <Link to="/adminalluser">Edit Users</Link>
           </button>
           <> </>
           <button>
