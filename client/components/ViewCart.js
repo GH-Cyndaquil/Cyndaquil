@@ -59,7 +59,18 @@ const ViewCart = (props) => {
   }
 
   function deleteItem(evt, product) {
-    dispatch(removeItem({ ...product, userId }));
+    if (userId) {
+      dispatch(removeItem({ ...product, userId }));
+    } else {
+      let cart = JSON.parse(localStorage.getItem('cart'));
+      delete cart[`${product.id}`];
+      let products = [];
+      for (let key in cart) {
+        products.push(cart[key]);
+      }
+      localStorage.setItem('cart', JSON.stringify(cart));
+      dispatch(gotCart({ products: products }));
+    }
   }
 
   if (curCart.id !== undefined || Object.keys(curCart).length > 0) {
@@ -121,6 +132,7 @@ const ViewCart = (props) => {
                           <i
                             className="fa fa-trash-o"
                             style={{ fontSize: '24px' }}
+                            onClick={(evt) => deleteItem(evt, product)}
                           ></i>
                         </td>
                       </tr>
