@@ -77,7 +77,7 @@ const ViewCart = (props) => {
                   ? curCart.products.map((product, i) => (
                       <tr key={product.id}>
                         <td>
-                          <img src={product.imageUrl}></img>
+                          <img className="img" src={product.imageUrl}></img>
                         </td>
 
                         <td>{curCart['order-details'][i].quantityOrdered}</td>
