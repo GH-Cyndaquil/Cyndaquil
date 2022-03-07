@@ -17,7 +17,7 @@ const AddForm = (props) => {
       action="/"
       onSubmit={handleSubmit}
     >
-      <label htmlFor="name">Product Name</label>
+      <label htmlFor="name">Name</label>
       <input
         className="ProductFormInput"
         type="text"
@@ -25,7 +25,7 @@ const AddForm = (props) => {
         value={name}
         onChange={handleChange}
       />
-      <label htmlFor="imageUrl">Product Image</label>
+      <label htmlFor="imageUrl">Image</label>
       <input
         className="ProductFormInput"
         type="text"
@@ -33,7 +33,7 @@ const AddForm = (props) => {
         value={imageUrl}
         onChange={handleChange}
       />
-      <label htmlFor="price">Product Price</label>
+      <label htmlFor="price">Price</label>
       <input
         className="ProductFormInput"
         type="number"
@@ -43,7 +43,7 @@ const AddForm = (props) => {
         value={price}
         onChange={handleChange}
       />
-      <label htmlFor="quantity">Product Quantity</label>
+      <label htmlFor="quantity">Quantity</label>
       <input
         className="ProductFormInput"
         type="number"
@@ -53,7 +53,7 @@ const AddForm = (props) => {
         value={quantity}
         onChange={handleChange}
       />
-      <label htmlFor="description">Product Description</label>
+      <label htmlFor="description">Description</label>
       <input
         className="ProductFormInput"
         type="text"
@@ -62,7 +62,7 @@ const AddForm = (props) => {
         onChange={handleChange}
       />
       <button
-        disabled={name === "" || price === 0 || imageUrl === ""}
+        disabled={name === "" || price === 0 || quantity === ""}
         className="ButtonUpdateProduct ProductFormLabel"
         type="submit"
       >

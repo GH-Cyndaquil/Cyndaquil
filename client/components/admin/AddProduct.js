@@ -1,9 +1,9 @@
 import React from "react";
 import { connect } from "react-redux";
-import { addProduct } from "../../store/products";
+import createProduct from "../../store/products";
 import AddForm from "./AddProductForm";
 
-class AddProduct extends React.Component {
+class CreateProduct extends React.Component {
   constructor() {
     super();
     this.state = {
@@ -70,8 +70,8 @@ const mapStateToProps = () => {
 
 const mapDispatchToProps = (dispatch) => {
   return {
-    addProduct: (product) => dispatch(addProduct(product)),
+    addProduct: (product) => dispatch(createProduct(product)),
   };
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(AddProduct);
+export default connect(mapStateToProps, mapDispatchToProps)(CreateProduct);
