@@ -4,7 +4,7 @@ import { authenticate } from "../store";
 import Signup from "./Signup";
 import { Link } from "react-router-dom";
 
-const Login = () => {
+const Login = (props) => {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const error = useSelector((state) => state.user.error);

@@ -9,6 +9,8 @@ const SingleUser = () => {
     return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
+  console.log(user);
+
   return (
     <div id="single-user">
       <h1>Hello, {user.username}</h1>
