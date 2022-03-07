@@ -155,6 +155,13 @@ form div {
   width: 100%;
 }
 
+.all-users {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
+}
+
 .adminBackground {
   background-color: rgb(61, 61, 61);
   padding: 1em;
