@@ -1,8 +1,9 @@
-import axios from 'axios';
+import axios from "axios";
 const initState = {};
 
-const GOT_CART = 'GOT_CART';
-const ADD_ITEM = 'ADD_ITEM';
+const GOT_CART = "GOT_CART";
+const ADD_ITEM = "ADD_ITEM";
+const DELETE_ITEM = "DELETE_ITEM";
 
 const addedItem = (item) => ({
   type: ADD_ITEM,
@@ -14,13 +15,18 @@ export const gotCart = (cart) => ({
   cart,
 });
 
+const deletedItem = (cart) => ({
+  type: DELETE_ITEM,
+  cart,
+});
+
 export const addItem = (item) => {
   return async (dispatch) => {
     try {
       const { data } = await axios.post(`/api/orders/`, item);
       dispatch(fetchCart(item.userId));
     } catch (error) {
-      console.error('AddItem Failed');
+      console.error("AddItem Failed");
     }
   };
 };
@@ -33,8 +39,17 @@ export const fetchCart = (id) => {
         dispatch(gotCart(data));
       }
     } catch (error) {
-      console.error('fetchCart failed');
+      console.error("fetchCart failed");
     }
+  };
+};
+
+export const deleteItem = (id) => {
+  console.log("deleteItem was called", id);
+
+  return async (dispatch) => {
+    const { data: thisCart } = await axios.delete(`api/orders/${id}`);
+    dispatch(deletedItem(thisCart));
   };
 };
 
@@ -44,6 +59,9 @@ export default (state = initState, action) => {
       return action.cart;
     case ADD_ITEM:
       return action.item;
+    case DELETE_ITEM:
+      return state.filter((product) => product.id !== action.product.id);
+
     default:
       return state;
   }

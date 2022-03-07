@@ -1,13 +1,15 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchCart, gotCart } from '../store/orders';
-import { Link } from 'react-router-dom';
+import React, { useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCart, gotCart } from "../store/orders";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 const ViewCart = (props) => {
   const dispatch = useDispatch();
   const userId = useSelector((state) => {
     return state.user.id;
   });
+  console.log("userId", userId);
   let curCart = useSelector((state) => {
     return state.orders;
   });
@@ -15,7 +17,7 @@ const ViewCart = (props) => {
   useEffect(() => {
     if (localStorage.cart) {
       let products = [];
-      let cart = JSON.parse(localStorage.getItem('cart'));
+      let cart = JSON.parse(localStorage.getItem("cart"));
       for (let key in cart) {
         products.push(cart[key]);
       }
@@ -30,15 +32,15 @@ const ViewCart = (props) => {
   }, [userId]);
 
   function numberWithCommas(price) {
-    if (price.toString().split('.')[1] !== undefined) {
-      if (price.toString().split('.')[1].length === 1) {
+    if (price.toString().split(".")[1] !== undefined) {
+      if (price.toString().split(".")[1].length === 1) {
         price = price.toString() + 0;
       }
     }
     return Number(price)
       .toFixed(2)
       .toString()
-      .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
   function getTotal() {
@@ -46,8 +48,8 @@ const ViewCart = (props) => {
     if (curCart.id) {
       for (let i = 0; i < curCart.products.length; i++) {
         total +=
-          +curCart.products[i]['order-details'].price *
-          curCart.products[i]['order-details'].quantityOrdered;
+          +curCart.products[i]["order-details"].price *
+          curCart.products[i]["order-details"].quantityOrdered;
       }
     } else {
       for (let i = 0; i < curCart.products.length; i++) {
@@ -80,19 +82,19 @@ const ViewCart = (props) => {
                           <img className="img" src={product.imageUrl}></img>
                         </td>
 
-                        <td>{product['order-details'].quantityOrdered}</td>
+                        <td>{product["order-details"].quantityOrdered}</td>
                         <td>${numberWithCommas(curCart.products[i].price)}</td>
                         <td>
                           $
                           {numberWithCommas(
-                            product['order-details'].price *
-                              product['order-details'].quantityOrdered
+                            product["order-details"].price *
+                              product["order-details"].quantityOrdered
                           )}
                         </td>
                         <td>
                           <i
                             className="fa fa-trash-o"
-                            style={{ fontSize: '24px' }}
+                            style={{ fontSize: "24px" }}
                           ></i>
                         </td>
                       </tr>
@@ -115,7 +117,7 @@ const ViewCart = (props) => {
                         <td>
                           <i
                             className="fa fa-trash-o"
-                            style={{ fontSize: '24px' }}
+                            style={{ fontSize: "24px" }}
                           ></i>
                         </td>
                       </tr>
@@ -126,10 +128,17 @@ const ViewCart = (props) => {
                   <td></td>
                   <td>Total</td>
                   <td>${getTotal()}</td>
+
                   <td>
-                    <Link to="/checkoutuser">
-                      <button>Checkout</button>
-                    </Link>
+                    {userId ? (
+                      <Link to="/checkoutuser">
+                        <button>Checkout</button>
+                      </Link>
+                    ) : (
+                      <Link to="/checkoutguest">
+                        <button>Checkout</button>
+                      </Link>
+                    )}
                   </td>
                 </tr>
               </tbody>
