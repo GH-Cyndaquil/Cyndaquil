@@ -8,8 +8,12 @@ export const Home = (props) => {
   const { username } = props;
 
   return (
-    <div>
-      <h3>Welcome, {username}</h3>
+    <div id="home-container">
+      <div id="home-text-container">
+        <h1>Welcome to Nyet</h1>
+        <p>Premium vodkas, never from Russia.</p>
+      </div>
+      <div id="home-background"></div>
     </div>
   );
 };
