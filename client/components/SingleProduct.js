@@ -24,6 +24,7 @@ function SingleProduct(props) {
   const userId = useSelector((state) => {
     return state.user.id;
   });
+  const isLoggedIn = useSelector((state) => !!state.user.id);
 
   useEffect(() => {
     // dispatch(fetchCart(userId));
@@ -51,14 +52,43 @@ function SingleProduct(props) {
   }
 
   function addToCart(evt) {
-    dispatch(
-      addItem({
-        productId: currentProduct.id,
-        price: quantityPrice,
-        quantity: currentQuantity,
-        userId: userId,
-      })
-    );
+    if (isLoggedIn) {
+      dispatch(
+        addItem({
+          productId: currentProduct.id,
+          price: quantityPrice,
+          quantity: currentQuantity,
+          userId: userId,
+        })
+      );
+    } else {
+      if (localStorage.cart) {
+        let cart = JSON.parse(localStorage.getItem('cart'));
+        let cartItem = cart[`${currentProduct.id}`];
+        if (cartItem) {
+          cartItem.quantity =
+            Number(cartItem.quantity) + Number(currentQuantity);
+          cartItem.price = (cartItem.quantity * currentProduct.price).toFixed(
+            2
+          );
+        } else {
+          cart[`${currentProduct.id}`] = {
+            productId: currentProduct.id,
+            price: quantityPrice,
+            quantity: currentQuantity,
+          };
+        }
+        localStorage.setItem('cart', JSON.stringify(cart));
+      } else {
+        let cart = {};
+        cart[`${currentProduct.id}`] = {
+          productId: currentProduct.id,
+          price: quantityPrice,
+          quantity: currentQuantity,
+        };
+        localStorage.setItem('cart', JSON.stringify(cart));
+      }
+    }
   }
 
   if (ingredients.length === 0) {
