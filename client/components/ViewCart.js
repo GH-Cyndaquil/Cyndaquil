@@ -73,6 +73,8 @@ const ViewCart = (props) => {
     }
   }
 
+  function updateItem(evt, product) {}
+
   if (curCart.id !== undefined || Object.keys(curCart).length > 0) {
     return (
       <>
@@ -95,7 +97,16 @@ const ViewCart = (props) => {
                           <img className="img" src={product.imageUrl}></img>
                         </td>
 
-                        <td>{product['order-details'].quantityOrdered}</td>
+                        <td>
+                          {' '}
+                          <input
+                            type="number"
+                            id="cart-item-quantity"
+                            min={1}
+                            defaultValue={product.quantity}
+                          ></input>
+                          <button>Update</button>
+                        </td>
                         <td>${numberWithCommas(curCart.products[i].price)}</td>
                         <td>
                           $
@@ -119,7 +130,15 @@ const ViewCart = (props) => {
                           <img src={product.imageUrl}></img>
                         </td>
 
-                        <td>{curCart.products[i].quantity}</td>
+                        <td>
+                          <input
+                            type="number"
+                            min={1}
+                            defaultValue={product.quantity}
+                          ></input>
+                          {curCart.products[i].quantity}
+                          <button>Update</button>
+                        </td>
                         <td>${numberWithCommas(curCart.products[i].price)}</td>
                         <td>
                           $
