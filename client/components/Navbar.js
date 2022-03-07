@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { logout } from '../store';
-import { fetchCart } from '../store/orders';
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { logout } from "../store";
+import { fetchCart } from "../store/orders";
 
 const Navbar = (props) => {
   const userId = useSelector((state) => state.user.id);
@@ -17,14 +17,14 @@ const Navbar = (props) => {
 
   function cartCounter() {
     return cart.products.reduce((accum, num) => {
-      accum += num['order-details'].quantityOrdered;
+      accum += num["order-details"].quantityOrdered;
       return accum;
     }, 0);
   }
 
   function localStorageCount() {
     if (localStorage.cart) {
-      let cart = Object.values(JSON.parse(localStorage.getItem('cart')));
+      let cart = Object.values(JSON.parse(localStorage.getItem("cart")));
       let items = 0;
       for (let i = 0; i < cart.length; i++) {
         items += Number(cart[i].quantityOrdered);
@@ -34,7 +34,7 @@ const Navbar = (props) => {
       return 0;
     }
   }
-
+  console.log("cart", cart);
   return (
     <div id="navbar">
       <nav>
@@ -66,7 +66,7 @@ const Navbar = (props) => {
                 <i
                   id="shopping-cart"
                   className="fa fa-shopping-cart"
-                  style={{ fontSize: '50px' }}
+                  style={{ fontSize: "50px" }}
                 ></i>
                 {cart.id !== undefined ? (
                   <div id="cart-count">{cartCounter()}</div>
@@ -90,7 +90,7 @@ const Navbar = (props) => {
                 <i
                   id="shopping-cart"
                   className="fa fa-shopping-cart"
-                  style={{ fontSize: '50px' }}
+                  style={{ fontSize: "50px" }}
                 ></i>
                 <div id="cart-count">{localStorageCount()}</div>
               </div>

@@ -41,14 +41,17 @@ router.get("/history/:id", async (req, res, next) => {
 router.get("/cart/:id", async (req, res, next) => {
   try {
     if (req.params.id !== undefined) {
-      const [orders, wasCreated] = await Order.findOrCreate({
+      const [order, wasCreated] = await Order.findOrCreate({
         where: {
           userId: req.params.id,
           fulfilled: false,
         },
         include: Product,
       });
-      res.json(orders);
+      if (wasCreated) {
+        order.setUser(req.params.id);
+      }
+      res.json(order);
     }
   } catch (err) {
     next(err);
