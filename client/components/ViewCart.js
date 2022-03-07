@@ -20,8 +20,10 @@ const ViewCart = (props) => {
   });
 
   function numberWithCommas(price) {
-    if (price.toString().split('.')[1].length === 1) {
-      price = price.toString() + 0;
+    if (price.toString().split('.')[1] !== undefined) {
+      if (price.toString().split('.')[1].length === 1) {
+        price = price.toString() + 0;
+      }
     }
     return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
