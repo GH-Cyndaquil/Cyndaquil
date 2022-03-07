@@ -38,6 +38,16 @@ nav a {
   margin: 1em;
 }
 
+.homestyle {
+  background-color: rgb(61, 61, 61);
+  background-image: url("./gifs/pouringMartini.gif"), url(".images/");
+  background-size: cover;
+  font-size: 2rem;
+  border: 2px solid black;
+  border-radius: 4px;
+  padding: 3px;
+}
+
 form div {
   margin: 1em;
   display: inline-block;

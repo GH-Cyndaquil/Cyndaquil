@@ -11,7 +11,7 @@ const SingleOrder = (props) => {
     };
     fetchOrder();
   }, []);
-
+  console.log("order", order);
   return (
     <div>
       <h1>Order #{order.id}</h1>
