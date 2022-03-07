@@ -1,18 +1,19 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { authenticate } from "../store";
-import Signup from "./Signup";
-import { Link } from "react-router-dom";
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { authenticate } from '../store';
+import Signup from './Signup';
+import { Link } from 'react-router-dom';
 
 const Login = (props) => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const error = useSelector((state) => state.user.error);
   const dispatch = useDispatch();
+  const isLoggedIn = useSelector((state) => !!state.user.id);
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(authenticate({ username, password }, "login"));
+    dispatch(authenticate({ username, password }, 'login'));
   };
 
   return (

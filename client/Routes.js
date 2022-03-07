@@ -17,7 +17,6 @@ import EditUser from './components/EditUser';
 import CheckoutUser from './components/CheckoutUser';
 import SingleOrder from './components/SingleOrder';
 import CheckoutGuest from './components/CheckoutGuest';
-
 /**
  * COMPONENT
  */
