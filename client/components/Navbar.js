@@ -9,8 +9,7 @@ const Navbar = (props) => {
   const isLoggedIn = useSelector((state) => !!state.user.id);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
-  const cartCount = useSelector((state) => state.orders.products);
-  const cart = useSelector((state) => state.orders);
+  let cart = useSelector((state) => state.orders);
 
   useEffect(() => {
     dispatch(fetchCart(userId));
@@ -21,6 +20,19 @@ const Navbar = (props) => {
       accum += num.quantityOrdered;
       return accum;
     }, 0);
+  }
+
+  function localStorageCount() {
+    if (localStorage.cart) {
+      let cart = Object.values(JSON.parse(localStorage.getItem('cart')));
+      let items = 0;
+      for (let i = 0; i < cart.length; i++) {
+        items += Number(cart[i].quantityOrdered);
+      }
+      return items;
+    } else {
+      return 0;
+    }
   }
 
   return (
@@ -80,7 +92,7 @@ const Navbar = (props) => {
                   className="fa fa-shopping-cart"
                   style={{ fontSize: '50px' }}
                 ></i>
-                <div id="cart-count">{1}</div>
+                <div id="cart-count">{localStorageCount()}</div>
               </div>
               {/* <h5>{number of items in cart}</h5> */}
             </Link>

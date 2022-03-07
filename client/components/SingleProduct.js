@@ -6,7 +6,7 @@ import {
 } from '../store/selectedProduct';
 import { fetchIngredients } from '../store/ingredients';
 import { fetchRegions } from '../store/regions';
-import { addItem, fetchCart } from '../store/orders';
+import { addItem, fetchCart, gotCart } from '../store/orders';
 
 function SingleProduct(props) {
   const dispatch = useDispatch();
@@ -24,6 +24,7 @@ function SingleProduct(props) {
   const userId = useSelector((state) => {
     return state.user.id;
   });
+  const isLoggedIn = useSelector((state) => !!state.user.id);
 
   useEffect(() => {
     // dispatch(fetchCart(userId));
@@ -51,14 +52,58 @@ function SingleProduct(props) {
   }
 
   function addToCart(evt) {
-    dispatch(
-      addItem({
-        productId: currentProduct.id,
-        price: quantityPrice,
-        quantity: currentQuantity,
-        userId: userId,
-      })
-    );
+    if (isLoggedIn) {
+      dispatch(
+        addItem({
+          productId: currentProduct.id,
+          price: quantityPrice,
+          quantity: currentQuantity,
+          userId: userId,
+        })
+      );
+    } else {
+      if (currentProduct.quantity > 0) {
+        if (localStorage.cart) {
+          let cart = JSON.parse(localStorage.getItem('cart'));
+          let cartItem = cart[`${currentProduct.id}`];
+          if (cartItem) {
+            cartItem.quantityOrdered =
+              Number(cartItem.quantityOrdered) + Number(currentQuantity);
+            cartItem.price = (
+              cartItem.quantityOrdered * currentProduct.price
+            ).toFixed(2);
+            cartItem.imageUrl = currentProduct.imageUrl;
+          } else {
+            cart[`${currentProduct.id}`] = {
+              id: +currentProduct.id,
+              price: quantityPrice,
+              quantityOrdered: currentQuantity,
+              imageUrl: currentProduct.imageUrl,
+            };
+          }
+          let products = [];
+          for (let key in cart) {
+            products.push(cart[key]);
+          }
+          localStorage.setItem('cart', JSON.stringify(cart));
+          dispatch(gotCart({ products: products }));
+        } else {
+          let cart = {};
+          cart[`${currentProduct.id}`] = {
+            id: +currentProduct.id,
+            price: quantityPrice,
+            quantityOrdered: currentQuantity,
+            imageUrl: currentProduct.imageUrl,
+          };
+          let products = [];
+          for (let key in cart) {
+            products.push(cart[key]);
+          }
+          localStorage.setItem('cart', JSON.stringify(cart));
+          dispatch(gotCart({ products: products }));
+        }
+      }
+    }
   }
 
   if (ingredients.length === 0) {

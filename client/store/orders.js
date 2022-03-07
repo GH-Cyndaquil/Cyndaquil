@@ -9,7 +9,7 @@ const addedItem = (item) => ({
   item,
 });
 
-const gotCart = (cart) => ({
+export const gotCart = (cart) => ({
   type: GOT_CART,
   cart,
 });
@@ -41,6 +41,7 @@ export const fetchCart = (id) => {
 export default (state = initState, action) => {
   switch (action.type) {
     case GOT_CART:
+      console.log(action.cart);
       return action.cart;
     case ADD_ITEM:
       return action.item;

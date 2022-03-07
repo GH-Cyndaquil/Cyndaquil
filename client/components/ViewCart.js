@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchCart } from '../store/orders';
+import { fetchCart, gotCart } from '../store/orders';
 import { Link } from 'react-router-dom';
 
 const ViewCart = (props) => {
@@ -8,16 +8,26 @@ const ViewCart = (props) => {
   const userId = useSelector((state) => {
     return state.user.id;
   });
+  let curCart = useSelector((state) => {
+    return state.orders;
+  });
+
+  useEffect(() => {
+    if (localStorage.cart) {
+      let products = [];
+      let cart = JSON.parse(localStorage.getItem('cart'));
+      for (let key in cart) {
+        products.push(cart[key]);
+      }
+      dispatch(gotCart({ products: products }));
+    }
+  }, []);
 
   useEffect(() => {
     if (userId !== undefined) {
       dispatch(fetchCart(userId));
     }
   }, [userId]);
-
-  const curCart = useSelector((state) => {
-    return state.orders;
-  });
 
   function numberWithCommas(price) {
     if (price.toString().split('.')[1] !== undefined) {
@@ -33,17 +43,22 @@ const ViewCart = (props) => {
 
   function getTotal() {
     let total = 0;
-    for (let i = 0; i < curCart.products.length; i++) {
-      total +=
-        +curCart.products[i].price *
-        curCart['order-details'][i].quantityOrdered;
+    if (curCart.id) {
+      for (let i = 0; i < curCart.products.length; i++) {
+        total +=
+          +curCart.products[i].price *
+          curCart['order-details'][i].quantityOrdered;
+      }
+    } else {
+      for (let i = 0; i < curCart.products.length; i++) {
+        total +=
+          +curCart.products[i].price * curCart.products[i].quantityOrdered;
+      }
     }
     return numberWithCommas(total);
   }
 
-  console.log(curCart);
-
-  if (curCart.id !== undefined) {
+  if (curCart.id !== undefined || Object.keys(curCart).length > 0) {
     return (
       <>
         <main id="cart">
@@ -58,35 +73,58 @@ const ViewCart = (props) => {
                   <th>Subtotal</th>
                   <th></th>
                 </tr>
-                {curCart.products.map((product, i) => (
-                  <tr key={product.id}>
-                    <td>
-                      <img src={product.imageUrl}></img>
-                    </td>
+                {curCart.shipState !== undefined
+                  ? curCart.products.map((product, i) => (
+                      <tr key={product.id}>
+                        <td>
+                          <img className="img" src={product.imageUrl}></img>
+                        </td>
 
-                    <td>{curCart['order-details'][i].quantityOrdered}</td>
-                    <td>${numberWithCommas(curCart.products[i].price)}</td>
-                    <td>
-                      $
-                      {numberWithCommas(
-                        curCart.products[i].price *
-                          curCart['order-details'][i].quantityOrdered
-                      )}
-                    </td>
-                    <td>
-                      <i
-                        className="fa fa-trash-o"
-                        style={{ fontSize: '24px' }}
-                      ></i>
-                    </td>
-                  </tr>
-                ))}
+                        <td>{curCart['order-details'][i].quantityOrdered}</td>
+                        <td>${numberWithCommas(curCart.products[i].price)}</td>
+                        <td>
+                          $
+                          {numberWithCommas(
+                            curCart.products[i].price *
+                              curCart['order-details'][i].quantityOrdered
+                          )}
+                        </td>
+                        <td>
+                          <i
+                            className="fa fa-trash-o"
+                            style={{ fontSize: '24px' }}
+                          ></i>
+                        </td>
+                      </tr>
+                    ))
+                  : curCart.products.map((product, i) => (
+                      <tr key={product.id}>
+                        <td>
+                          <img src={product.imageUrl}></img>
+                        </td>
+
+                        <td>{curCart.products[i].quantity}</td>
+                        <td>${numberWithCommas(curCart.products[i].price)}</td>
+                        <td>
+                          $
+                          {numberWithCommas(
+                            +curCart.products[i].price *
+                              +curCart.products[i].quantityOrdered
+                          )}
+                        </td>
+                        <td>
+                          <i
+                            className="fa fa-trash-o"
+                            style={{ fontSize: '24px' }}
+                          ></i>
+                        </td>
+                      </tr>
+                    ))}
 
                 <tr>
                   <td></td>
                   <td></td>
                   <td>Total</td>
-                  {/* need to figure out how to do a total here */}
                   <td>${getTotal()}</td>
                   <td>
                     <Link to="/checkoutuser">
