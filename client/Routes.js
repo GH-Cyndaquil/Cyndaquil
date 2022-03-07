@@ -8,6 +8,7 @@ import { me } from "./store";
 import AdminPage from "./components/admin/AdminPage";
 import AdminUser from "./components/admin/AdminUser";
 import AddProduct from "./components/admin/AddProduct";
+import AdminProduct from "./components/admin/AdminProduct";
 import AllProducts from "./components/AllProducts";
 import ViewCart from "./components/ViewCart";
 import SingleProduct from "./components/SingleProduct";
@@ -35,8 +36,9 @@ class Routes extends Component {
             <Route exact path="/users/:id" component={SingleUser} />
             <Route path="/users/:id/edit" component={EditUser} />
             <Route path="/admin" component={AdminPage} />
-            <Route path="/adminrights" component={AdminUser} />
+            <Route path="/adminuser" component={AdminUser} />
             <Route path="/addproduct" component={AddProduct} />
+            <Route path="/adminproduct" component={AdminProduct} />
             <Route path="/checkoutuser" component={CheckoutUser} />
             <Route path="/viewcart" component={ViewCart} />
           </Switch>
