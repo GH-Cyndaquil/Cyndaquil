@@ -100,7 +100,7 @@ router.post('/', async (req, res, next) => {
 
     const newCart = await Order.findOne({
       where: {
-        id: userId,
+        userId: userId,
       },
       include: OrderDetails,
     });
