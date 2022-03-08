@@ -14,7 +14,7 @@ const requireToken = async (req, res, next) => {
     next(error);
   }
 };
-
+/*
 router.get("/", async (req, res, next) => {
   try {
     const users = await User.findAll({
@@ -28,7 +28,7 @@ router.get("/", async (req, res, next) => {
     next(err);
   }
 });
-
+*/
 router.put("/:id", requireToken, async (req, res, next) => {
   try {
     const {
