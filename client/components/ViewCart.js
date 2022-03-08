@@ -189,7 +189,7 @@ const ViewCart = (props) => {
                                 ...productQuantities,
                                 [product.id]: {
                                   quantity: evt.target.value,
-                                  price: evt.target.value * product.price,
+                                  price: evt.target.value * product.unitPrice,
                                   unitPrice: product.unitPrice,
                                   imageUrl: product.imageUrl,
                                 },
