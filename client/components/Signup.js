@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { authenticate } from "../store";
 import { Link } from "react-router-dom";
 
@@ -12,6 +12,8 @@ const Signup = () => {
     password: "",
   });
 
+  const error = useSelector((state) => state.user.error);
+
   const dispatch = useDispatch();
 
   const handleChange = (e) => {
@@ -20,6 +22,7 @@ const Signup = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
     dispatch(authenticate(newUser, "signup"));
   };
 
@@ -29,6 +32,7 @@ const Signup = () => {
       <div className="form-container">
         <form onSubmit={handleSubmit} className="login-form">
           <h1>Signup</h1>
+          <div className="error">{error ? error.response.data : ""}</div>
           <div className="form-element">
             <label htmlFor="firstName">
               <small>First Name</small>
@@ -38,6 +42,7 @@ const Signup = () => {
               type="text"
               onChange={handleChange}
               value={newUser.firstName}
+              required
             />
           </div>
           <div className="form-element">
@@ -49,6 +54,7 @@ const Signup = () => {
               type="text"
               onChange={handleChange}
               value={newUser.lastName}
+              required
             />
           </div>
           <div className="form-element">
@@ -60,6 +66,7 @@ const Signup = () => {
               type="text"
               onChange={handleChange}
               value={newUser.email}
+              required
             />
           </div>
           <div className="form-element">
@@ -71,6 +78,7 @@ const Signup = () => {
               type="text"
               onChange={handleChange}
               value={newUser.username}
+              required
             />
           </div>
           <div className="form-element">
@@ -82,6 +90,7 @@ const Signup = () => {
               type="password"
               onChange={handleChange}
               value={newUser.password}
+              required
             />
           </div>
           <button type="submit">Signup</button>
