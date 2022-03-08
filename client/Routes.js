@@ -15,7 +15,6 @@ import SingleUser from './components/SingleUser';
 import EditUser from './components/EditUser';
 import CheckoutUser from './components/CheckoutUser';
 import SingleOrder from './components/SingleOrder';
-import CheckoutGuest from './components/CheckoutGuest';
 import Confirmation from './components/Confirmation';
 import NotFoundPage from './components/NotFoundPage';
 
@@ -28,7 +27,7 @@ class Routes extends Component {
   }
 
   render() {
-    const { isLoggedIn } = this.props;
+    const { isLoggedIn, isAdmin } = this.props;
 
     return (
       <div>
@@ -39,13 +38,19 @@ class Routes extends Component {
             <Route path="/products/:id" component={SingleProduct} />
             <Route exact path="/users/:id" component={SingleUser} />
             <Route path="/users/:id/edit" component={EditUser} />
-            <Route path="/admin" component={AdminPage} />
-            <Route path="/addproduct" component={AddProduct} />
-            <Route path="/adminproduct" component={AdminProduct} />
+            {isAdmin ? (
+              <div>
+                <Route path="/admin" component={AdminPage} />
+                <Route path="/adminalluser" component={AllUsers} />
+                <Route path="/addproduct" component={AddProduct} />
+                <Route path="/adminproduct" component={AdminProduct} />
+              </div>
+            ) : (
+              <div></div>
+            )}
             <Route path="/checkoutuser" component={CheckoutUser} />
             <Route path="/viewcart" component={ViewCart} />
             <Route path="/orders/:id" component={SingleOrder} />
-            <Route path="/checkoutguest" component={CheckoutGuest} />
             <Route path="/confirmation" component={Confirmation} />
             <Route path="*" component={NotFoundPage} />
           </Switch>
@@ -58,7 +63,6 @@ class Routes extends Component {
             <Route path="/products/:id" component={SingleProduct} />
             <Route path="/viewcart" component={ViewCart} />
             <Route path="/checkoutuser" component={CheckoutUser} />
-            <Route path="/checkoutguest" component={CheckoutGuest} />
             <Route path="*" component={NotFoundPage} />
           </Switch>
         )}
@@ -75,6 +79,7 @@ const mapState = (state) => {
     // Being 'logged in' for our purposes will be defined has having a state.user that has a truthy id.
     // Otherwise, state.user will be an empty object, and state.user.id will be falsey
     isLoggedIn: !!state.user.id,
+    isAdmin: state.user.isAdmin,
   };
 };
 
