@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { checkoutCart, fetchCart } from "../store/orders";
-import axios from "axios";
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { checkoutCart, fetchCart, gotCart } from '../store/orders';
+import axios from 'axios';
 
 export const CheckoutUser = (props) => {
+  const isLoggedIn = useSelector((state) => !!state.user.id);
   const user = useSelector((state) => {
     return state.user;
   });
@@ -12,21 +13,18 @@ export const CheckoutUser = (props) => {
     return state.orders;
   });
 
-  console.log("user=====>", user);
-  console.log("order as passed to route", curCart.products);
-
   const [checked, setChecked] = useState(true);
 
   const [formState, setFormState] = useState({
-    cardHolderName: "",
-    cardNumber: "",
-    expiration: "",
-    cvv: "",
-    address: user.address || "",
-    city: user.city || "",
-    state: user.state || "",
-    zip: user.postalCode || "",
-    email: user.email || "",
+    cardHolderName: '',
+    cardNumber: '',
+    expiration: '',
+    cvv: '',
+    address: user.address || '',
+    city: user.city || '',
+    state: user.state || '',
+    zip: user.postalCode || '',
+    email: user.email || '',
     order: curCart.products,
   });
 
@@ -42,18 +40,18 @@ export const CheckoutUser = (props) => {
   const onSubmit = async (evt) => {
     evt.preventDefault();
 
-    if (user == undefined) {
-      console.log(user, "confirm user, condition one");
-      await axios.put("api/orders/confirm", {
+    if (isLoggedIn) {
+      await axios.put('api/orders/confirm', {
         orderId: curCart.id,
         shipAddress: formState.address,
         shipCity: formState.city,
         shipState: formState.state,
         shipPostalCode: formState.zip,
       });
+      dispatch(fetchCart(curCart.userId));
     } else {
-      console.log("confirm guest, condition twwo", formState);
-      await axios.put("api/orders/confirmGuest", {
+      localStorage.removeItem('cart');
+      await axios.put('api/orders/confirmGuest', {
         orderId: curCart.id,
         shipAddress: formState.address,
         shipCity: formState.city,
@@ -62,10 +60,10 @@ export const CheckoutUser = (props) => {
         email: formState.email,
         order: formState.order,
       });
+      dispatch(gotCart({ products: [] }));
     }
 
-    dispatch(fetchCart(curCart.userId));
-    props.history.push("/confirmation");
+    props.history.push('/confirmation');
   };
 
   const disableButton = (formState) => {

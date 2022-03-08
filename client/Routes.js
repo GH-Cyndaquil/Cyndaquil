@@ -1,23 +1,22 @@
-import React, { Component, Fragment } from "react";
-import { connect } from "react-redux";
-import { withRouter, Route, Switch, Redirect } from "react-router-dom";
-import Signup from "./components/Signup";
-import Login from "./components/Login";
-import Home from "./components/Home";
-import { me } from "./store";
-import AdminPage from "./components/admin/AdminPage";
-import AddProduct from "./components/admin/AddProduct";
-import AdminProduct from "./components/admin/AdminProduct";
-import AllUsers from "./components/admin/AdminAllUsers";
-import AllProducts from "./components/AllProducts";
-import ViewCart from "./components/ViewCart";
-import SingleProduct from "./components/SingleProduct";
-import SingleUser from "./components/SingleUser";
-import EditUser from "./components/EditUser";
-import CheckoutUser from "./components/CheckoutUser";
-import SingleOrder from "./components/SingleOrder";
-import Confirmation from "./components/Confirmation";
-import NotFoundPage from "./components/NotFoundPage";
+import React, { Component, Fragment } from 'react';
+import { connect } from 'react-redux';
+import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
+import Signup from './components/Signup';
+import Login from './components/Login';
+import Home from './components/Home';
+import { me } from './store';
+import AdminPage from './components/admin/AdminPage';
+import AddProduct from './components/admin/AddProduct';
+import AdminProduct from './components/admin/AdminProduct';
+import AllProducts from './components/AllProducts';
+import ViewCart from './components/ViewCart';
+import SingleProduct from './components/SingleProduct';
+import SingleUser from './components/SingleUser';
+import EditUser from './components/EditUser';
+import CheckoutUser from './components/CheckoutUser';
+import SingleOrder from './components/SingleOrder';
+import Confirmation from './components/Confirmation';
+import NotFoundPage from './components/NotFoundPage';
 
 /**
  * COMPONENT
