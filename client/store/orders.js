@@ -23,7 +23,9 @@ const deletedItem = (cart) => ({
 export const addItem = (item) => {
   return async (dispatch) => {
     try {
+      console.log(item);
       const { data } = await axios.post(`/api/orders/`, item);
+      console.log(`DATA:`, data);
       dispatch(fetchCart(item.userId));
     } catch (error) {
       console.error("AddItem Failed");
