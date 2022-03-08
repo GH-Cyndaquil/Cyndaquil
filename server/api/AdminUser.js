@@ -1,4 +1,5 @@
 const router = require("express").Router();
+
 const {
   models: { User },
 } = require("../db");
@@ -25,6 +26,27 @@ router.get("/", adminsOnly, async (req, res, next) => {
     res.json(users);
   } catch (err) {
     next(err);
+  }
+});
+
+router.get("/:id", async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.params.id, {
+      attributes: [
+        "firstName",
+        "lastName",
+        "email",
+        "username",
+        "address",
+        "city",
+        "state",
+        "postalCode",
+        "isAdmin",
+      ],
+    });
+    res.send(user);
+  } catch (error) {
+    next(error);
   }
 });
 

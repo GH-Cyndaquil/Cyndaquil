@@ -18,6 +18,7 @@ import CheckoutUser from "./components/CheckoutUser";
 import SingleOrder from "./components/SingleOrder";
 import CheckoutGuest from "./components/CheckoutGuest";
 import Confirmation from "./components/Confirmation";
+import AllUsers from "./components/admin/AdminAllUsers";
 
 /**
  * COMPONENT
@@ -40,7 +41,7 @@ class Routes extends Component {
             <Route exact path="/users/:id" component={SingleUser} />
             <Route path="/users/:id/edit" component={EditUser} />
             <Route path="/admin" component={AdminPage} />
-            <Route path="/adminuser" component={AdminUser} />
+            <Route path="/adminalluser" component={AllUsers} />
             <Route path="/addproduct" component={AddProduct} />
             <Route path="/adminproduct" component={AdminProduct} />
             <Route path="/checkoutuser" component={CheckoutUser} />
@@ -48,6 +49,7 @@ class Routes extends Component {
             <Route path="/orders/:id" component={SingleOrder} />
             <Route path="/checkoutguest" component={CheckoutGuest} />
             <Route path="/confirmation" component={Confirmation} />
+            <Route path="/user/:id" component={AdminUser} />
           </Switch>
         ) : (
           <Switch>

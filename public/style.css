@@ -102,6 +102,14 @@ form div {
   justify-content: center;
   padding: 50px;
 }
+
+#single-product-view {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
 .img {
   height: 300px;
   width: 300px;
@@ -153,6 +161,13 @@ form div {
   font-size: 30px;
   height: 100%;
   width: 100%;
+}
+
+.all-users {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 10px;
 }
 
 .adminBackground {
@@ -602,6 +617,8 @@ button:active {
   box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08),
     inset 0 1px 0 #e298d8;
   transform: scale(0.99);
+  */
+
 #home-background {
   background-image: url('./gifs/swirlingRicky.gif');
   width: 60%;
@@ -617,4 +634,4 @@ button:active {
 #home-container {
   display: flex;
   flex-direction: row;
-} */
+}
