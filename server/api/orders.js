@@ -145,12 +145,21 @@ router.post('/', async (req, res, next) => {
 
 router.put('/confirm', async (req, res, next) => {
   try {
+    const { orderId, shipAddress, shipCity, shipState, shipPostalCode } =
+      req.body;
+
     const completeOrder = await Order.findOne({
       where: {
         id: req.body.orderId,
       },
     });
-    await completeOrder.update({ fulfilled: true });
+    await completeOrder.update({
+      fulfilled: true,
+      shipAddress,
+      shipCity,
+      shipState,
+      shipPostalCode,
+    });
     res.send();
   } catch (error) {
     next(error);
