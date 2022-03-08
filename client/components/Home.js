@@ -10,8 +10,11 @@ export const Home = (props) => {
   return (
     <div id="home-container">
       <div id="home-text-container">
+        <p></p>
+        <p></p>
+        <p></p>
         <h1>Welcome to Nyet</h1>
-        <p>Premium vodkas, never from Russia.</p>
+        <h2>Premium vodkas, never from Russia.</h2>
       </div>
       <div id="home-background"></div>
     </div>
