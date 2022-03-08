@@ -6,7 +6,6 @@ import Login from "./components/Login";
 import Home from "./components/Home";
 import { me } from "./store";
 import AdminPage from "./components/admin/AdminPage";
-import AdminUser from "./components/admin/AdminUser";
 import AddProduct from "./components/admin/AddProduct";
 import AdminProduct from "./components/admin/AdminProduct";
 import AllProducts from "./components/AllProducts";
@@ -18,7 +17,6 @@ import CheckoutUser from "./components/CheckoutUser";
 import SingleOrder from "./components/SingleOrder";
 import CheckoutGuest from "./components/CheckoutGuest";
 import Confirmation from "./components/Confirmation";
-import AllUsers from "./components/admin/AdminAllUsers";
 import NotFoundPage from "./components/NotFoundPage";
 
 /**
@@ -50,7 +48,6 @@ class Routes extends Component {
             <Route path="/orders/:id" component={SingleOrder} />
             <Route path="/checkoutguest" component={CheckoutGuest} />
             <Route path="/confirmation" component={Confirmation} />
-            <Route path="/user/:id" component={AdminUser} />
             <Route path="*" component={NotFoundPage} />
           </Switch>
         ) : (

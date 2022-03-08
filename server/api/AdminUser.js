@@ -18,10 +18,13 @@ const adminsOnly = (req, res, next) => {
   next();
 };
 
-router.get("/", adminsOnly, async (req, res, next) => {
+router.get("/", async (req, res, next) => {
   try {
     const users = await User.findAll({
-      include: [{ model: User.username }],
+      // explicitly select only the id and username fields - even though
+      // users' passwords are encrypted, it won't help if we just
+      // send everything to anyone who asks!
+      attributes: ["id", "username"],
     });
     res.json(users);
   } catch (err) {
@@ -33,6 +36,7 @@ router.get("/:id", async (req, res, next) => {
   try {
     const user = await User.findByPk(req.params.id, {
       attributes: [
+        "id",
         "firstName",
         "lastName",
         "email",
@@ -76,6 +80,18 @@ router.put("/:id", adminsOnly, async (req, res, next) => {
       isAdmin,
     });
     res.send(user);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.patch("/:id", adminsOnly, async (req, res, next) => {
+  try {
+    const user = await User.findByPk(req.params.id);
+    user.update({
+      isAdmin: req.body.isAdmin,
+    });
+    res.send();
   } catch (error) {
     next(error);
   }
