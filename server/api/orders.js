@@ -1,10 +1,10 @@
-const router = require("express").Router();
-const Order = require("../db/models/Order");
-const Product = require("../db/models/Product");
-const OrderDetails = require("../db/models/OrderDetails");
+const router = require('express').Router();
+const Order = require('../db/models/Order');
+const Product = require('../db/models/Product');
+const OrderDetails = require('../db/models/OrderDetails');
 
 //for specific order
-router.get("/:id", async (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
   try {
     if (req.params.id !== undefined) {
     }
@@ -21,7 +21,7 @@ router.get("/:id", async (req, res, next) => {
 });
 
 //for order history
-router.get("/history/:id", async (req, res, next) => {
+router.get('/history/:id', async (req, res, next) => {
   try {
     if (req.params.id !== undefined) {
       const orders = await Order.findAll({
@@ -38,7 +38,7 @@ router.get("/history/:id", async (req, res, next) => {
   }
 });
 
-router.get("/cart/:id", async (req, res, next) => {
+router.get('/cart/:id', async (req, res, next) => {
   try {
     if (req.params.id !== undefined) {
       const [order, wasCreated] = await Order.findOrCreate({
@@ -67,7 +67,7 @@ router.get("/cart/:id", async (req, res, next) => {
   }
 });
 
-router.post("/", async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   try {
     const { productId, price, quantity, userId } = req.body;
 
@@ -105,26 +105,26 @@ router.post("/", async (req, res, next) => {
       });
     }
 
-    // what is cors
-    router.post("/payment", async (req, res, next) => {
+    // // what is cors
+    router.post('/payment', async (req, res, next) => {
       let { amount, id } = req.body;
       try {
         const payment = await stripe.paymentItents.create({
           amount,
-          currency: "USD",
-          description: "NYET Vodka",
+          currency: 'USD',
+          description: 'NYET Vodka',
           payment_method: id,
           confirm: true,
         });
-        console.log("payment", payment);
+        console.log('payment', payment);
         res.json({
-          message: "Payment successful",
+          message: 'Payment successful',
           success: true,
         });
       } catch (error) {
-        console.log("error", error),
+        console.log('error', error),
           res.json({
-            message: "Payment failed",
+            message: 'Payment failed',
             success: false,
           });
       }
@@ -143,7 +143,7 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.put("/confirm", async (req, res, next) => {
+router.put('/confirm', async (req, res, next) => {
   try {
     const completeOrder = await Order.findOne({
       where: {
@@ -157,7 +157,7 @@ router.put("/confirm", async (req, res, next) => {
   }
 });
 
-router.delete("/:id", async (req, res, next) => {
+router.delete('/:id', async (req, res, next) => {
   try {
     let { id, userid } = req.headers;
 
@@ -170,23 +170,22 @@ router.delete("/:id", async (req, res, next) => {
 
     await item.destroy();
 
-    const newCart = await Order.findOne({
+    const newOrder = await Order.findOne({
       where: {
         userId: userid,
+        fulfilled: false,
       },
       include: Product,
     });
-
-    res.json(newCart);
+    res.json(newOrder);
   } catch (err) {
     next(err);
   }
 });
 
-router.put("/:id", async (req, res, next) => {
+router.put('/:id', async (req, res, next) => {
   try {
     let { id, userId, quantity } = req.body;
-    console.log(quantity);
 
     const item = await OrderDetails.findOne({
       where: {
