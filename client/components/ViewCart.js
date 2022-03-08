@@ -229,7 +229,7 @@ const ViewCart = (props) => {
                   <td>${getTotal()}</td>
 
                   <td>
-                    {userId ? (
+                    {/* {userId ? (
                       <Link to="/checkoutuser">
                         <button>Checkout</button>
                       </Link>
@@ -237,7 +237,10 @@ const ViewCart = (props) => {
                       <Link to="/checkoutguest">
                         <button>Checkout</button>
                       </Link>
-                    )}
+                    )} */}
+                    <Link to="/checkoutuser">
+                      <button>Checkout</button>
+                    </Link>
                   </td>
                 </tr>
               </tbody>
