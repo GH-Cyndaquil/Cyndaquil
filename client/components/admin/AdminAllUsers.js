@@ -27,18 +27,20 @@ export class AllUsers extends React.Component {
       return <h3>Loading</h3>;
     } else {
       return (
-        <div>
-          <h1>Admin Page</h1>
-          <h2>All site Users</h2>
-          {users.map((user) => (
-            <div key={user.id}>
-              <Link to={`/user/${user.id}`}>
-                <div>
-                  <h3>{user.username}</h3>
-                </div>
-              </Link>
-            </div>
-          ))}
+        <div className="adminBackground">
+          <div className="single-product-div">
+            <h1>Admin Page</h1>
+            <h2>All site Users</h2>
+            {users.map((user) => (
+              <div key={user.id}>
+                <Link to={`/user/${user.id}`}>
+                  <div>
+                    <h3>{user.username}</h3>
+                  </div>
+                </Link>
+              </div>
+            ))}
+          </div>
         </div>
       );
     }
