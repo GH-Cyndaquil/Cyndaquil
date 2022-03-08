@@ -43,7 +43,10 @@ const Navbar = (props) => {
   return (
     <div id="navbar">
       <nav>
-        <h1 className="title">NYET</h1>
+        <a href="/">
+          <h1 className="title">NYET</h1>
+        </a>
+
         <div>
           <NavLink exact to="/" className="nav-button">
             Home
