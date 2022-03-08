@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import { logout } from "../store";
 import { fetchCart } from "../store/orders";
 
@@ -45,26 +45,26 @@ const Navbar = (props) => {
       <nav>
         <h1 className="title">NYET</h1>
         <div>
-          <Link to="/" className="nav-button">
+          <NavLink exact to="/" className="nav-button">
             Home
-          </Link>
-          <Link to="/products?page=1" className="nav-button">
+          </NavLink>
+          <NavLink to="/products?page=1" className="nav-button">
             Products
-          </Link>
+          </NavLink>
         </div>
         {isLoggedIn ? (
           <div id="nav-user-control">
             {isAdmin ? (
               <div>
-                <Link to="/admin" className="nav-button">
+                <NavLink to="/admin" className="nav-button">
                   Admin
-                </Link>
+                </NavLink>
               </div>
             ) : null}
-            <Link to={`/users/${userId}`} className="nav-button">
+            <NavLink to={`/users/${userId}`} className="nav-button">
               <div id="hello-user">Hello, {user.username}</div>
               Account
-            </Link>
+            </NavLink>
             <a
               className="nav-button"
               href="#"
@@ -72,7 +72,7 @@ const Navbar = (props) => {
             >
               Logout
             </a>
-            <Link to="/viewcart" className="nav-button">
+            <NavLink to="/viewcart" className="nav-button">
               <div id="container">
                 <i
                   id="shopping-cart"
@@ -86,17 +86,17 @@ const Navbar = (props) => {
                 )}
               </div>
               {/* <h5>{number of items in cart}</h5> */}
-            </Link>
+            </NavLink>
           </div>
         ) : (
           <div id="nav-user-control">
-            <Link to="/login" className="nav-button">
+            <NavLink to="/login" className="nav-button">
               Login
-            </Link>
-            <Link to="/signup" className="nav-button">
+            </NavLink>
+            <NavLink to="/signup" className="nav-button">
               Sign Up
-            </Link>
-            <Link to="/viewcart" className="nav-button">
+            </NavLink>
+            <NavLink to="/viewcart" className="nav-button">
               <div id="container">
                 <i
                   id="shopping-cart"
@@ -106,7 +106,7 @@ const Navbar = (props) => {
                 <div id="cart-count">{localStorageCount()}</div>
               </div>
               {/* <h5>{number of items in cart}</h5> */}
-            </Link>
+            </NavLink>
           </div>
         )}
       </nav>

@@ -52,6 +52,7 @@ const ViewCart = (props) => {
   function getTotal() {
     let total = 0;
     if (curCart.id) {
+      console.log('inside getTotal', curCart);
       for (let i = 0; i < curCart.products.length; i++) {
         total +=
           +curCart.products[i].price *
