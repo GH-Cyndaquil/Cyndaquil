@@ -97,7 +97,7 @@ const Navbar = (props) => {
               Login
             </NavLink>
             <NavLink to="/signup" className="nav-button">
-              Sign Up
+              Signup
             </NavLink>
             <NavLink to="/viewcart" className="nav-button">
               <div id="container">
