@@ -66,7 +66,7 @@ export const logout = () => {
 // get all user thunk
 export const getAllUsers = () => async (dispatch) => {
   try {
-    const res = await axios.get("/api/users");
+    const res = await axios.get("/api/adminuser");
     dispatch(gotAllUsers(res.data || defaultUser));
   } catch (err) {
     console.error(err);
