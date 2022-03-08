@@ -52,7 +52,7 @@ const ViewCart = (props) => {
     if (curCart.id) {
       for (let i = 0; i < curCart.products.length; i++) {
         total +=
-          +curCart.products[i]['order-details'].price *
+          +curCart.products[i].price *
           curCart.products[i]['order-details'].quantityOrdered;
       }
     } else {

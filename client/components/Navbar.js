@@ -39,8 +39,6 @@ const Navbar = (props) => {
     }
   }
 
-  console.log(`NAV CART`, cart);
-
   return (
     <div id="navbar">
       <nav>
