@@ -103,6 +103,7 @@ function AllProducts(props) {
         addItem({
           productId: evt.target.id,
           price: Number(productQuantities[evt.target.id].price).toFixed(2),
+          unitPrice: productQuantities[evt.target.id].unitPrice,
           quantity: Number(productQuantities[evt.target.id].quantity),
           userId: userId,
         })
@@ -121,10 +122,12 @@ function AllProducts(props) {
               Number(productQuantities[evt.target.id].price)
             ).toFixed(2);
             cartItem.imageUrl = productQuantities[evt.target.id].imageUrl;
+            cartItem.unitPrice = productQuantities[evt.target.id].unitPrice;
           } else {
             cart[`${evt.target.id}`] = {
               id: +evt.target.id,
               price: Number(productQuantities[evt.target.id].price).toFixed(2),
+              unitPrice: productQuantities[evt.target.id].unitPrice,
               quantityOrdered: Number(
                 productQuantities[evt.target.id].quantity
               ),
@@ -142,10 +145,10 @@ function AllProducts(props) {
           cart[`${evt.target.id}`] = {
             id: +evt.target.id,
             price: Number(productQuantities[evt.target.id].price).toFixed(2),
+            unitPrice: productQuantities[evt.target.id].unitPrice,
             quantityOrdered: Number(productQuantities[evt.target.id].quantity),
             imageUrl: productQuantities[evt.target.id].imageUrl,
           };
-          //make sure localStorage object has a products array
           let products = [];
           for (let key in cart) {
             products.push(cart[key]);

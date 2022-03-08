@@ -79,6 +79,7 @@ function SingleProduct(props) {
             cart[`${currentProduct.id}`] = {
               id: +currentProduct.id,
               price: quantityPrice,
+              unitPrice: currentProduct.price,
               quantityOrdered: currentQuantity,
               imageUrl: currentProduct.imageUrl,
             };
@@ -94,6 +95,7 @@ function SingleProduct(props) {
           cart[`${currentProduct.id}`] = {
             id: +currentProduct.id,
             price: quantityPrice,
+            unitPrice: currentProduct.price,
             quantityOrdered: currentQuantity,
             imageUrl: currentProduct.imageUrl,
           };

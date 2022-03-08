@@ -43,6 +43,7 @@ function RenderProducts(props) {
                     [product.id]: {
                       quantity: evt.target.value,
                       price: evt.target.value * product.price,
+                      unitPrice: product.price,
                       imageUrl: product.imageUrl,
                     },
                   })
@@ -108,6 +109,7 @@ function RenderProducts(props) {
                     [product.id]: {
                       quantity: evt.target.value,
                       price: evt.target.value * product.price,
+                      unitPrice: product.price,
                       imageUrl: product.imageUrl,
                     },
                   })
