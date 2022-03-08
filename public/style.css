@@ -613,3 +613,10 @@ caption {
   flex-direction: row;
   height: 80vh;
 }
+
+#shop-now {
+  height: 50px;
+  width: 150px;
+  border: none;
+  border-radius: 20px;
+}
