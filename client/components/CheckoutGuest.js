@@ -2,6 +2,11 @@ import React from "react";
 import { useSelector } from "react-redux";
 
 export const CheckoutGuest = () => {
+  const user = useSelector((state) => {
+    return state.user;
+  });
+  console.log(user);
+
   return (
     <div>
       <div className="checkoutCentered">

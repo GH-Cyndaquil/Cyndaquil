@@ -1,10 +1,10 @@
-const router = require("express").Router();
-const Order = require("../db/models/Order");
-const Product = require("../db/models/Product");
-const OrderDetails = require("../db/models/OrderDetails");
+const router = require('express').Router();
+const Order = require('../db/models/Order');
+const Product = require('../db/models/Product');
+const OrderDetails = require('../db/models/OrderDetails');
 
 //for specific order
-router.get("/:id", async (req, res, next) => {
+router.get('/:id', async (req, res, next) => {
   try {
     if (req.params.id !== undefined) {
     }
@@ -21,7 +21,7 @@ router.get("/:id", async (req, res, next) => {
 });
 
 //for order history
-router.get("/history/:id", async (req, res, next) => {
+router.get('/history/:id', async (req, res, next) => {
   try {
     if (req.params.id !== undefined) {
       const orders = await Order.findAll({
@@ -38,7 +38,7 @@ router.get("/history/:id", async (req, res, next) => {
   }
 });
 
-router.get("/cart/:id", async (req, res, next) => {
+router.get('/cart/:id', async (req, res, next) => {
   try {
     if (req.params.id !== undefined) {
       const [order, wasCreated] = await Order.findOrCreate({
@@ -50,17 +50,26 @@ router.get("/cart/:id", async (req, res, next) => {
       });
       if (wasCreated) {
         order.setUser(req.params.id);
+        const newOrder = await Order.findOne({
+          where: {
+            userId: req.params.id,
+            fulfilled: false,
+          },
+          include: Product,
+        });
+        res.json(newOrder);
+      } else {
+        res.json(order);
       }
-      res.json(order);
     }
   } catch (err) {
     next(err);
   }
 });
 
-router.post("/", async (req, res, next) => {
+router.post('/', async (req, res, next) => {
   try {
-    const { productId, price, quantity, userId } = req.body;
+    const { productId, price, quantity, userId, unitPrice } = req.body;
 
     const [item, wasCreated] = await Order.findOrCreate({
       where: {
@@ -82,44 +91,18 @@ router.post("/", async (req, res, next) => {
     if (!ifOrderExists) {
       await item.addProduct(req.body.productId, {
         through: {
-          price: req.body.price,
+          price: req.body.unitPrice,
           quantityOrdered: req.body.quantity,
         },
       });
     } else {
-      let newPrice = Number(ifOrderExists.dataValues.price) + Number(price);
       let newQuantityOrdered =
         Number(ifOrderExists.dataValues.quantityOrdered) + Number(quantity);
       await ifOrderExists.update({
-        price: newPrice,
+        price: req.body.unitPrice,
         quantityOrdered: newQuantityOrdered,
       });
     }
-
-    // what is cors
-    router.post("/payment", async (req, res, next) => {
-      let { amount, id } = req.body;
-      try {
-        const payment = await stripe.paymentItents.create({
-          amount,
-          currency: "USD",
-          description: "NYET Vodka",
-          payment_method: id,
-          confirm: true,
-        });
-        console.log("payment", payment);
-        res.json({
-          message: "Payment successful",
-          success: true,
-        });
-      } catch (error) {
-        console.log("error", error),
-          res.json({
-            message: "Payment failed",
-            success: false,
-          });
-      }
-    });
 
     const newCart = await Order.findOne({
       where: {
@@ -134,21 +117,30 @@ router.post("/", async (req, res, next) => {
   }
 });
 
-router.put("/confirm", async (req, res, next) => {
+router.put('/confirm', async (req, res, next) => {
   try {
+    const { orderId, shipAddress, shipCity, shipState, shipPostalCode } =
+      req.body;
+
     const completeOrder = await Order.findOne({
       where: {
         id: req.body.orderId,
       },
     });
-    await completeOrder.update({ fulfilled: true });
+    await completeOrder.update({
+      fulfilled: true,
+      shipAddress,
+      shipCity,
+      shipState,
+      shipPostalCode,
+    });
     res.send();
   } catch (error) {
     next(error);
   }
 });
 
-router.delete("/:id", async (req, res, next) => {
+router.delete('/:id', async (req, res, next) => {
   try {
     let { id, userid } = req.headers;
 
@@ -161,23 +153,22 @@ router.delete("/:id", async (req, res, next) => {
 
     await item.destroy();
 
-    const newCart = await Order.findOne({
+    const newOrder = await Order.findOne({
       where: {
         userId: userid,
+        fulfilled: false,
       },
       include: Product,
     });
-
-    res.json(newCart);
+    res.json(newOrder);
   } catch (err) {
     next(err);
   }
 });
 
-router.put("/:id", async (req, res, next) => {
+router.put('/:id', async (req, res, next) => {
   try {
     let { id, userId, quantity } = req.body;
-    console.log(quantity);
 
     const item = await OrderDetails.findOne({
       where: {

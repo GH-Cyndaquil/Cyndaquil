@@ -7,30 +7,33 @@ import axios from 'axios';
 const ViewCart = (props) => {
   const dispatch = useDispatch();
   let [productQuantities, setProductQuantities] = useState({});
+  const isLoggedIn = useSelector((state) => !!state.user.id);
   const userId = useSelector((state) => {
     return state.user.id;
   });
 
-  let curCart = useSelector((state) => {
+  let stateCart = useSelector((state) => {
     return state.orders;
   });
 
+  let [curCart, setCurCart] = useState({});
+
   useEffect(() => {
-    if (localStorage.cart) {
+    if (!isLoggedIn && localStorage.cart) {
       let products = [];
       let cart = JSON.parse(localStorage.getItem('cart'));
       for (let key in cart) {
         products.push(cart[key]);
       }
       dispatch(gotCart({ products: products }));
+    } else {
+      dispatch(fetchCart(userId));
     }
   }, []);
 
   useEffect(() => {
-    if (userId !== undefined) {
-      dispatch(fetchCart(userId));
-    }
-  }, [userId]);
+    setCurCart(stateCart);
+  }, [stateCart]);
 
   function numberWithCommas(price) {
     if (price.toString().split('.')[1] !== undefined) {
@@ -49,13 +52,13 @@ const ViewCart = (props) => {
     if (curCart.id) {
       for (let i = 0; i < curCart.products.length; i++) {
         total +=
-          +curCart.products[i]['order-details'].price *
+          +curCart.products[i].price *
           curCart.products[i]['order-details'].quantityOrdered;
       }
     } else {
       for (let i = 0; i < curCart.products.length; i++) {
         total +=
-          +curCart.products[i].price * curCart.products[i].quantityOrdered;
+          +curCart.products[i].unitPrice * curCart.products[i].quantityOrdered;
       }
     }
     return numberWithCommas(total);
@@ -88,11 +91,11 @@ const ViewCart = (props) => {
     } else {
       let cart = JSON.parse(localStorage.getItem('cart'));
       let cartItem = cart[`${evt.target.id}`];
-      console.log(cartItem);
       cartItem.quantityOrdered = Number(
         productQuantities[evt.target.id].quantity
       );
       cartItem.price = productQuantities[evt.target.id].price.toString();
+      cartItem.unitPrice = productQuantities[evt.target.id].unitPrice;
       let products = [];
       for (let key in cart) {
         products.push(cart[key]);
@@ -102,7 +105,7 @@ const ViewCart = (props) => {
     }
   }
 
-  if (curCart.id !== undefined || Object.keys(curCart).length > 0) {
+  if (curCart.products && curCart.products.length > 0) {
     return (
       <>
         <main id="cart">
@@ -117,7 +120,7 @@ const ViewCart = (props) => {
                   <th>Subtotal</th>
                   <th></th>
                 </tr>
-                {curCart.shipState !== undefined
+                {isLoggedIn && curCart.id
                   ? curCart.products.map((product, i) => (
                       <tr key={product.id}>
                         <td>
@@ -139,6 +142,7 @@ const ViewCart = (props) => {
                                 [product.id]: {
                                   quantity: evt.target.value,
                                   price: evt.target.value * product.price,
+                                  unitPrice: product.unitPrice,
                                   imageUrl: product.imageUrl,
                                 },
                               })
@@ -151,11 +155,11 @@ const ViewCart = (props) => {
                             Update
                           </button>
                         </td>
-                        <td>${numberWithCommas(curCart.products[i].price)}</td>
+                        <td>${numberWithCommas(product.price)}</td>
                         <td>
                           $
                           {numberWithCommas(
-                            product['order-details'].price *
+                            +product.price *
                               product['order-details'].quantityOrdered
                           )}
                         </td>
@@ -186,6 +190,7 @@ const ViewCart = (props) => {
                                 [product.id]: {
                                   quantity: evt.target.value,
                                   price: evt.target.value * product.price,
+                                  unitPrice: product.unitPrice,
                                   imageUrl: product.imageUrl,
                                 },
                               })
@@ -199,12 +204,12 @@ const ViewCart = (props) => {
                             Update
                           </button>
                         </td>
-                        <td>${numberWithCommas(curCart.products[i].price)}</td>
+                        <td>${numberWithCommas(product.unitPrice)}</td>
                         <td>
                           $
                           {numberWithCommas(
-                            +curCart.products[i].price *
-                              +curCart.products[i].quantityOrdered
+                            +product.unitPrice *
+                              curCart.products[i].quantityOrdered
                           )}
                         </td>
                         <td>
@@ -224,7 +229,7 @@ const ViewCart = (props) => {
                   <td>${getTotal()}</td>
 
                   <td>
-                    {userId ? (
+                    {/* {userId ? (
                       <Link to="/checkoutuser">
                         <button>Checkout</button>
                       </Link>
@@ -232,7 +237,10 @@ const ViewCart = (props) => {
                       <Link to="/checkoutguest">
                         <button>Checkout</button>
                       </Link>
-                    )}
+                    )} */}
+                    <Link to="/checkoutuser">
+                      <button>Checkout</button>
+                    </Link>
                   </td>
                 </tr>
               </tbody>

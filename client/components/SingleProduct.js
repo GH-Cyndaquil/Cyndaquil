@@ -7,6 +7,7 @@ import {
 import { fetchIngredients } from '../store/ingredients';
 import { fetchRegions } from '../store/regions';
 import { addItem, fetchCart, gotCart } from '../store/orders';
+import EditProductForm from './admin/EditProductsForm';
 
 function SingleProduct(props) {
   const dispatch = useDispatch();
@@ -25,6 +26,7 @@ function SingleProduct(props) {
     return state.user.id;
   });
   const isLoggedIn = useSelector((state) => !!state.user.id);
+  const isAdmin = useSelector((state) => !!state.user.isAdmin);
 
   useEffect(() => {
     // dispatch(fetchCart(userId));
@@ -77,6 +79,7 @@ function SingleProduct(props) {
             cart[`${currentProduct.id}`] = {
               id: +currentProduct.id,
               price: quantityPrice,
+              unitPrice: currentProduct.price,
               quantityOrdered: currentQuantity,
               imageUrl: currentProduct.imageUrl,
             };
@@ -92,6 +95,7 @@ function SingleProduct(props) {
           cart[`${currentProduct.id}`] = {
             id: +currentProduct.id,
             price: quantityPrice,
+            unitPrice: currentProduct.price,
             quantityOrdered: currentQuantity,
             imageUrl: currentProduct.imageUrl,
           };
@@ -110,37 +114,40 @@ function SingleProduct(props) {
     return null;
   } else {
     return (
-      <main id="single-product">
-        <img src={currentProduct.imageUrl} />
-        <div id="product-info">
-          <h1>{currentProduct.name}</h1>
-          <h2>${currentProduct.price}</h2>
-          <div>In stock: {currentProduct.quantity}</div>
-          <p>{currentProduct.description}</p>
-          <h4>
-            Main ingredient:{' '}
-            {ingredients
-              .filter(
-                (ingredient) => ingredient.id === currentProduct.ingredientId
-              )
-              .map((ingredient) => ingredient.name)}
-          </h4>
-          <h4>
-            Region:{' '}
-            {regions
-              .filter((region) => region.id === currentProduct.regionId)
-              .map((region) => region.name)}
-          </h4>
-          <input
-            type="number"
-            min={0}
-            max={currentProduct.quantity}
-            onChange={(evt) => handleQuantityChange(evt)}
-          ></input>
-          <button onClick={addToCart}>Add to Cart</button>
-          <h5>Adding to cart: ${quantityPrice}</h5>
-        </div>
-      </main>
+      <div id="single-product-view">
+        <main id="single-product">
+          <img src={currentProduct.imageUrl} />
+          <div id="product-info">
+            <h1>{currentProduct.name}</h1>
+            <h2>${currentProduct.price}</h2>
+            <div>In stock: {currentProduct.quantity}</div>
+            <p>{currentProduct.description}</p>
+            <h4>
+              Main ingredient:{' '}
+              {ingredients
+                .filter(
+                  (ingredient) => ingredient.id === currentProduct.ingredientId
+                )
+                .map((ingredient) => ingredient.name)}
+            </h4>
+            <h4>
+              Region:{' '}
+              {regions
+                .filter((region) => region.id === currentProduct.regionId)
+                .map((region) => region.name)}
+            </h4>
+            <input
+              type="number"
+              min={0}
+              max={currentProduct.quantity}
+              onChange={(evt) => handleQuantityChange(evt)}
+            ></input>
+            <button onClick={addToCart}>Add to Cart</button>
+            <h5>Adding to cart: ${quantityPrice}</h5>
+          </div>
+        </main>
+        {isAdmin ? <EditProductForm /> : null}
+      </div>
     );
   }
 }

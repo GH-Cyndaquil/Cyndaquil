@@ -36,7 +36,6 @@ function RenderProducts(props) {
               <input
                 type="number"
                 min="1"
-                defaultValue={1}
                 max={product.quantity}
                 onChange={(evt) =>
                   props.setProductQuantities({
@@ -44,6 +43,7 @@ function RenderProducts(props) {
                     [product.id]: {
                       quantity: evt.target.value,
                       price: evt.target.value * product.price,
+                      unitPrice: product.price,
                       imageUrl: product.imageUrl,
                     },
                   })
@@ -103,13 +103,13 @@ function RenderProducts(props) {
                 type="number"
                 min="1"
                 max={product.quantity}
-                defaultValue={1}
                 onChange={(evt) =>
                   props.setProductQuantities({
                     ...props.productQuantities,
                     [product.id]: {
                       quantity: evt.target.value,
                       price: evt.target.value * product.price,
+                      unitPrice: product.price,
                       imageUrl: product.imageUrl,
                     },
                   })
