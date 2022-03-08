@@ -39,6 +39,8 @@ const Navbar = (props) => {
     }
   }
 
+  console.log(`NAV CART`, cart);
+
   return (
     <div id="navbar">
       <nav>
@@ -72,7 +74,7 @@ const Navbar = (props) => {
                   className="fa fa-shopping-cart"
                   style={{ fontSize: '50px' }}
                 ></i>
-                {cart.id !== undefined ? (
+                {cart.id !== undefined && cart !== null ? (
                   <div id="cart-count">{cartCounter()}</div>
                 ) : (
                   <div id="cart-count">{0}</div>
