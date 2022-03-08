@@ -1,22 +1,23 @@
-import React, { Component, Fragment } from 'react';
-import { connect } from 'react-redux';
-import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
-import Signup from './components/Signup';
-import Login from './components/Login';
-import Home from './components/Home';
-import { me } from './store';
-import AdminPage from './components/admin/AdminPage';
-import AdminUser from './components/admin/AdminUser';
-import AddProduct from './components/admin/AddProduct';
-import AdminProduct from './components/admin/AdminProduct';
-import AllProducts from './components/AllProducts';
-import ViewCart from './components/ViewCart';
-import SingleProduct from './components/SingleProduct';
-import SingleUser from './components/SingleUser';
-import EditUser from './components/EditUser';
-import CheckoutUser from './components/CheckoutUser';
-import SingleOrder from './components/SingleOrder';
-import CheckoutGuest from './components/CheckoutGuest';
+import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
+import { withRouter, Route, Switch, Redirect } from "react-router-dom";
+import Signup from "./components/Signup";
+import Login from "./components/Login";
+import Home from "./components/Home";
+import { me } from "./store";
+import AdminPage from "./components/admin/AdminPage";
+import AdminUser from "./components/admin/AdminUser";
+import AddProduct from "./components/admin/AddProduct";
+import AdminProduct from "./components/admin/AdminProduct";
+import AllProducts from "./components/AllProducts";
+import ViewCart from "./components/ViewCart";
+import SingleProduct from "./components/SingleProduct";
+import SingleUser from "./components/SingleUser";
+import EditUser from "./components/EditUser";
+import CheckoutUser from "./components/CheckoutUser";
+import SingleOrder from "./components/SingleOrder";
+import CheckoutGuest from "./components/CheckoutGuest";
+import Confirmation from "./components/Confirmation";
 
 /**
  * COMPONENT
@@ -46,6 +47,7 @@ class Routes extends Component {
             <Route path="/viewcart" component={ViewCart} />
             <Route path="/orders/:id" component={SingleOrder} />
             <Route path="/checkoutguest" component={CheckoutGuest} />
+            <Route path="/confirmation" component={Confirmation} />
           </Switch>
         ) : (
           <Switch>

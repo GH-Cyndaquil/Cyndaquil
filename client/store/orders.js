@@ -1,9 +1,9 @@
-import axios from 'axios';
+import axios from "axios";
 const initState = {};
 
-const GOT_CART = 'GOT_CART';
-const ADD_ITEM = 'ADD_ITEM';
-const DELETE_ITEM = 'DELETE_ITEM';
+const GOT_CART = "GOT_CART";
+const ADD_ITEM = "ADD_ITEM";
+const DELETE_ITEM = "DELETE_ITEM";
 
 const addedItem = (item) => ({
   type: ADD_ITEM,
@@ -26,7 +26,7 @@ export const addItem = (item) => {
       const { data } = await axios.post(`/api/orders/`, item);
       dispatch(fetchCart(item.userId));
     } catch (error) {
-      console.error('AddItem Failed');
+      console.error("AddItem Failed");
     }
   };
 };
@@ -39,7 +39,7 @@ export const fetchCart = (id) => {
         dispatch(gotCart(data));
       }
     } catch (error) {
-      console.error('fetchCart failed');
+      console.error("fetchCart failed");
     }
   };
 };
@@ -48,7 +48,7 @@ export const removeItem = (item) => {
   return async (dispatch) => {
     try {
       let { data } = await axios.delete(
-        `/api/orders/${item['order-details'].orderId}`,
+        `/api/orders/${item["order-details"].orderId}`,
         {
           headers: item,
         }
@@ -61,11 +61,10 @@ export const removeItem = (item) => {
 };
 
 export const updateItem = (item) => {
-  console.log(item);
   return async (dispatch) => {
     try {
       let { data } = await axios.put(
-        `/api/orders/${item['order-details'].orderId}`,
+        `/api/orders/${item["order-details"].orderId}`,
         item
       );
       dispatch(fetchCart(item.userId));

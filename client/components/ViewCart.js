@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { fetchCart, gotCart, removeItem, updateItem } from '../store/orders';
-import { Link } from 'react-router-dom';
-import axios from 'axios';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { fetchCart, gotCart, removeItem, updateItem } from "../store/orders";
+import { Link } from "react-router-dom";
+import axios from "axios";
 
 const ViewCart = (props) => {
   const dispatch = useDispatch();
@@ -18,7 +18,7 @@ const ViewCart = (props) => {
   useEffect(() => {
     if (localStorage.cart) {
       let products = [];
-      let cart = JSON.parse(localStorage.getItem('cart'));
+      let cart = JSON.parse(localStorage.getItem("cart"));
       for (let key in cart) {
         products.push(cart[key]);
       }
@@ -33,15 +33,15 @@ const ViewCart = (props) => {
   }, [userId]);
 
   function numberWithCommas(price) {
-    if (price.toString().split('.')[1] !== undefined) {
-      if (price.toString().split('.')[1].length === 1) {
+    if (price.toString().split(".")[1] !== undefined) {
+      if (price.toString().split(".")[1].length === 1) {
         price = price.toString() + 0;
       }
     }
     return Number(price)
       .toFixed(2)
       .toString()
-      .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
   function getTotal() {
@@ -49,8 +49,8 @@ const ViewCart = (props) => {
     if (curCart.id) {
       for (let i = 0; i < curCart.products.length; i++) {
         total +=
-          +curCart.products[i]['order-details'].price *
-          curCart.products[i]['order-details'].quantityOrdered;
+          +curCart.products[i]["order-details"].price *
+          curCart.products[i]["order-details"].quantityOrdered;
       }
     } else {
       for (let i = 0; i < curCart.products.length; i++) {
@@ -65,13 +65,13 @@ const ViewCart = (props) => {
     if (userId) {
       dispatch(removeItem({ ...product, userId }));
     } else {
-      let cart = JSON.parse(localStorage.getItem('cart'));
+      let cart = JSON.parse(localStorage.getItem("cart"));
       delete cart[`${product.id}`];
       let products = [];
       for (let key in cart) {
         products.push(cart[key]);
       }
-      localStorage.setItem('cart', JSON.stringify(cart));
+      localStorage.setItem("cart", JSON.stringify(cart));
       dispatch(gotCart({ products: products }));
     }
   }
@@ -86,7 +86,7 @@ const ViewCart = (props) => {
         })
       );
     } else {
-      let cart = JSON.parse(localStorage.getItem('cart'));
+      let cart = JSON.parse(localStorage.getItem("cart"));
       let cartItem = cart[`${evt.target.id}`];
       console.log(cartItem);
       cartItem.quantityOrdered = Number(
@@ -97,7 +97,7 @@ const ViewCart = (props) => {
       for (let key in cart) {
         products.push(cart[key]);
       }
-      localStorage.setItem('cart', JSON.stringify(cart));
+      localStorage.setItem("cart", JSON.stringify(cart));
       dispatch(gotCart({ products: products }));
     }
   }
@@ -125,13 +125,13 @@ const ViewCart = (props) => {
                         </td>
 
                         <td>
-                          {' '}
+                          {" "}
                           <input
                             type="number"
                             id="cart-item-quantity"
                             min={1}
                             defaultValue={
-                              product['order-details'].quantityOrdered
+                              product["order-details"].quantityOrdered
                             }
                             onChange={(evt) =>
                               setProductQuantities({
@@ -155,14 +155,14 @@ const ViewCart = (props) => {
                         <td>
                           $
                           {numberWithCommas(
-                            product['order-details'].price *
-                              product['order-details'].quantityOrdered
+                            product.price *
+                              product["order-details"].quantityOrdered
                           )}
                         </td>
                         <td>
                           <i
                             className="fa fa-trash-o"
-                            style={{ fontSize: '24px' }}
+                            style={{ fontSize: "24px" }}
                             onClick={(evt) => deleteItem(evt, product)}
                           ></i>
                         </td>
@@ -210,7 +210,7 @@ const ViewCart = (props) => {
                         <td>
                           <i
                             className="fa fa-trash-o"
-                            style={{ fontSize: '24px' }}
+                            style={{ fontSize: "24px" }}
                             onClick={(evt) => deleteItem(evt, product)}
                           ></i>
                         </td>
@@ -224,7 +224,7 @@ const ViewCart = (props) => {
                   <td>${getTotal()}</td>
 
                   <td>
-                    {userId ? (
+                    {/* {userId ? (
                       <Link to="/checkoutuser">
                         <button>Checkout</button>
                       </Link>
@@ -232,7 +232,10 @@ const ViewCart = (props) => {
                       <Link to="/checkoutguest">
                         <button>Checkout</button>
                       </Link>
-                    )}
+                    )} */}
+                    <Link to="/checkoutuser">
+                      <button>Checkout</button>
+                    </Link>
                   </td>
                 </tr>
               </tbody>
