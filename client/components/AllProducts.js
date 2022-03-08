@@ -145,6 +145,7 @@ function AllProducts(props) {
             quantityOrdered: Number(productQuantities[evt.target.id].quantity),
             imageUrl: productQuantities[evt.target.id].imageUrl,
           };
+          //make sure localStorage object has a products array
           let products = [];
           for (let key in cart) {
             products.push(cart[key]);
