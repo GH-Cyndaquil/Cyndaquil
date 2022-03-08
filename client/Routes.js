@@ -8,6 +8,7 @@ import { me } from "./store";
 import AdminPage from "./components/admin/AdminPage";
 import AddProduct from "./components/admin/AddProduct";
 import AdminProduct from "./components/admin/AdminProduct";
+import AllUsers from "./components/admin/AdminAllUsers";
 import AllProducts from "./components/AllProducts";
 import ViewCart from "./components/ViewCart";
 import SingleProduct from "./components/SingleProduct";
