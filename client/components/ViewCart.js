@@ -1,8 +1,8 @@
-import React, { useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchCart, gotCart, removeItem, updateItem } from "../store/orders";
-import { Link } from "react-router-dom";
-import axios from "axios";
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchCart, gotCart, removeItem, updateItem } from '../store/orders';
+import { Link } from 'react-router-dom';
+import axios from 'axios';
 
 const ViewCart = (props) => {
   const dispatch = useDispatch();
@@ -21,7 +21,7 @@ const ViewCart = (props) => {
   useEffect(() => {
     if (!isLoggedIn && localStorage.cart) {
       let products = [];
-      let cart = JSON.parse(localStorage.getItem("cart"));
+      let cart = JSON.parse(localStorage.getItem('cart'));
       for (let key in cart) {
         products.push(cart[key]);
       }
@@ -36,26 +36,27 @@ const ViewCart = (props) => {
   }, [stateCart]);
 
   function numberWithCommas(price) {
-    console.log("price", price);
-    if (price.toString().split(".")[1] !== undefined) {
-      if (price.toString().split(".")[1].length === 1) {
-        price = price.toString() + 0;
+    if (price !== undefined) {
+      if (price.toString().split('.')[1] !== undefined) {
+        if (price.toString().split('.')[1].length === 1) {
+          price = price.toString() + 0;
+        }
       }
+      return Number(price)
+        .toFixed(2)
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     }
-    return Number(price)
-      .toFixed(2)
-      .toString()
-      .replace(/\B(?=(\d{3})+(?!\d))/g, ",");
   }
 
   function getTotal() {
     let total = 0;
     if (curCart.id) {
-      console.log("inside getTotal", curCart);
+      console.log('inside getTotal', curCart);
       for (let i = 0; i < curCart.products.length; i++) {
         total +=
           +curCart.products[i].price *
-          curCart.products[i]["order-details"].quantityOrdered;
+          curCart.products[i]['order-details'].quantityOrdered;
       }
     } else {
       for (let i = 0; i < curCart.products.length; i++) {
@@ -70,13 +71,13 @@ const ViewCart = (props) => {
     if (userId) {
       dispatch(removeItem({ ...product, userId }));
     } else {
-      let cart = JSON.parse(localStorage.getItem("cart"));
+      let cart = JSON.parse(localStorage.getItem('cart'));
       delete cart[`${product.id}`];
       let products = [];
       for (let key in cart) {
         products.push(cart[key]);
       }
-      localStorage.setItem("cart", JSON.stringify(cart));
+      localStorage.setItem('cart', JSON.stringify(cart));
       dispatch(gotCart({ products: products }));
     }
   }
@@ -91,7 +92,7 @@ const ViewCart = (props) => {
         })
       );
     } else {
-      let cart = JSON.parse(localStorage.getItem("cart"));
+      let cart = JSON.parse(localStorage.getItem('cart'));
       let cartItem = cart[`${evt.target.id}`];
       cartItem.quantityOrdered = Number(
         productQuantities[evt.target.id].quantity
@@ -102,7 +103,7 @@ const ViewCart = (props) => {
       for (let key in cart) {
         products.push(cart[key]);
       }
-      localStorage.setItem("cart", JSON.stringify(cart));
+      localStorage.setItem('cart', JSON.stringify(cart));
       dispatch(gotCart({ products: products }));
     }
   }
@@ -130,13 +131,13 @@ const ViewCart = (props) => {
                         </td>
 
                         <td>
-                          {" "}
+                          {' '}
                           <input
                             type="number"
                             id="cart-item-quantity"
                             min={1}
                             defaultValue={
-                              product["order-details"].quantityOrdered
+                              product['order-details'].quantityOrdered
                             }
                             onChange={(evt) =>
                               setProductQuantities({
@@ -162,13 +163,13 @@ const ViewCart = (props) => {
                           $
                           {numberWithCommas(
                             +product.price *
-                              product["order-details"].quantityOrdered
+                              product['order-details'].quantityOrdered
                           )}
                         </td>
                         <td>
                           <i
                             className="fa fa-trash-o"
-                            style={{ fontSize: "24px" }}
+                            style={{ fontSize: '24px' }}
                             onClick={(evt) => deleteItem(evt, product)}
                           ></i>
                         </td>
@@ -217,7 +218,7 @@ const ViewCart = (props) => {
                         <td>
                           <i
                             className="fa fa-trash-o"
-                            style={{ fontSize: "24px" }}
+                            style={{ fontSize: '24px' }}
                             onClick={(evt) => deleteItem(evt, product)}
                           ></i>
                         </td>
