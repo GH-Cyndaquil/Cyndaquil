@@ -7,7 +7,7 @@ import { fetchCart } from "../store/orders";
 const Navbar = (props) => {
   const userId = useSelector((state) => state.user.id);
   const isLoggedIn = useSelector((state) => !!state.user.id);
-  const isAdmin = useSelector((state) => !!state.user.id);
+  const isAdmin = useSelector((state) => state.user.isAdmin);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   let cart = useSelector((state) => state.orders);
@@ -63,7 +63,9 @@ const Navbar = (props) => {
                   Admin
                 </NavLink>
               </div>
-            ) : null}
+            ) : (
+              <div></div>
+            )}
             <NavLink to={`/users/${userId}`} className="nav-button">
               <div id="hello-user">Hello, {user.username}</div>
               Account
