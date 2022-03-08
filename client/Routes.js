@@ -16,7 +16,6 @@ import SingleUser from "./components/SingleUser";
 import EditUser from "./components/EditUser";
 import CheckoutUser from "./components/CheckoutUser";
 import SingleOrder from "./components/SingleOrder";
-import CheckoutGuest from "./components/CheckoutGuest";
 import Confirmation from "./components/Confirmation";
 import AllUsers from "./components/admin/AdminAllUsers";
 import NotFoundPage from "./components/NotFoundPage";
@@ -48,7 +47,6 @@ class Routes extends Component {
             <Route path="/checkoutuser" component={CheckoutUser} />
             <Route path="/viewcart" component={ViewCart} />
             <Route path="/orders/:id" component={SingleOrder} />
-            <Route path="/checkoutguest" component={CheckoutGuest} />
             <Route path="/confirmation" component={Confirmation} />
             <Route path="/user/:id" component={AdminUser} />
             <Route path="*" component={NotFoundPage} />
@@ -62,7 +60,6 @@ class Routes extends Component {
             <Route path="/products/:id" component={SingleProduct} />
             <Route path="/viewcart" component={ViewCart} />
             <Route path="/checkoutuser" component={CheckoutUser} />
-            <Route path="/checkoutguest" component={CheckoutGuest} />
             <Route path="*" component={NotFoundPage} />
           </Switch>
         )}
