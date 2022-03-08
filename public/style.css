@@ -143,7 +143,7 @@ form div {
   margin-bottom: 15px;
 }
 .lost-div {
-  height: 100vw
+  height: 100vw;
   margin: 0 auto;
   width: 50%;
   background-color: rgba(127, 245, 245, 0.338);
@@ -251,7 +251,7 @@ nav {
   justify-content: space-between;
   align-items: center;
   border-bottom: 2px solid black;
-  border-width: .25em;
+  border-width: 0.25em;
 }
 
 #hello-user {
@@ -289,7 +289,7 @@ nav {
   text-shadow: 0.05em 0 black, 0 0.05em black, -0.05em 0 black, 0 -0.05em black,
     -0.05em -0.05em black, -0.05em 0.05em black, 0.05em -0.05em black,
     0.05em 0.05em black;
-  margin-left: 12em;
+  margin-left: 2em;
 }
 
 .product-links {
@@ -311,7 +311,7 @@ nav {
   border: 0;
   height: 30px;
   margin: 3px;
-  cursor: url(https://cur.cursors-4u.net/nature/nat-9/nat803.cur), auto !important;
+  cursor: url(https://cur.cursors-4u.net/games/gam-7/gam670.cur), auto !important;
   transition: box-shadow 0.2s;
 }
 
@@ -389,7 +389,7 @@ nav {
     0.05em 0.05em black;
   width: 100%;
   border-top: 2px solid black;
-  border-width: .25em;
+  border-width: 0.25em;
 }
 
 .footer-link-img {
@@ -654,7 +654,7 @@ button:active {
   margin: 1em;
   height: 70vh;
   font-family: sans-serif;
-  color:beige;
+  color: beige;
   background-color: lightslategray;
   text-shadow: 0.05em 0 black, 0 0.05em black, -0.05em 0 black, 0 -0.05em black,
     -0.05em -0.05em black, -0.05em 0.05em black, 0.05em -0.05em black,
@@ -664,5 +664,5 @@ button:active {
 #home-container {
   display: flex;
   flex-direction: row;
-  height: 80vh
+  height: 80vh;
 }
