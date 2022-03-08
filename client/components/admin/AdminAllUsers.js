@@ -1,6 +1,5 @@
 import React from "react";
 import { connect } from "react-redux";
-import { getAllUsers } from "../../store/user";
 import axios from "axios";
 import { Link } from "react-router-dom";
 
@@ -8,11 +7,11 @@ export class AllUsers extends React.Component {
   constructor() {
     super();
     this.handleClick = this.handleClick.bind(this);
-    this.state = { users: [] };
+    this.state = { users: [], isAdmin: false };
   }
 
   async componentDidMount() {
-    const { data } = await axios.get("api/users");
+    const { data } = await axios.get("api/adminuser");
     this.setState({ users: data });
   }
 
@@ -33,11 +32,28 @@ export class AllUsers extends React.Component {
             <h2>All site Users</h2>
             {users.map((user) => (
               <div key={user.id}>
-                <Link to={`/user/${user.id}`}>
-                  <div>
-                    <h3>{user.username}</h3>
-                  </div>
-                </Link>
+                <div>
+                  <h3>{user.username}</h3>
+                  <select
+                    onChange={(e) => {
+                      this.setState({ isAdmin: e.target.value });
+                    }}
+                  >
+                    <option>Admin Status</option>
+                    <option value={true}>True</option>
+                    <option value={false}>False</option>
+                  </select>
+                  <button
+                    onClick={async () => {
+                      await axios.patch(`/api/adminuser/${user.id}`, {
+                        isAdmin: this.state.isAdmin,
+                        user: this.props.user,
+                      });
+                    }}
+                  >
+                    Submit
+                  </button>
+                </div>
               </div>
             ))}
           </div>
@@ -48,11 +64,7 @@ export class AllUsers extends React.Component {
 }
 
 const mapState = (state) => ({
-  users: state.user.allUsers,
+  user: state.user,
 });
 
-const mapDispatch = (dispatch) => ({
-  setAllUsers: () => dispatch(getAllUsers()),
-});
-
-export default connect(mapState, mapDispatch)(AllUsers);
+export default connect(mapState, null)(AllUsers);
