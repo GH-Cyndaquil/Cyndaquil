@@ -36,15 +36,17 @@ const ViewCart = (props) => {
   }, [stateCart]);
 
   function numberWithCommas(price) {
-    if (price.toString().split('.')[1] !== undefined) {
-      if (price.toString().split('.')[1].length === 1) {
-        price = price.toString() + 0;
+    if (price !== undefined) {
+      if (price.toString().split('.')[1] !== undefined) {
+        if (price.toString().split('.')[1].length === 1) {
+          price = price.toString() + 0;
+        }
       }
+      return Number(price)
+        .toFixed(2)
+        .toString()
+        .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
     }
-    return Number(price)
-      .toFixed(2)
-      .toString()
-      .replace(/\B(?=(\d{3})+(?!\d))/g, ',');
   }
 
   function getTotal() {
