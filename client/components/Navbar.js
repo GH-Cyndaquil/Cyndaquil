@@ -1,12 +1,13 @@
-import React, { useState, useEffect } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { Link } from 'react-router-dom';
-import { logout } from '../store';
-import { fetchCart } from '../store/orders';
+import React, { useState, useEffect } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { logout } from "../store";
+import { fetchCart } from "../store/orders";
 
 const Navbar = (props) => {
   const userId = useSelector((state) => state.user.id);
   const isLoggedIn = useSelector((state) => !!state.user.id);
+  const isAdmin = useSelector((state) => !!state.user.id);
   const dispatch = useDispatch();
   const user = useSelector((state) => state.user);
   let cart = useSelector((state) => state.orders);
@@ -18,7 +19,7 @@ const Navbar = (props) => {
   function cartCounter() {
     if (cart.products !== undefined) {
       return cart.products.reduce((accum, num) => {
-        accum += num['order-details'].quantityOrdered;
+        accum += num["order-details"].quantityOrdered;
         return accum;
       }, 0);
     } else {
@@ -28,7 +29,7 @@ const Navbar = (props) => {
 
   function localStorageCount() {
     if (localStorage.cart) {
-      let cart = Object.values(JSON.parse(localStorage.getItem('cart')));
+      let cart = Object.values(JSON.parse(localStorage.getItem("cart")));
       let items = 0;
       for (let i = 0; i < cart.length; i++) {
         items += Number(cart[i].quantityOrdered);
@@ -51,9 +52,15 @@ const Navbar = (props) => {
             Products
           </Link>
         </div>
-
         {isLoggedIn ? (
           <div id="nav-user-control">
+            {isAdmin ? (
+              <div>
+                <Link to="/admin" className="nav-button">
+                  Admin
+                </Link>
+              </div>
+            ) : null}
             <Link to={`/users/${userId}`} className="nav-button">
               <div id="hello-user">Hello, {user.username}</div>
               Account
@@ -70,7 +77,7 @@ const Navbar = (props) => {
                 <i
                   id="shopping-cart"
                   className="fa fa-shopping-cart"
-                  style={{ fontSize: '50px' }}
+                  style={{ fontSize: "50px" }}
                 ></i>
                 {cart.id !== undefined && cart !== null ? (
                   <div id="cart-count">{cartCounter()}</div>
@@ -94,7 +101,7 @@ const Navbar = (props) => {
                 <i
                   id="shopping-cart"
                   className="fa fa-shopping-cart"
-                  style={{ fontSize: '50px' }}
+                  style={{ fontSize: "50px" }}
                 ></i>
                 <div id="cart-count">{localStorageCount()}</div>
               </div>
