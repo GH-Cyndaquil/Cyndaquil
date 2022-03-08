@@ -1,22 +1,23 @@
-import React, { Component, Fragment } from 'react';
-import { connect } from 'react-redux';
-import { withRouter, Route, Switch, Redirect } from 'react-router-dom';
-import Signup from './components/Signup';
-import Login from './components/Login';
-import Home from './components/Home';
-import { me } from './store';
-import AdminPage from './components/admin/AdminPage';
-import AddProduct from './components/admin/AddProduct';
-import AdminProduct from './components/admin/AdminProduct';
-import AllProducts from './components/AllProducts';
-import ViewCart from './components/ViewCart';
-import SingleProduct from './components/SingleProduct';
-import SingleUser from './components/SingleUser';
-import EditUser from './components/EditUser';
-import CheckoutUser from './components/CheckoutUser';
-import SingleOrder from './components/SingleOrder';
-import Confirmation from './components/Confirmation';
-import NotFoundPage from './components/NotFoundPage';
+import React, { Component, Fragment } from "react";
+import { connect } from "react-redux";
+import { withRouter, Route, Switch, Redirect } from "react-router-dom";
+import Signup from "./components/Signup";
+import Login from "./components/Login";
+import Home from "./components/Home";
+import { me } from "./store";
+import AdminPage from "./components/admin/AdminPage";
+import AddProduct from "./components/admin/AddProduct";
+import AdminProduct from "./components/admin/AdminProduct";
+import AllProducts from "./components/AllProducts";
+import ViewCart from "./components/ViewCart";
+import SingleProduct from "./components/SingleProduct";
+import SingleUser from "./components/SingleUser";
+import EditUser from "./components/EditUser";
+import CheckoutUser from "./components/CheckoutUser";
+import SingleOrder from "./components/SingleOrder";
+import Confirmation from "./components/Confirmation";
+import NotFoundPage from "./components/NotFoundPage";
+import AllUsers from "./components/admin/AdminAllUsers";
 
 /**
  * COMPONENT
@@ -31,27 +32,34 @@ class Routes extends Component {
 
     return (
       <div>
-        {isLoggedIn ? (
+        {isLoggedIn && !isAdmin ? (
           <Switch>
             <Route exact path="/" component={Home} />
             <Route exact path="/products" component={AllProducts} />
             <Route path="/products/:id" component={SingleProduct} />
             <Route exact path="/users/:id" component={SingleUser} />
             <Route path="/users/:id/edit" component={EditUser} />
-            {isAdmin ? (
-              <div>
-                <Route path="/admin" component={AdminPage} />
-                <Route path="/adminalluser" component={AllUsers} />
-                <Route path="/addproduct" component={AddProduct} />
-                <Route path="/adminproduct" component={AdminProduct} />
-              </div>
-            ) : (
-              <div></div>
-            )}
             <Route path="/checkoutuser" component={CheckoutUser} />
             <Route path="/viewcart" component={ViewCart} />
             <Route path="/orders/:id" component={SingleOrder} />
             <Route path="/confirmation" component={Confirmation} />
+            <Route path="*" component={NotFoundPage} />
+          </Switch>
+        ) : isLoggedIn && isAdmin ? (
+          <Switch>
+            <Route exact path="/" component={Home} />
+            <Route exact path="/products" component={AllProducts} />
+            <Route path="/products/:id" component={SingleProduct} />
+            <Route exact path="/users/:id" component={SingleUser} />
+            <Route path="/users/:id/edit" component={EditUser} />
+            <Route path="/checkoutuser" component={CheckoutUser} />
+            <Route path="/viewcart" component={ViewCart} />
+            <Route path="/orders/:id" component={SingleOrder} />
+            <Route path="/confirmation" component={Confirmation} />
+            <Route path="/admin" component={AdminPage} />
+            <Route path="/adminalluser" component={AllUsers} />
+            <Route path="/addproduct" component={AddProduct} />
+            <Route path="/adminproduct" component={AdminProduct} />
             <Route path="*" component={NotFoundPage} />
           </Switch>
         ) : (
