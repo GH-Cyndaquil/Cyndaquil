@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { checkoutCart } from "../store/orders";
+import { checkoutCart, fetchCart } from "../store/orders";
 import axios from "axios";
 
 export const CheckoutUser = (props) => {
@@ -12,9 +12,7 @@ export const CheckoutUser = (props) => {
     return state.orders;
   });
 
-  let cartObject = { objectId: curCart.id };
-
-  console.log("cartObject=====>", curCart);
+  console.log("cart.id=====>", curCart.id);
 
   const [checked, setChecked] = useState(true);
 
@@ -48,10 +46,9 @@ export const CheckoutUser = (props) => {
       shipState: formState.state,
       shipPostalCode: formState.zip,
     });
+    dispatch(fetchCart(curCart.id));
     props.history.push("/confirmation");
   };
-
-  console.log(!!user.id, "checked", checked);
 
   const disableButton = (formState) => {
     for (let key in formState) {

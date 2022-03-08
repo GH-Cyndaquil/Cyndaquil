@@ -40,7 +40,7 @@ nav a {
 
 .homestyle {
   background-color: rgb(61, 61, 61);
-  background-image: url('./gifs/pouringMartini.gif'), url('.images/');
+  background-image: url("./gifs/pouringMartini.gif"), url(".images/");
   background-size: cover;
   font-size: 2rem;
   border: 2px solid black;
@@ -182,7 +182,7 @@ form div {
   width: 500px;
   text-align: center;
   justify-content: space-between;
-  background-image: url('./gifs/shoutPour.gif');
+  background-image: url("./gifs/shoutPour.gif");
   background-size: cover;
   font-size: 2rem;
   border: 2px solid black;
@@ -245,7 +245,7 @@ nav {
 }
 
 #navbar {
-  background-image: url('https://static.wixstatic.com/media/84465c_8a62d497e52f417ebfe985eefda9778c~mv2.jpg/v1/fill/w_740,h_493,al_c,q_90/84465c_8a62d497e52f417ebfe985eefda9778c~mv2.webp');
+  background-image: url("https://static.wixstatic.com/media/84465c_8a62d497e52f417ebfe985eefda9778c~mv2.jpg/v1/fill/w_740,h_493,al_c,q_90/84465c_8a62d497e52f417ebfe985eefda9778c~mv2.webp");
   background-size: cover;
   top: 0%;
   left: 0;
@@ -424,14 +424,14 @@ nav {
 }
 
 .login-background {
-  background-image: url('./images/login-background.jpeg');
+  background-image: url("./images/login-background.jpeg");
   width: 60%;
   height: 100vh;
   background-size: cover;
 }
 
 .signup-background {
-  background-image: url('./images/login-background.jpeg');
+  background-image: url("./images/login-background.jpeg");
   width: 60%;
   height: 100vh;
   background-size: cover;
@@ -565,62 +565,8 @@ caption {
   margin-bottom: 5vh;
 }
 
-/* .FormGroup {
-  margin: 0 15px 20px;
-  padding: 0;
-  border-style: none;
-  background-color: #7795f8;
-  will-change: opacity, transform;
-  box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08),
-    inset 0 1px 0 #829fff;
-  border-radius: 4px;
-}
-
-.FormRow {
-  display: -ms-flexbox;
-  display: flex;
-  -ms-flex-align: center;
-  align-items: center;
-  margin-left: 15px;
-  border-top: 1px solid #819efc;
-}
-
-.StripeElement--webkit-autofill {
-  background: transparent !important;
-}
-
-.StripeElement {
-  width: 100%;
-  padding: 11px 15px 11px 0;
-}
-
-button {
-  display: block;
-  font-size: 16px;
-  width: calc(100% - 30px);
-  height: 40px;
-  margin: 40px 15px 0;
-  background-color: #f6a4eb;
-  box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08),
-    inset 0 1px 0 #ffb9f6;
-  border-radius: 4px;
-  color: #fff;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 100ms ease-in-out;
-  will-change: transform, background-color, box-shadow;
-  border: none;
-}
-
-button:active {
-  background-color: #d782d9;
-  box-shadow: 0 6px 9px rgba(50, 50, 93, 0.06), 0 2px 5px rgba(0, 0, 0, 0.08),
-    inset 0 1px 0 #e298d8;
-  transform: scale(0.99);
-  */
-
 #home-background {
-  background-image: url('./gifs/swirlingRicky.gif');
+  background-image: url("./gifs/swirlingRicky.gif");
   width: 60%;
   height: 100vh;
   background-size: cover;
