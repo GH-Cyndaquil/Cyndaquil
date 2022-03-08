@@ -51,14 +51,18 @@ export const CheckoutUser = (props) => {
     props.history.push("/confirmation");
   };
 
-  //   console.log(user);
+  console.log(!!user.id, "checked", checked);
+
+  const disableButton = (formState) => {
+    for (let key in formState) {
+      if (!formState[key]) return true;
+    }
+    return false;
+  };
 
   return (
     <div>
-      <div
-        id="savedAddress"
-        // style={{ display: user === undefined ? "block" : "none" }}
-      >
+      <div id="savedAddress" hidden={!user.id}>
         <h3>
           {user.firstName} {user.lastName} <br></br>
           {user.address}, {user.city}, {user.state} <br></br>
@@ -75,49 +79,53 @@ export const CheckoutUser = (props) => {
       </div>
 
       <form onSubmit={onSubmit} className="checkoutCentered">
-        <div style={{ display: checked === false ? "block" : "none" }}>
-          <h2>New Shipping Address</h2>
-          <label htmlFor="address">Street Address:</label>
-          <input
-            onChange={handleChange}
-            value={formState.address}
-            size="50"
-            type="text"
-            id="address"
-            name="address"
-          ></input>
+        {user.id && checked ? (
+          <div></div>
+        ) : (
+          <div>
+            <h2>New Shipping Address</h2>
+            <label htmlFor="address">Street Address:</label>
+            <input
+              onChange={handleChange}
+              value={formState.address}
+              size="50"
+              type="text"
+              id="address"
+              name="address"
+            ></input>
 
-          <label htmlFor="city">City:</label>
-          <input
-            onChange={handleChange}
-            value={formState.city}
-            size="50"
-            type="text"
-            id="city"
-            name="city"
-          ></input>
+            <label htmlFor="city">City:</label>
+            <input
+              onChange={handleChange}
+              value={formState.city}
+              size="50"
+              type="text"
+              id="city"
+              name="city"
+            ></input>
 
-          <label htmlFor="state">State:</label>
-          <input
-            onChange={handleChange}
-            value={formState.state}
-            size="50"
-            type="text"
-            id="state"
-            name="state"
-          ></input>
+            <label htmlFor="state">State:</label>
+            <input
+              onChange={handleChange}
+              value={formState.state}
+              size="50"
+              type="text"
+              id="state"
+              name="state"
+            ></input>
 
-          <label htmlFor="zip">Zipcode:</label>
-          <input
-            onChange={handleChange}
-            value={formState.zip}
-            size="50"
-            type="text"
-            id="zip"
-            name="zip"
-          ></input>
-          <br></br>
-        </div>
+            <label htmlFor="zip">Zipcode:</label>
+            <input
+              onChange={handleChange}
+              value={formState.zip}
+              size="50"
+              type="text"
+              id="zip"
+              name="zip"
+            ></input>
+            <br></br>
+          </div>
+        )}
 
         {/* <form className="checkoutCentered"> */}
         <div>
@@ -163,7 +171,11 @@ export const CheckoutUser = (props) => {
           ></input>
           <br></br>
           <br></br>
-          <button type="submit" value="submit">
+          <button
+            type="submit"
+            value="submit"
+            disabled={disableButton(formState)}
+          >
             Submit
           </button>
         </div>
