@@ -1,10 +1,12 @@
-const router = require('express').Router();
-const Order = require('../db/models/Order');
-const Product = require('../db/models/Product');
-const OrderDetails = require('../db/models/OrderDetails');
+const router = require("express").Router();
+const Order = require("../db/models/Order");
+const Product = require("../db/models/Product");
+const OrderDetails = require("../db/models/OrderDetails");
+const User = require("../db/models/User");
+// const { default: user } = require("../../client/store/user");
 
 //for specific order
-router.get('/:id', async (req, res, next) => {
+router.get("/:id", async (req, res, next) => {
   try {
     if (req.params.id !== undefined) {
     }
@@ -21,7 +23,7 @@ router.get('/:id', async (req, res, next) => {
 });
 
 //for order history
-router.get('/history/:id', async (req, res, next) => {
+router.get("/history/:id", async (req, res, next) => {
   try {
     if (req.params.id !== undefined) {
       const orders = await Order.findAll({
@@ -38,7 +40,7 @@ router.get('/history/:id', async (req, res, next) => {
   }
 });
 
-router.get('/cart/:id', async (req, res, next) => {
+router.get("/cart/:id", async (req, res, next) => {
   try {
     if (req.params.id !== undefined) {
       const [order, wasCreated] = await Order.findOrCreate({
@@ -67,7 +69,7 @@ router.get('/cart/:id', async (req, res, next) => {
   }
 });
 
-router.post('/', async (req, res, next) => {
+router.post("/", async (req, res, next) => {
   try {
     const { productId, price, quantity, userId, unitPrice } = req.body;
 
@@ -117,9 +119,9 @@ router.post('/', async (req, res, next) => {
   }
 });
 
-router.put('/confirm', async (req, res, next) => {
+router.put("/confirm", async (req, res, next) => {
   try {
-    const { orderId, shipAddress, shipCity, shipState, shipPostalCode } =
+    const { email, shipAddress, shipCity, shipState, shipPostalCode } =
       req.body;
 
     const completeOrder = await Order.findOne({
@@ -134,13 +136,57 @@ router.put('/confirm', async (req, res, next) => {
       shipState,
       shipPostalCode,
     });
+
     res.send();
   } catch (error) {
     next(error);
   }
 });
 
-router.delete('/:id', async (req, res, next) => {
+router.put("/confirmGuest", async (req, res, next) => {
+  try {
+    const { order, email, shipAddress, shipCity, shipState, shipPostalCode } =
+      req.body;
+
+    let thisId = (Math.random() + 1).toString(36).substring(7);
+
+    console.log(thisId, "<======thisId");
+
+    const thisUser = await User.create({
+      email,
+      address: shipAddress,
+      city: shipCity,
+      state: shipState,
+      postalCode: shipPostalCode,
+      isAdmin: false,
+      username: thisId,
+      password: "thisisfake",
+      firstName: "jane",
+      lastName: "doe",
+    });
+    const thisOrder = await Order.create({
+      orderDate: new Date(),
+      shipAddress,
+      shipState,
+      shipCity,
+      shipPostalCode,
+      fulfilled: true,
+    });
+    let idxOrder = thisOrder.Id;
+    let idxUser = thisUser.id;
+
+    await thisOrder.setUser(idxUser);
+
+    await thisOrder.addProduct(idxOrder, {
+      through: { price: 3.5, quantityOrdered: 1 },
+    });
+    res.send();
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.delete("/:id", async (req, res, next) => {
   try {
     let { id, userid } = req.headers;
 
@@ -166,7 +212,7 @@ router.delete('/:id', async (req, res, next) => {
   }
 });
 
-router.put('/:id', async (req, res, next) => {
+router.put("/:id", async (req, res, next) => {
   try {
     let { id, userId, quantity } = req.body;
 

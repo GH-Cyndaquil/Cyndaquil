@@ -1,9 +1,10 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { checkoutCart, fetchCart } from "../store/orders";
-import axios from "axios";
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { checkoutCart, fetchCart, gotCart } from '../store/orders';
+import axios from 'axios';
 
 export const CheckoutUser = (props) => {
+  const isLoggedIn = useSelector((state) => !!state.user.id);
   const user = useSelector((state) => {
     return state.user;
   });
@@ -12,19 +13,19 @@ export const CheckoutUser = (props) => {
     return state.orders;
   });
 
-  console.log("cart.id=====>", curCart.id);
-
   const [checked, setChecked] = useState(true);
 
   const [formState, setFormState] = useState({
-    cardHolderName: "",
-    cardNumber: "",
-    expiration: "",
-    cvv: "",
-    address: user.address || "",
-    city: user.city || "",
-    state: user.state || "",
-    zip: user.postalCode || "",
+    cardHolderName: '',
+    cardNumber: '',
+    expiration: '',
+    cvv: '',
+    address: user.address || '',
+    city: user.city || '',
+    state: user.state || '',
+    zip: user.postalCode || '',
+    email: user.email || '',
+    order: curCart.products,
   });
 
   const dispatch = useDispatch();
@@ -38,16 +39,31 @@ export const CheckoutUser = (props) => {
 
   const onSubmit = async (evt) => {
     evt.preventDefault();
-    console.log(formState);
-    await axios.put("api/orders/confirm", {
-      orderId: curCart.id,
-      shipAddress: formState.address,
-      shipCity: formState.city,
-      shipState: formState.state,
-      shipPostalCode: formState.zip,
-    });
-    dispatch(fetchCart(curCart.id));
-    props.history.push("/confirmation");
+
+    if (isLoggedIn) {
+      await axios.put('api/orders/confirm', {
+        orderId: curCart.id,
+        shipAddress: formState.address,
+        shipCity: formState.city,
+        shipState: formState.state,
+        shipPostalCode: formState.zip,
+      });
+      dispatch(fetchCart(curCart.userId));
+    } else {
+      localStorage.removeItem('cart');
+      await axios.put('api/orders/confirmGuest', {
+        orderId: curCart.id,
+        shipAddress: formState.address,
+        shipCity: formState.city,
+        shipState: formState.state,
+        shipPostalCode: formState.zip,
+        email: formState.email,
+        order: formState.order,
+      });
+      dispatch(gotCart({ products: [] }));
+    }
+
+    props.history.push('/confirmation');
   };
 
   const disableButton = (formState) => {
@@ -79,49 +95,68 @@ export const CheckoutUser = (props) => {
         {user.id && checked ? (
           <div></div>
         ) : (
-          <div>
-            <h2>New Shipping Address</h2>
-            <label htmlFor="address">Street Address:</label>
-            <input
-              onChange={handleChange}
-              value={formState.address}
-              size="50"
-              type="text"
-              id="address"
-              name="address"
-            ></input>
+          <>
+            <div>
+              <h2>Email:</h2>
+              <label htmlFor="email"></label>
+              <input
+                onChange={handleChange}
+                value={formState.email}
+                size="50"
+                type="text"
+                id="email"
+                name="email"
+              ></input>
+            </div>
+            <div>
+              {user.id && !checked ? (
+                <h2>New Shipping Address</h2>
+              ) : (
+                <h2>Shipping Address</h2>
+              )}
 
-            <label htmlFor="city">City:</label>
-            <input
-              onChange={handleChange}
-              value={formState.city}
-              size="50"
-              type="text"
-              id="city"
-              name="city"
-            ></input>
+              <label htmlFor="address">Street Address:</label>
+              <input
+                onChange={handleChange}
+                value={formState.address}
+                size="50"
+                type="text"
+                id="address"
+                name="address"
+              ></input>
 
-            <label htmlFor="state">State:</label>
-            <input
-              onChange={handleChange}
-              value={formState.state}
-              size="50"
-              type="text"
-              id="state"
-              name="state"
-            ></input>
+              <label htmlFor="city">City:</label>
+              <input
+                onChange={handleChange}
+                value={formState.city}
+                size="50"
+                type="text"
+                id="city"
+                name="city"
+              ></input>
 
-            <label htmlFor="zip">Zipcode:</label>
-            <input
-              onChange={handleChange}
-              value={formState.zip}
-              size="50"
-              type="text"
-              id="zip"
-              name="zip"
-            ></input>
-            <br></br>
-          </div>
+              <label htmlFor="state">State:</label>
+              <input
+                onChange={handleChange}
+                value={formState.state}
+                size="50"
+                type="text"
+                id="state"
+                name="state"
+              ></input>
+
+              <label htmlFor="zip">Zipcode:</label>
+              <input
+                onChange={handleChange}
+                value={formState.zip}
+                size="50"
+                type="text"
+                id="zip"
+                name="zip"
+              ></input>
+              <br></br>
+            </div>
+          </>
         )}
 
         {/* <form className="checkoutCentered"> */}
@@ -168,6 +203,7 @@ export const CheckoutUser = (props) => {
           ></input>
           <br></br>
           <br></br>
+
           <button
             type="submit"
             value="submit"
