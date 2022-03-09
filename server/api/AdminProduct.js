@@ -1,10 +1,10 @@
 const router = require("express").Router();
 const Product = require("../db/models/Product");
-const User = require("../db/models/User");
+//const User = require("../db/models/User");
 module.exports = router;
 
 const adminsOnly = (req, res, next) => {
-  console.log("not a string", req.body.user);
+  console.log("not a string", req.body);
   if (!req.body.user) {
     const err = new Error("Not logged in");
     err.status = 401;
@@ -33,10 +33,26 @@ router.post("/", adminsOnly, async (req, res, next) => {
   }
 });
 
-router.get("/", adminsOnly, async (req, res, next) => {
+router.get("/:productId", async (req, res, next) => {
+  try {
+    const product = await Product.findByPk(req.params.productId);
+    res.json(product);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.get("/", async (req, res, next) => {
   try {
     const products = await Product.findAll({
-      attributes: ["id", "name"],
+      attributes: [
+        "id",
+        "name",
+        "price",
+        "quantity",
+        "description",
+        "imageUrl",
+      ],
     });
     res.json(products);
   } catch (err) {
@@ -44,12 +60,14 @@ router.get("/", adminsOnly, async (req, res, next) => {
   }
 });
 
-router.delete("/:ProductId", adminsOnly, async (req, res, next) => {
+router.delete("/:id", adminsOnly, async (req, res, next) => {
   try {
-    const id = req.params.userId;
-    const user = await User.findByPk(id);
-    await user.destroy();
-    res.status(204).send();
+    await Product.destroy({
+      where: {
+        id: req.params.id,
+      },
+    });
+    res.send("The Product has been deleted");
   } catch (error) {
     next(error);
   }
@@ -58,15 +76,32 @@ router.delete("/:ProductId", adminsOnly, async (req, res, next) => {
 router.put("/:id", adminsOnly, async (req, res, next) => {
   try {
     const { name, price, description, imageUrl, quantity } = req.body;
-    const user = await Product.findByPk(req.params.id);
-    await user.update({
+    const product = await Product.findByPk(req.params.id);
+    await product.update({
       name,
       price,
       description,
       imageUrl,
       quantity,
     });
-    res.send(user);
+    console.log("api product---", product);
+    res.send(product);
+  } catch (error) {
+    next(error);
+  }
+});
+
+router.patch("/:id", adminsOnly, async (req, res, next) => {
+  try {
+    const product = await Product.findByPk(req.params.id);
+    product.update({
+      name: req.body.name,
+      price: req.body.price,
+      quantity: req.body.quantity,
+      description: req.body.description,
+      imageUrl: req.body.imageUrl,
+    });
+    res.send();
   } catch (error) {
     next(error);
   }

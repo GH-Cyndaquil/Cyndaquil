@@ -7,7 +7,7 @@ import Home from "./components/Home";
 import { me } from "./store";
 import AdminPage from "./components/admin/AdminPage";
 import AddProduct from "./components/admin/AddProduct";
-import AdminProduct from "./components/admin/AdminProduct";
+import AdminAllProducts from "./components/admin/adminProducts";
 import AllUsers from "./components/admin/AdminAllUsers";
 import AllProducts from "./components/AllProducts";
 import ViewCart from "./components/ViewCart";
@@ -19,7 +19,7 @@ import SingleOrder from "./components/SingleOrder";
 import CheckoutGuest from "./components/CheckoutGuest";
 import Confirmation from "./components/Confirmation";
 import NotFoundPage from "./components/NotFoundPage";
-
+import EditProduct from "./components/admin/AdminProduct";
 /**
  * COMPONENT
  */
@@ -40,10 +40,11 @@ class Routes extends Component {
             <Route path="/products/:id" component={SingleProduct} />
             <Route exact path="/users/:id" component={SingleUser} />
             <Route path="/users/:id/edit" component={EditUser} />
+            <Route path="/editproduct/:id" component={EditProduct} />
             <Route path="/admin" component={AdminPage} />
             <Route path="/adminalluser" component={AllUsers} />
             <Route path="/addproduct" component={AddProduct} />
-            <Route path="/adminproduct" component={AdminProduct} />
+            <Route path="/adminproducts" component={AdminAllProducts} />
             <Route path="/checkoutuser" component={CheckoutUser} />
             <Route path="/viewcart" component={ViewCart} />
             <Route path="/orders/:id" component={SingleOrder} />

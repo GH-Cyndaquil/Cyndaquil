@@ -1,7 +1,6 @@
+import axios from "axios";
 import React from "react";
-import EditProductsForm from "./EditProductsForm";
 import { connect } from "react-redux";
-import { adminEditProduct } from "../../store/products";
 
 export class EditProduct extends React.Component {
   constructor(props) {
@@ -18,49 +17,85 @@ export class EditProduct extends React.Component {
     this.handleChange = this.handleChange.bind(this);
   }
 
+  async componentDidMount() {
+    const { data } = await axios.get(
+      `/api/adminproduct/${this.props.match.params.id}`
+    );
+    this.setState({ ...data });
+    console.log("editproduct data---", data);
+  }
+
   handleChange(event) {
     this.setState({
       [event.target.name]: event.target.value,
     });
   }
 
-  handleSubmit(event) {
+  async handleSubmit(event) {
     event.preventDefault();
-    try {
-      //update the product with new values. call method from store. check API
-
-      this.props.editProduct({ ...this.props.product, ...this.state });
-    } catch (error) {
-      console.error(error);
-    }
+    await axios.put(`/api/adminproduct/${this.props.match.params.id}`, {
+      ...this.state,
+      user: this.props.user,
+    });
+    this.props.history.push("/adminproducts");
   }
 
   render() {
     return (
-      <div className="adminBackground">
-        <div className="single-product-div">
-          <h1> Edit Product: </h1>
-          <EditProductsForm
-            handleChange={this.handleChange}
-            handleSubmit={this.handleSubmit}
-            title={this.state.name}
-            description={this.state.description}
-            price={this.state.price}
-            imageUrl={this.state.imageUrl}
-            quantity={this.state.quantity}
+      <div>
+        <h2>Edit Item</h2>
+        <form onSubmit={this.handleSubmit}>
+          <label htmlFor="name"> Name: </label>
+          <input
+            name="name"
+            type="text"
+            onChange={this.handleChange}
+            value={this.state.name}
           />
-        </div>
+          <p> </p>
+          <label htmlFor="description"> Description: </label>
+          <input
+            name="description"
+            type="text"
+            onChange={this.handleChange}
+            value={this.state.description}
+          />
+          <p> </p>
+          <label htmlFor="price"> Price: </label>
+          <input
+            name="price"
+            type="number"
+            onChange={this.handleChange}
+            value={this.state.price}
+          />
+          <p> </p>
+          <label htmlFor="imageUrl"> Image Url: </label>
+          <input
+            name="imageUrl"
+            type="text"
+            onChange={this.handleChange}
+            value={this.state.imageUrl}
+          />
+          <p> </p>
+          <label htmlFor="quantity"> Quantity: </label>
+          <input
+            name="quantity"
+            type="number"
+            onChange={this.handleChange}
+            value={this.state.quantity}
+          />
+          <p> </p>
+          <div>
+            <button type="submit"> Submit Changes </button>
+          </div>
+        </form>
       </div>
     );
   }
 }
 
-/* const mapToState = state => ({
-  product: state.product
-}) */
-
-const mapToDispatch = (dispatch) => ({
-  adminEditProduct: (product) => dispatch(adminEditProduct(product)),
+const mapState = (state) => ({
+  user: state.user,
 });
 
-export default connect(null, mapToDispatch)(EditProduct);
+export default connect(mapState, null)(EditProduct);

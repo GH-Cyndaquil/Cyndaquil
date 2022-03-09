@@ -1,22 +1,16 @@
 import React from "react";
 import { connect } from "react-redux";
 import axios from "axios";
-import { Link } from "react-router-dom";
 
 export class AllUsers extends React.Component {
   constructor() {
     super();
-    this.handleClick = this.handleClick.bind(this);
     this.state = { users: [], isAdmin: false };
   }
 
   async componentDidMount() {
     const { data } = await axios.get("api/adminuser");
     this.setState({ users: data });
-  }
-
-  handleClick(id) {
-    this.props.setUsers(id);
   }
 
   render() {

@@ -1,8 +1,10 @@
 import axios from "axios";
+import { AuthenticationMD5Password } from "pg-protocol/dist/messages";
 //Action creators
 const SET_PRODUCTS = "SET_PRODUCTS";
 const CREATE_PRODUCT = "CREATE_PRODUCT";
 const UPDATE_PRODUCT = "UPDATE_PRODUCT";
+const DELETE_PRODUCT = "DELETE_PRODUCT";
 
 //action types
 const setProducts = (products) => ({
@@ -10,13 +12,15 @@ const setProducts = (products) => ({
   products,
 });
 
-const _createProduct = (product) => {
-  console.log(product, CREATE_PRODUCT);
-  return {
-    type: CREATE_PRODUCT,
-    product,
-  };
-};
+const _createProduct = (product) => ({
+  type: CREATE_PRODUCT,
+  product,
+});
+
+const deleteProduct = (product) => ({
+  type: DELETE_PRODUCT,
+  product,
+});
 
 const editProduct = (product) => ({
   type: UPDATE_PRODUCT,
@@ -61,6 +65,15 @@ export const adminEditProduct = (product) => {
   };
 };
 
+export const adminDeleteProduct = (id, user) => async (dispatch) => {
+  try {
+    await axios.delete(`/api/adminproduct/${id}`, { user: user });
+    dispatch(deleteProduct(product));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
 const initState = [];
 
 export default (state = initState, action) => {
@@ -70,6 +83,8 @@ export default (state = initState, action) => {
     case CREATE_PRODUCT:
       return [...state, action.product];
     case UPDATE_PRODUCT:
+      return action.product;
+    case DELETE_PRODUCT:
       return action.product;
     default:
       return state;

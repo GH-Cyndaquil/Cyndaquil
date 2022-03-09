@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import {
   fetchSelectedProduct,
   setSelectedProduct,
-} from '../store/selectedProduct';
-import { fetchIngredients } from '../store/ingredients';
-import { fetchRegions } from '../store/regions';
-import { addItem, fetchCart, gotCart } from '../store/orders';
-import EditProductForm from './admin/EditProductsForm';
+} from "../store/selectedProduct";
+import { fetchIngredients } from "../store/ingredients";
+import { fetchRegions } from "../store/regions";
+import { addItem, fetchCart, gotCart } from "../store/orders";
 
 function SingleProduct(props) {
   const dispatch = useDispatch();
@@ -40,13 +39,13 @@ function SingleProduct(props) {
     let newQuantity = evt.target.value;
     let price = Number((newQuantity * currentProduct.price).toFixed(2));
     if (price !== 0) {
-      if (price.toString().split('.')[1].length === 1) {
+      if (price.toString().split(".")[1].length === 1) {
         price = price.toString() + 0;
       }
     }
 
     function numberWithCommas(x) {
-      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+      return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
     }
 
     setQuantityPrice(numberWithCommas(price));
@@ -66,7 +65,7 @@ function SingleProduct(props) {
     } else {
       if (currentProduct.quantity > 0) {
         if (localStorage.cart) {
-          let cart = JSON.parse(localStorage.getItem('cart'));
+          let cart = JSON.parse(localStorage.getItem("cart"));
           let cartItem = cart[`${currentProduct.id}`];
           if (cartItem) {
             cartItem.quantityOrdered =
@@ -88,7 +87,7 @@ function SingleProduct(props) {
           for (let key in cart) {
             products.push(cart[key]);
           }
-          localStorage.setItem('cart', JSON.stringify(cart));
+          localStorage.setItem("cart", JSON.stringify(cart));
           dispatch(gotCart({ products: products }));
         } else {
           let cart = {};
@@ -103,7 +102,7 @@ function SingleProduct(props) {
           for (let key in cart) {
             products.push(cart[key]);
           }
-          localStorage.setItem('cart', JSON.stringify(cart));
+          localStorage.setItem("cart", JSON.stringify(cart));
           dispatch(gotCart({ products: products }));
         }
       }
@@ -123,7 +122,7 @@ function SingleProduct(props) {
             <div>In stock: {currentProduct.quantity}</div>
             <p>{currentProduct.description}</p>
             <h4>
-              Main ingredient:{' '}
+              Main ingredient:{" "}
               {ingredients
                 .filter(
                   (ingredient) => ingredient.id === currentProduct.ingredientId
@@ -131,7 +130,7 @@ function SingleProduct(props) {
                 .map((ingredient) => ingredient.name)}
             </h4>
             <h4>
-              Region:{' '}
+              Region:{" "}
               {regions
                 .filter((region) => region.id === currentProduct.regionId)
                 .map((region) => region.name)}
@@ -146,7 +145,6 @@ function SingleProduct(props) {
             <h5>Adding to cart: ${quantityPrice}</h5>
           </div>
         </main>
-        {isAdmin ? <EditProductForm /> : null}
       </div>
     );
   }

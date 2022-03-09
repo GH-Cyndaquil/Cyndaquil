@@ -12,7 +12,7 @@ export const AdminPage = () => {
           </button>
           <> </>
           <button>
-            <Link to="/adminProduct">Edit Product</Link>
+            <Link to="/adminProducts">Edit Product</Link>
           </button>
           <> </>
           <button>
