@@ -40,7 +40,7 @@ nav a {
 
 .homestyle {
   background-color: rgb(61, 61, 61);
-  background-image: url('./gifs/pouringMartini.gif'), url('.images/');
+  background-image: url("./gifs/pouringMartini.gif"), url(".images/");
   background-size: cover;
   font-size: 2rem;
   border: 2px solid black;
@@ -194,7 +194,7 @@ form div {
   width: 500px;
   text-align: center;
   justify-content: space-between;
-  background-image: url('./gifs/shoutPour.gif');
+  background-image: url("./gifs/shoutPour.gif");
   background-size: cover;
   font-size: 2rem;
   border: 2px solid black;
@@ -445,14 +445,14 @@ nav {
 }
 
 .login-background {
-  background-image: url('./images/login-background.jpeg');
+  background-image: url("./images/login-background.jpeg");
   width: 60%;
   height: 100vh;
   background-size: cover;
 }
 
 .signup-background {
-  background-image: url('./images/login-background.jpeg');
+  background-image: url("./images/login-background.jpeg");
   width: 60%;
   height: 100vh;
   background-size: cover;
@@ -588,7 +588,7 @@ caption {
 }
 
 #home-background {
-  background-image: url('./gifs/swirlingRicky.gif');
+  background-image: url("./gifs/swirlingRicky.gif");
   width: 60%;
   height: 70vh;
   background-size: cover;

@@ -1,5 +1,5 @@
 import axios from "axios";
-import { AuthenticationMD5Password } from "pg-protocol/dist/messages";
+
 //Action creators
 const SET_PRODUCTS = "SET_PRODUCTS";
 const CREATE_PRODUCT = "CREATE_PRODUCT";
@@ -40,9 +40,7 @@ export const fetchProducts = (location, filters) => {
 export const createProduct = (product, history) => {
   return async (dispatch) => {
     try {
-      console.log(history);
       const { data: created } = await axios.post("/api/adminproduct", product);
-      console.log(created);
       dispatch(_createProduct(created));
       history.push(`/products/${created.id}`);
     } catch (err) {

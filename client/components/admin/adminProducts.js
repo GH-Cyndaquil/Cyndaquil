@@ -24,9 +24,6 @@ export class AdminAllProducts extends React.Component {
 
   render() {
     const { products } = this.state;
-    console.log(products);
-    console.log("admin products user  ---- ", this.props.user);
-
     if (!products || products.length === 0) {
       return <h3>Loading</h3>;
     } else {

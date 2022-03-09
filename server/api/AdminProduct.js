@@ -4,7 +4,6 @@ const Product = require("../db/models/Product");
 module.exports = router;
 
 const adminsOnly = (req, res, next) => {
-  console.log("not a string", req.body);
   if (!req.body.user) {
     const err = new Error("Not logged in");
     err.status = 401;
@@ -84,7 +83,6 @@ router.put("/:id", adminsOnly, async (req, res, next) => {
       imageUrl,
       quantity,
     });
-    console.log("api product---", product);
     res.send(product);
   } catch (error) {
     next(error);

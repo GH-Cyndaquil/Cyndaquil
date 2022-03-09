@@ -15,7 +15,6 @@ export class AllUsers extends React.Component {
 
   render() {
     const { users } = this.state;
-    console.log(users);
     if (users.length === 0) {
       return <h3>Loading</h3>;
     } else {
